@@ -1,54 +1,49 @@
-# React + TypeScript + Vite
+# 🌍 exchango
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**exchango** is a fast, free, and mobile-first currency converter web app. Built with React, TypeScript, and Tailwind CSS, it offers instant conversion between 150+ global currencies and supports multiple languages.
 
-Currently, two official plugins are available:
+> ⚠️ This site is only accessible on mobile screens for an optimized user experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 📱 **Mobile-first design**
+- 🌐 **Multilingual support** (English, German, French, Spanish, Italian etc)
+- 🔁 **Live currency conversion** using [CurrencyFreaks API]
+- 📊 **Real-time exchange rate updates**
+- 🌎 **Auto-detects your local currency** based on location (via IPInfo)
+- 🕒 Shows **relative time** of last update (e.g., “Updated 3 minutes ago”)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Tech Stack
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **React + TypeScript**
+- **Tailwind CSS**
+- **Framer Motion** – animations
+- **i18next** – localization
+- **CurrencyFreaks API** – real-time rates
+- **IPInfo API** – for location-based currency detection
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🌐 Localization
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- English (default)
+- German 🇩🇪
+- French 🇫🇷
+- Spanish 🇪🇸
+- Italian 🇮🇹
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 🚧 Continuous Improvement
+**exchango** is an evolving project. New features, enhancements and improvements will be added over time as the app grows. **Stay tuned for updates, and feel free to contribute or provide feedback!**
+> ## 🧪 To Do/Future Updates
+> - Add dark mode
+> - Graphs for historical exchange rates
+> - Desktop/tablet support etc
+
+## Developer
+Made with ❤️ and React by **Ezekiel**
+
+## 🔧 Setup & Installation
+
+1. **Clone the repo**
+
+```bash
+git clone https://github.com/zeke614/exchango.git
+cd exchango
