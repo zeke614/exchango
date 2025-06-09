@@ -37,7 +37,7 @@
 > - Graphs for historical exchange rates
 > - Desktop/tablet support etc
 
-## Developer
+## 👨🏾‍💻 Developer
 Made with ❤️ and React by **Ezekiel**
 
 ## 🔧 Setup & Installation
