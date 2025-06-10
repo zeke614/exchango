@@ -1,0 +1,55 @@
+{
+  "siteTitle": "exchango",
+  "aria": {
+    "changeLanguage": "Sprache ändern"
+  },
+  "welcome": {
+    "welcomeLine1": "Willkommen bei ",
+    "welcomeLine2": "dem besten Währungsrechner!",
+    "guideTitle": "Kurzanleitung"
+  },
+  "guide": {
+    "step1": {
+      "title": "Wähle deine Währungen",
+      "desc": "Verwende die Dropdown-Menüs, um die Ausgangswährung (z.B. USD) und die Zielwährung (z.B. GHS) auszuwählen."
+    },
+    "step2": {
+      "title": "Betrag eingeben",
+      "desc": "Gib den Betrag ein, den du umrechnen möchtest. Die Umrechnung erfolgt automatisch."
+    },
+    "step3": {
+      "title": "Erhalte sofortige Ergebnisse",
+      "desc": "Sie sehen die Aktualisierung des Live-Wechselkurses in Echtzeit, wenn sich die Marktbedingungen ändern."
+    }
+  },
+  "converterWords": {
+    "title": "Währungsrechner",
+    "amount": "Betrag",
+    "convertedFigure": "Entspricht",
+    "rate": "Der Wechselkurs"
+  },
+  "updated": {
+    "relative": {
+      "seconds_one": "Aktualisiert vor {{count}} Sekunde",
+      "seconds_other": "Aktualisiert vor {{count}} Sekunden",
+      "minutes_one": "Aktualisiert vor {{count}} Minute",
+      "minutes_other": "Aktualisiert vor {{count}} Minuten",
+      "hours_one": "Aktualisiert vor {{count}} Stunde",
+      "hours_other": "Aktualisiert vor {{count}} Stunden",
+      "days_one": "Aktualisiert vor {{count}} Tag",
+      "days_other": "Aktualisiert vor {{count}} Tagen"
+    }
+  },
+  "footer": {
+    "value": "Einfach, Genau und Zuverlässig.\nWir helfen dir, Währungen schnell\nund zuverlässig umzuwandeln.",
+    "links": {
+      "title": "Schnellzugriff",
+      "howItWorks": "Wie es funktioniert",
+      "converter": "Rechner",
+      "contact": "Kontakt"
+    },
+    "socials": "Unsere Sozialen Netzwerke",
+    "disclaimer": "Die Wechselkurse dienen nur zu Informationszwecken\nund können leicht variieren. Überprüfe immer\nbei deiner Bank oder deinem Finanzdienstleister\nbevor du Entscheidungen triffst.",
+    "builder": "Erstellt von"
+  }
+}

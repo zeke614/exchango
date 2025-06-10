@@ -1,0 +1,31 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-outfit: "Outfit", sans-serif; 
+}
+
+body {
+  @apply font-outfit;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer utilities {
+  /* Thin scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+  .thin-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .thin-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full;
+  }
+  
+  /* For Firefox */
+  .thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent; /* gray-300 */
+  }
+}

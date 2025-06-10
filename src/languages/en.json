@@ -1,0 +1,55 @@
+{
+  "siteTitle": "exchango",
+  "aria": {
+    "changeLanguage": "Change language"
+  },
+  "welcome": {
+    "welcomeLine1": "Welcome to ",
+    "welcomeLine2": "the best currency converter!",
+    "guideTitle": "Quick Guide"
+  },
+  "guide": {
+    "step1": {
+      "title": "Pick your currencies",
+      "desc": "Use the dropdowns to choose the currency you're converting from (e.g. USD) and the one you're converting to (e.g. GHS)."
+    },
+    "step2": {
+      "title": "Enter amount",
+      "desc": "Type how much money you want to convert in the input field. The conversion will be done automatically."
+    },
+    "step3": {
+      "title": "Get instant results",
+      "desc": "You'll see the live exchange rate update in real-time as market conditions change."
+    }
+  },
+  "converterWords": {
+    "title": "Currency Converter",
+    "amount": "Amount",
+    "convertedFigure": "Equals",
+    "rate": "Live Exchange Rate"
+  },
+  "updated": {
+    "relative": {
+      "seconds_one": "Updated {{count}} second ago",
+      "seconds_other": "Updated {{count}} seconds ago",
+      "minutes_one": "Updated {{count}} minute ago",
+      "minutes_other": "Updated {{count}} minutes ago",
+      "hours_one": "Updated {{count}} hour ago",
+      "hours_other": "Updated {{count}} hours ago",
+      "days_one": "Updated {{count}} day ago",
+      "days_other": "Updated {{count}} days ago"
+    }
+  },
+  "footer": {
+    "value": "Simple, Accurate & Trusted.\nHelping you convert currencies fast and reliably.",
+    "links": {
+      "title": "Quick Links",
+      "howItWorks": "How It Works",
+      "converter": "Converter",
+      "contact": "Contact"
+    },
+    "socials": "Our Socials",
+    "disclaimer": "Currency rates are for general information\nand may vary slightly. Always check with\nyour bank or financial service provider\nbefore making decisions.",
+    "builder": "Built by"
+  }
+}

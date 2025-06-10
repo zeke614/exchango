@@ -1,0 +1,55 @@
+{
+  "siteTitle": "exchango",
+  "aria": {
+    "changeLanguage": "Changer la langue"
+  },
+  "welcome": {
+    "welcomeLine1": "Bienvenue sur ",
+    "welcomeLine2": "le meilleur convertisseur de devises!",
+    "guideTitle": "Guide Rapide"
+  },
+  "guide": {
+    "step1": {
+      "title": "Choisissez vos devises",
+      "desc": "Utilisez les menus déroulants pour choisir la devise de départ (ex. USD) et celle à convertir (ex. GHS)."
+    },
+    "step2": {
+      "title": "Saisissez un montant",
+      "desc": "Entrez le montant à convertir dans le champ prévu. La conversion se fera automatiquement."
+    },
+    "step3": {
+      "title": "Obtenez des résultats instantanés",
+      "desc": "Vous verrez la mise à jour du taux de change en direct en temps réel à mesure que les conditions du marché changent."
+    }
+  },
+  "converterWords": {
+    "title": "Convertisseur de Devises",
+    "amount": "Montant",
+    "convertedFigure": "Équivaut",
+    "rate": "Taux de Change"
+  },
+  "updated": {
+    "relative": {
+      "seconds_one": "Mis à jour il y a {{count}} seconde",
+      "seconds_other": "Mis à jour il y a {{count}} secondes",
+      "minutes_one": "Mis à jour il y a {{count}} minute",
+      "minutes_other": "Mis à jour il y a {{count}} minutes",
+      "hours_one": "Mis à jour il y a {{count}} heure",
+      "hours_other": "Mis à jour il y a {{count}} heures",
+      "days_one": "Mis à jour il y a {{count}} jour",
+      "days_other": "Mis à jour il y a {{count}} jours"
+    }
+  },
+  "footer": {
+    "value": "Simple, Précis et Fiable.\nNous vous aidons à convertir des devises\nrapidement et de manière fiable.",
+    "links": {
+      "title": "Liens Rapides",
+      "howItWorks": "Comment ça marche",
+      "converter": "Convertisseur",
+      "contact": "Contact"
+    },
+    "socials": "Nos Réseaux Sociaux",
+    "disclaimer": "Les taux de change sont à titre informatif\net peuvent varier légèrement. Vérifiez toujours\nauprès de votre fournisseur de services financiers\nou de votre banque avant de prendre des décisions.",
+    "builder": "Construit par"
+  }
+}

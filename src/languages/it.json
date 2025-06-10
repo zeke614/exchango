@@ -1,0 +1,55 @@
+{
+  "siteTitle": "exchango",
+  "aria": {
+    "changeLanguage": "Cambia lingua"
+  },
+  "welcome": {
+    "welcomeLine1": "Benvenuto su ",
+    "welcomeLine2": "il miglior convertitore di valute!",
+    "guideTitle": "Guida Rapida"
+  },
+  "guide": {
+    "step1": {
+      "title": "Scegli le tue valute",
+      "desc": "Usa i menu a discesa per scegliere la valuta di partenza (es. USD) e quella di destinazione (es. GHS)."
+    },
+    "step2": {
+      "title": "Inserisci la tua quantità",
+      "desc": "Digita quanto denaro vuoi convertire nel campo di input. La conversione avverrà automaticamente."
+    },
+    "step3": {
+      "title": "Ottieni risultati immediati",
+      "desc": "Vedrai l'aggiornamento del tasso di cambio in tempo reale, man mano che cambiano le condizioni di mercato."
+    }
+  },
+  "converterWords": {
+    "title": "Convertitore di Valute",
+    "amount": "Quantità",
+    "convertedFigure": "Equivale",
+    "rate": "Tasso di Cambio"
+  },
+  "updated": {
+    "relative": {
+      "seconds_one": "Aggiornato {{count}} secondo fa",
+      "seconds_other": "Aggiornato {{count}} secondi fa",
+      "minutes_one": "Aggiornato {{count}} minuto fa",
+      "minutes_other": "Aggiornato {{count}} minuti fa",
+      "hours_one": "Aggiornato {{count}} ora fa",
+      "hours_other": "Aggiornato {{count}} ore fa",
+      "days_one": "Aggiornato {{count}} giorno fa",
+      "days_other": "Aggiornato {{count}} giorni fa"
+    }
+  },
+  "footer": {
+    "value": "Semplice, Accurato e Affidabile.\nTi aiutiamo a convertire valute in modo veloce e affidabile.",
+    "links": {
+      "title": "Link Rapidi",
+      "howItWorks": "Come Funziona",
+      "converter": "Convertitore",
+      "contact": "Contatto"
+    },
+    "socials": "I Nostri Social",
+    "disclaimer": "I tassi di cambio sono per informazioni generali e possono variare leggermente. Controlla sempre con la tua banca o fornitore di servizi finanziari\nprima di prendere decisioni.",
+    "builder": "Creato da"
+  }
+}
