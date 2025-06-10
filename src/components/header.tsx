@@ -37,9 +37,23 @@ export default function Header() {
   return (
     <header className="bg-white sticky top-0 z-50 flex items-center justify-between p-4 border-b border-b-[#0000001f] shadow-sm">
       <div>
-        <a href="/" className="text-[22px] font-medium">
-          x<span className="text-[#256F5C]">G</span>
-        </a>
+        <svg
+          width="60"
+          height="32"
+          viewBox="0 0 60 32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <text
+            x="0"
+            y="24"
+            font-family="cursive"
+            font-size="22"
+            font-weight="500"
+            fill="black"
+          >
+            x<tspan fill="#256F5C">G</tspan>
+          </text>
+        </svg>
       </div>
 
       <h1 className="text-[22px] font-medium ml-6">
