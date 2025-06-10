@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import countriesData from "./data.ts";
+//import xG from "../assets/xG.png";
 
 export default function Header() {
   const { t, i18n } = useTranslation();
@@ -36,25 +37,9 @@ export default function Header() {
 
   return (
     <header className="bg-white sticky top-0 z-50 flex items-center justify-between p-4 border-b border-b-[#0000001f] shadow-sm">
-      <div>
-        <svg
-          width="60"
-          height="32"
-          viewBox="0 0 60 32"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text
-            x="0"
-            y="24"
-            font-family="cursive"
-            font-size="22"
-            font-weight="500"
-            fill="black"
-          >
-            x<tspan fill="#256F5C">G</tspan>
-          </text>
-        </svg>
-      </div>
+      {/*<div className="flex items-center justify-center !bg-none">
+        <img src={xG} alt="xG-logo" className="w-11 bg-none" />
+      </div>*/}
 
       <h1 className="text-[22px] font-medium ml-6">
         exchan<span className="text-[#256F5C]">go</span>

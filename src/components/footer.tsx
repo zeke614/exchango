@@ -11,30 +11,13 @@ export default function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="bg-white space-y-6 mt-16 pt-[60px] border-t border-[#0000001f] mx-3">
+    <footer className="bg-white space-y-6 mt-16 pt-[50px] border-t border-[#0000001f] mx-3">
       {/*<div className="flex items-center justify-center !bg-none">
         <img src={xG} alt="xG-logo" className="w-24 bg-none" />
       </div>*/}
-      <div className="flex justify-center items-center">
-        <svg
-          width="55"
-          height="32"
-          viewBox="0 0 60 32"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <text
-            x="0"
-            y="24"
-            fontFamily="cursive"
-            fontSize="35"
-            fontWeight="500"
-            fill="black"
-            className="flex justify-center items-center"
-          >
-            x<tspan fill="#256F5C">G</tspan>
-          </text>
-        </svg>
-      </div>
+      <h1 className="text-[26px] text-center font-medium ml-6">
+        exchan<span className="text-[#256F5C]">go</span>
+      </h1>
 
       <p className="text-center text-lg text-gray-500 whitespace-pre-line">
         {t("footer.value")}
