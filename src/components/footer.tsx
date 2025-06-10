@@ -11,15 +11,15 @@ export default function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="bg-white space-y-6 mt-16 pt-[70px] border-t border-[#0000001f] mx-3.5">
+    <footer className="bg-white space-y-6 mt-16 pt-[70px] border-t border-[#0000001f] mx-3">
       {/*<div className="flex items-center justify-center !bg-none">
         <img src={xG} alt="xG-logo" className="w-24 bg-none" />
       </div>*/}
-      <h1 className="text-center text-[40px] pb-4 font-medium font-[cursive]">
+      <h1 className="text-center text-[40px] pb-4 font-medium">
         x<span className="text-[#256F5C]">G</span>
       </h1>
 
-      <p className="text-center text-[19px] text-gray-500 whitespace-pre-line">
+      <p className="text-center text-lg text-gray-500 whitespace-pre-line">
         {t("footer.value")}
       </p>
 
@@ -27,7 +27,7 @@ export default function Footer() {
         <h4 className="font-medium text-gray-800 text-[21px]">
           {t("footer.links.title")}
         </h4>
-        <ul className="text-gray-500 text-[19px] gap-3 flex justify-center flex-wrap">
+        <ul className="text-gray-500 text-lg gap-3 flex justify-center flex-wrap">
           <li>
             <a href="#how-it-works" className="hover:underline">
               {t("footer.links.howItWorks")}{" "}
@@ -78,18 +78,18 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="text-center text-lg text-gray-500 px-4 whitespace-pre-line">
+      <div className="text-center text-[15.5px] text-gray-500 px-4 whitespace-pre-line">
         {t("footer.disclaimer")}
       </div>
 
       <div className="flex flex-col items-center justify-center py-5">
-        <p className="gap-1.5 text-[19px] mb-0 text-gray-500 flex justify-center items-center">
+        <p className="gap-1.5 text-lg mb-0 text-gray-500 flex justify-center items-center">
           <span>&copy;</span> <span>{new Date().getFullYear()}</span>
           <span>
             exchan<span className="text-[#256F5C]">go</span>, Inc.
           </span>{" "}
         </p>
-        <span className="text-[19px] text-gray-500">
+        <span className="text-lg text-gray-500">
           {t("footer.builder")}
           <a
             href="https://github.com/zeke614"

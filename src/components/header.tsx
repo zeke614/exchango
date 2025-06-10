@@ -37,7 +37,7 @@ export default function Header() {
   return (
     <header className="bg-white sticky top-0 z-50 flex items-center justify-between p-4 border-b border-b-[#0000001f] shadow-sm">
       <div>
-        <a href="/" className="text-[22px] font-[cursive]">
+        <a href="/" className="text-[22px] font-medium">
           x<span className="text-[#256F5C]">G</span>
         </a>
       </div>
