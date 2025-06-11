@@ -5,6 +5,7 @@ import Footer from "./components/footer";
 import CurrencyDropdown from "./components/currencies";
 import countriesData from "./components/data";
 import { useTranslation } from "react-i18next";
+//import { motion } from "framer-motion";
 
 function App() {
   const { t } = useTranslation();
@@ -76,8 +77,17 @@ function App() {
     detectLocationCurrency();
   }, []);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     async function fetchRates() {
+      if (!amount || isNaN(parseFloat(amount))) {
+        setConvertedAmount("");
+        return;
+      }
+
+      setIsLoading(true);
+
       try {
         const res = await axios.get<CurrencyFreaksResponse>(
           `https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${currencyApiKey}`
@@ -99,6 +109,8 @@ function App() {
         }
       } catch (error) {
         console.error("Error fetching rates:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -176,7 +188,7 @@ function App() {
               {t("welcome.guideTitle")}
             </h3>
 
-            <div className="grid grid-rows-3 gap-9 my-14 mx-7 text-center">
+            <div className="grid grid-rows-3 gap-9 my-14 mx-4 text-center">
               {["step1", "step2", "step3"].map((step, index) => (
                 <div
                   key={step}
@@ -193,11 +205,10 @@ function App() {
           </section>
 
           <section id="converter" className="scroll-mt-20 pt-12">
-            <div className="bg-white px-1 py-6 border mx-1 border-gray-200 rounded-2xl flex flex-col items-center gap-3 shadow-md">
+            <div className="bg-white px-3.5 py-6 border border-gray-200 rounded-2xl flex flex-col items-center gap-3 shadow-md">
               <h3 className="text-center text-[26px] text-[#256F5C] font-medium my-3">
                 {t("converterWords.title")}
               </h3>
-
               <h4 className="text-[22px] text-center pb-9">
                 Get{" "}
                 <span className="font-medium text-[23px]">
@@ -210,7 +221,6 @@ function App() {
                 </span>
                 <span>.</span>
               </h4>
-
               <div className="w-full max-w-xs">
                 <label className="block text-end text-[17px] text-gray-600 mb-1.5">
                   {t("converterWords.amount")}
@@ -232,15 +242,23 @@ function App() {
                 </div>
               </div>
 
-              <button
-                onClick={handleSwap}
-                className="text-[26px] my-7 items-center bg-[#256F5C] rounded-full rotate-90 p-2 justify-center flex"
-                title="Swap currencies"
-              >
-                <span className="material-symbols-outlined text-white">
-                  sync_alt
-                </span>
-              </button>
+              {isLoading ? (
+                <div className="flex items-center justify-center mt-6 mb-4 animate-spin text-[#256F5C]">
+                  <span className="material-symbols-outlined text-[#256F5C]">
+                    currency_exchange
+                  </span>
+                </div>
+              ) : (
+                <button
+                  onClick={handleSwap}
+                  className="text-[26px] my-7 items-center bg-[#256F5C] rounded-full rotate-90 p-2 justify-center flex"
+                  title="Swap currencies"
+                >
+                  <span className="material-symbols-outlined text-white">
+                    sync_alt
+                  </span>
+                </button>
+              )}
 
               <div className="w-full max-w-xs">
                 <label className="block text-end text-[17px] text-gray-600 mb-2">
@@ -261,18 +279,19 @@ function App() {
                   </div>
                 </div>
               </div>
-
               <div>
                 <h5 className="text-center text-2xl font-medium mt-12">
                   {t("converterWords.rate")}
                 </h5>
-                <p className="text-center text-[22.5px] font-medium text-gray-600 mt-1.5">
+
+                <p className="text-center text-[22px] font-medium text-gray-600 mt-1.5">
                   {rate
                     ? `${fromCurrency.symbol}1.00 ${fromCurrency.code} = ${
                         toCurrency.symbol
                       }${rate.toFixed(4)} ${toCurrency.code}`
-                    : "-"}
+                    : "Could not fetch rate."}
                 </p>
+
                 {rate && relativeTime && (
                   <p className="text-center text-lg font-light text-gray-600 mt-4 mb-2">
                     {relativeTime}
