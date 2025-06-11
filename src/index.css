@@ -15,7 +15,6 @@ html {
 }
 
 @layer utilities {
-  /* Thin scrollbar for WebKit browsers (Chrome, Safari, Edge) */
   .thin-scrollbar::-webkit-scrollbar {
     width: 8px;
   }
@@ -23,7 +22,6 @@ html {
     @apply bg-gray-300 rounded-full;
   }
   
-  /* For Firefox */
   .thin-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: #d1d5db transparent; /* gray-300 */

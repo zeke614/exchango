@@ -5,7 +5,7 @@ import Footer from "./components/footer";
 import CurrencyDropdown from "./components/currencies";
 import countriesData from "./components/data";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
+//import { motion } from "framer-motion";
 
 function App() {
   const { t } = useTranslation();
@@ -105,17 +105,15 @@ function App() {
   }
 
   useEffect(() => {
-    fetchRates(false); // fetch exchange rate on load without loader
+    fetchRates(false);
   }, [fromCurrency, toCurrency]);
 
-  // Reset convertedAmount when input is cleared
   useEffect(() => {
     if (amount.trim() === "") {
       setConvertedAmount("");
     }
   }, [amount]);
 
-  // Only fetch rate if amount is valid
   useEffect(() => {
     if (amount && !isNaN(parseFloat(amount))) {
       fetchRates(true);
@@ -219,22 +217,20 @@ function App() {
               </div>
 
               {isLoading ? (
-                <motion.div
-                  className="flex items-center justify-center mt-6 mb-4 text-[#256F5C]"
-                  animate={{ rotate: 360 }}
-                  transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                >
+                <div className="flex items-center justify-center animate-spin mt-6 mb-4 text-[#256F5C]">
                   <span className="material-symbols-outlined text-[40px]">
                     currency_exchange
                   </span>
-                </motion.div>
+                </div>
               ) : (
                 <button
                   onClick={handleSwap}
                   className="text-[26px] my-7 items-center bg-[#256F5C] rounded-full rotate-90 p-2 justify-center flex"
                   title="Swap currencies"
                 >
-                  <i className="bx  bx-swap-horizontal text-white"></i>
+                  <span className="material-symbols-outlined text-white">
+                    sync_alt
+                  </span>
                 </button>
               )}
 
