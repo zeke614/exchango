@@ -5,7 +5,7 @@ import Footer from "./components/footer";
 import CurrencyDropdown from "./components/currencies";
 import countriesData from "./components/data";
 import { useTranslation } from "react-i18next";
-//import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 function App() {
   const { t } = useTranslation();
@@ -18,6 +18,7 @@ function App() {
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [relativeTime, setRelativeTime] = useState<string>("");
   const [isMobile, setIsMobile] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const currencyApiKey = import.meta.env.VITE_CURRENCY_FREAKS_API_KEY;
   const ipInfoToken = import.meta.env.VITE_IPINFO_TOKEN;
@@ -33,7 +34,6 @@ function App() {
     t: (key: string, options?: any) => string
   ) {
     const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
-
     if (seconds < 60) return t("updated.relative.seconds", { count: seconds });
     const minutes = Math.floor(seconds / 60);
     if (minutes < 60) return t("updated.relative.minutes", { count: minutes });
@@ -77,45 +77,50 @@ function App() {
     detectLocationCurrency();
   }, []);
 
-  const [isLoading, setIsLoading] = useState(false);
+  async function fetchRates(showLoader = false) {
+    if (showLoader) setIsLoading(true);
+
+    try {
+      const res = await axios.get<CurrencyFreaksResponse>(
+        `https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${currencyApiKey}`
+      );
+
+      const rates = res.data.rates;
+      const rateFrom = parseFloat(rates[fromCurrency.code]);
+      const rateTo = parseFloat(rates[toCurrency.code]);
+
+      const conversionRate = rateTo / rateFrom;
+      setRate(conversionRate);
+      setLastUpdated(new Date());
+
+      if (amount && !isNaN(parseFloat(amount))) {
+        const result = parseFloat(amount) * conversionRate;
+        setConvertedAmount(result.toFixed(2));
+      }
+    } catch (error) {
+      console.error("Error fetching rates:", error);
+    } finally {
+      if (showLoader) setIsLoading(false);
+    }
+  }
 
   useEffect(() => {
-    async function fetchRates() {
-      if (!amount || isNaN(parseFloat(amount))) {
-        setConvertedAmount("");
-        return;
-      }
+    fetchRates(false); // fetch exchange rate on load without loader
+  }, [fromCurrency, toCurrency]);
 
-      setIsLoading(true);
-
-      try {
-        const res = await axios.get<CurrencyFreaksResponse>(
-          `https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${currencyApiKey}`
-        );
-
-        const rates = res.data.rates;
-        const rateFrom = parseFloat(rates[fromCurrency.code]);
-        const rateTo = parseFloat(rates[toCurrency.code]);
-
-        const conversionRate = rateTo / rateFrom;
-        setRate(conversionRate);
-        setLastUpdated(new Date());
-
-        if (amount && !isNaN(parseFloat(amount))) {
-          const result = parseFloat(amount) * conversionRate;
-          setConvertedAmount(result.toFixed(2));
-        } else {
-          setConvertedAmount("");
-        }
-      } catch (error) {
-        console.error("Error fetching rates:", error);
-      } finally {
-        setIsLoading(false);
-      }
+  // Reset convertedAmount when input is cleared
+  useEffect(() => {
+    if (amount.trim() === "") {
+      setConvertedAmount("");
     }
+  }, [amount]);
 
-    fetchRates();
-  }, [fromCurrency, toCurrency, amount]);
+  // Only fetch rate if amount is valid
+  useEffect(() => {
+    if (amount && !isNaN(parseFloat(amount))) {
+      fetchRates(true);
+    }
+  }, [amount, fromCurrency, toCurrency]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -136,6 +141,10 @@ function App() {
   const handleSwap = () => {
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
+
+    if (amount && !isNaN(parseFloat(amount))) {
+      fetchRates(true);
+    }
   };
 
   useEffect(() => {
@@ -158,10 +167,10 @@ function App() {
           </h1>
           <p className="flex items-center justify-center gap-1">
             Kindly visit on your mobile phone.{" "}
-            <i className="bx  bx-mobile-alt text-2xl"></i>{" "}
+            <i className="bx bx-mobile-alt text-2xl"></i>
           </p>
           <p className="flex items-center justify-center gap-1">
-            Thank you. <i className="bx  bx-smile text-2xl"></i>{" "}
+            Thank you. <i className="bx bx-smile text-2xl"></i>
           </p>
         </div>
       </div>
@@ -171,7 +180,6 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[#fefefe] text-black">
       <Header />
-
       <main className="flex-grow px-4">
         <div className="pb-12 pt-16">
           <h2 className="text-center text-[21px] mb-6">
@@ -183,44 +191,12 @@ function App() {
             {t("welcome.welcomeLine2")}
           </h2>
 
-          <section id="how-it-works" className="scroll-mt-18">
-            <h3 className="text-center text-[#256F5C] text-[30px] font-medium">
-              {t("welcome.guideTitle")}
-            </h3>
-
-            <div className="grid grid-rows-3 gap-9 my-14 mx-4 text-center">
-              {["step1", "step2", "step3"].map((step, index) => (
-                <div
-                  key={step}
-                  className="bg-white px-6 py-11 border border-gray-200 rounded-3xl space-y-6 shadow-md"
-                >
-                  <h3 className="text-[38px] font-semibold">{index + 1}.</h3>
-                  <h4 className="text-[23px] font-medium">
-                    {t(`guide.${step}.title`)}
-                  </h4>
-                  <p className="text-[19.5px]">{t(`guide.${step}.desc`)}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section id="converter" className="scroll-mt-20 pt-12">
+          <section id="converter" className="pt-12">
             <div className="bg-white px-3.5 py-6 border border-gray-200 rounded-2xl flex flex-col items-center gap-3 shadow-md">
               <h3 className="text-center text-[26px] text-[#256F5C] font-medium my-3">
                 {t("converterWords.title")}
               </h3>
-              <h4 className="text-[22px] text-center pb-9">
-                Get{" "}
-                <span className="font-medium text-[23px]">
-                  free instant conversions
-                </span>{" "}
-                for
-                <br />
-                <span className="font-medium text-2xl text-[#256F5C]">
-                  150+ global currencies
-                </span>
-                <span>.</span>
-              </h4>
+
               <div className="w-full max-w-xs">
                 <label className="block text-end text-[17px] text-gray-600 mb-1.5">
                   {t("converterWords.amount")}
@@ -243,20 +219,22 @@ function App() {
               </div>
 
               {isLoading ? (
-                <div className="flex items-center justify-center mt-6 mb-4 animate-spin text-[#256F5C]">
-                  <span className="material-symbols-outlined text-[#256F5C]">
+                <motion.div
+                  className="flex items-center justify-center mt-6 mb-4 text-[#256F5C]"
+                  animate={{ rotate: 360 }}
+                  transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                >
+                  <span className="material-symbols-outlined text-[40px]">
                     currency_exchange
                   </span>
-                </div>
+                </motion.div>
               ) : (
                 <button
                   onClick={handleSwap}
                   className="text-[26px] my-7 items-center bg-[#256F5C] rounded-full rotate-90 p-2 justify-center flex"
                   title="Swap currencies"
                 >
-                  <span className="material-symbols-outlined text-white">
-                    sync_alt
-                  </span>
+                  <i className="bx  bx-swap-horizontal text-white"></i>
                 </button>
               )}
 
@@ -279,11 +257,11 @@ function App() {
                   </div>
                 </div>
               </div>
+
               <div>
                 <h5 className="text-center text-2xl font-medium mt-12">
                   {t("converterWords.rate")}
                 </h5>
-
                 <p className="text-center text-[22px] font-medium text-gray-600 mt-1.5">
                   {rate
                     ? `${fromCurrency.symbol}1.00 ${fromCurrency.code} = ${
@@ -302,7 +280,6 @@ function App() {
           </section>
         </div>
       </main>
-
       <Footer />
     </div>
   );
