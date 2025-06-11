@@ -128,10 +128,10 @@ function App() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 440);
+      setIsMobile(window.innerWidth < 770);
     };
 
-    handleResize(); // Set initial state
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
@@ -176,24 +176,24 @@ function App() {
               {t("welcome.guideTitle")}
             </h3>
 
-            <div className="grid grid-rows-3 gap-9 my-14 mx-5 text-center">
+            <div className="grid grid-rows-3 gap-9 my-14 mx-7 text-center">
               {["step1", "step2", "step3"].map((step, index) => (
                 <div
                   key={step}
-                  className="bg-white px-9 py-11 border border-gray-200 rounded-3xl space-y-6 shadow-md"
+                  className="bg-white px-6 py-11 border border-gray-200 rounded-3xl space-y-6 shadow-md"
                 >
                   <h3 className="text-[38px] font-semibold">{index + 1}.</h3>
                   <h4 className="text-[23px] font-medium">
                     {t(`guide.${step}.title`)}
                   </h4>
-                  <p className="text-[17.5px]">{t(`guide.${step}.desc`)}</p>
+                  <p className="text-[19.5px]">{t(`guide.${step}.desc`)}</p>
                 </div>
               ))}
             </div>
           </section>
 
           <section id="converter" className="scroll-mt-20 pt-12">
-            <div className="bg-white px-2 py-6 border border-gray-200 rounded-2xl flex flex-col items-center gap-3 shadow-md">
+            <div className="bg-white px-1 py-6 border mx-1 border-gray-200 rounded-2xl flex flex-col items-center gap-3 shadow-md">
               <h3 className="text-center text-[26px] text-[#256F5C] font-medium my-3">
                 {t("converterWords.title")}
               </h3>
@@ -266,7 +266,7 @@ function App() {
                 <h5 className="text-center text-2xl font-medium mt-12">
                   {t("converterWords.rate")}
                 </h5>
-                <p className="text-center text-[23px] font-medium text-gray-600 mt-1.5">
+                <p className="text-center text-[22.5px] font-medium text-gray-600 mt-1.5">
                   {rate
                     ? `${fromCurrency.symbol}1.00 ${fromCurrency.code} = ${
                         toCurrency.symbol
@@ -274,7 +274,7 @@ function App() {
                     : "-"}
                 </p>
                 {rate && relativeTime && (
-                  <p className="text-center text-xl font-light text-gray-600 mt-4 mb-2">
+                  <p className="text-center text-lg font-light text-gray-600 mt-4 mb-2">
                     {relativeTime}
                   </p>
                 )}

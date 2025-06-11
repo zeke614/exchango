@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faXTwitter,
-  faFacebook,
   faInstagram,
+  faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 import { useTranslation } from "react-i18next";
 //import xG from "../assets/xG.png";
@@ -66,14 +66,14 @@ export default function Footer() {
             target="_blank"
             className="w-8 h-9 flex items-center justify-center"
           >
-            <FontAwesomeIcon icon={faFacebook} className="text-[22px]" />
+            <FontAwesomeIcon icon={faInstagram} className="text-[22px]" />
           </a>
           <a
-            href=""
+            href="https://github.com/zeke614/exchango.git"
             target="_blank"
             className="w-8 h-9 flex items-center justify-center"
           >
-            <FontAwesomeIcon icon={faInstagram} className="text-[22px]" />
+            <FontAwesomeIcon icon={faGithub} className="text-[22px]" />
           </a>
         </div>
       </div>
@@ -94,7 +94,7 @@ export default function Footer() {
           <a
             href="https://github.com/zeke614"
             target="_blank"
-            className="font-medium ml-1 text-gray-800 hover:underline"
+            className="font-medium ml-1 text-gray-800 underline"
           >
             Ezekiel
           </a>

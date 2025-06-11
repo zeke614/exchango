@@ -41,12 +41,12 @@ export default function Header() {
         <img src={xG} alt="xG-logo" className="w-11 bg-none" />
       </div>*/}
 
-      <h1 className="text-[22px] font-medium ml-6">
+      <h1 className="text-[22px] font-medium">
         exchan<span className="text-[#256F5C]">go</span>
       </h1>
 
       <div
-        className="relative flex items-center justify-center"
+        className="relative flex flex-row items-center justify-center gap-2.5"
         ref={dropdownRef}
       >
         <button
