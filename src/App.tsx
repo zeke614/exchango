@@ -58,6 +58,18 @@ function App() {
         const data = await res.json();
         const countryCode = data.country?.toUpperCase();
 
+        if (countriesData.euroZone.includes(countryCode)) {
+          const euroCurrency = countriesData.currencies.find(
+            (currency) => currency.code === "EUR"
+          );
+
+          if (euroCurrency) {
+            setToCurrency(euroCurrency);
+            localStorage.setItem("user_currency", JSON.stringify(euroCurrency));
+            return;
+          }
+        }
+
         const detectedCurrency = countriesData.currencies.find(
           (currency) => currency.flag.toUpperCase() === countryCode
         );
@@ -183,7 +195,7 @@ function App() {
           <h2 className="text-center text-[21px] mb-6">
             {t("welcome.welcomeLine1")}
             <span className="font-medium text-[22px]">
-              exchan<span className="text-[#256F5C]">go</span>
+              exchan<span className="text-[#256F5C]">go</span>,
             </span>
             <br />
             {t("welcome.welcomeLine2")}

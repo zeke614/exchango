@@ -11,15 +11,18 @@ export default function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="bg-white space-y-6 mt-16 pt-[50px] border-t border-[#0000001f] mx-3">
+    <footer className="bg-white space-y-5 pt-20">
       {/*<div className="flex items-center justify-center !bg-none">
         <img src={xG} alt="xG-logo" className="w-24 bg-none" />
       </div>*/}
-      <h1 className="text-[26px] text-center font-medium ml-6">
+
+      <div className="border-t border-[#0000001f] pb-7 mx-5"></div>
+
+      <h1 className="text-[26px] text-center font-medium mb-3 ml-6">
         exchan<span className="text-[#256F5C]">go</span>
       </h1>
 
-      <p className="text-center text-lg text-gray-500 whitespace-pre-line">
+      <p className="text-center text-lg text-gray-500 mb-12 whitespace-pre-line">
         {t("footer.value")}
       </p>
 
@@ -82,7 +85,7 @@ export default function Footer() {
         {t("footer.disclaimer")}
       </div>
 
-      <div className="flex flex-col items-center justify-center py-5">
+      <div className="flex flex-col items-center justify-center pt-5 pb-4">
         <p className="gap-1.5 text-lg mb-0 text-gray-500 flex justify-center items-center">
           <span>&copy;</span> <span>{new Date().getFullYear()}</span>
           <span>
