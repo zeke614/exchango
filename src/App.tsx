@@ -278,6 +278,27 @@ function App() {
               {t("welcome.welcomeLine2")}
             </h2>
 
+            <section id="how-it-works" className="scroll-mt-18">
+              <h3 className="text-center text-[#256F5C] text-[30px] font-medium">
+                {t("welcome.guideTitle")}
+              </h3>
+
+              <div className="grid grid-rows-3 gap-9 mb-14 mt-6 mx-4 text-center">
+                {["step1", "step2", "step3"].map((step, index) => (
+                  <div
+                    key={step}
+                    className="bg-white px-6 py-11 border border-gray-200 rounded-3xl space-y-6 shadow-md"
+                  >
+                    <h3 className="text-[38px] font-semibold">{index + 1}.</h3>
+                    <h4 className="text-[23px] font-medium">
+                      {t(`guide.${step}.title`)}
+                    </h4>
+                    <p className="text-[19.5px]">{t(`guide.${step}.desc`)}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
             <section id="converter" className="pt-12">
               <div className="bg-white px-3.5 py-6 border border-gray-200 rounded-2xl flex flex-col items-center gap-3 shadow-md">
                 <h3 className="text-center text-[26px] text-[#256F5C] font-medium my-3">
