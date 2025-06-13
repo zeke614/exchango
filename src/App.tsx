@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "./components/header";
-import Footer from "./components/footer";
-import CurrencyDropdown from "./components/currencies";
+import { lazy, Suspense } from "react";
 import countriesData from "./components/data";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
+const CurrencyDropdown = lazy(() => import("./components/currencies"));
+const Footer = lazy(() => import("./components/footer"));
 //import { motion } from "framer-motion";
 
 function App() {
@@ -304,10 +305,18 @@ function App() {
                     {t("converterWords.amount")}
                   </label>
                   <div className="flex items-center justify-between border gap-6 border-gray-200 rounded-xl px-4 py-[17px] bg-white shadow-sm">
-                    <CurrencyDropdown
-                      selected={fromCurrency}
-                      setSelected={setFromCurrency}
-                    />
+                    <Suspense
+                      fallback={
+                        <span className="text-center font-light">
+                          Loading...
+                        </span>
+                      }
+                    >
+                      <CurrencyDropdown
+                        selected={fromCurrency}
+                        setSelected={setFromCurrency}
+                      />
+                    </Suspense>
                     <div className="w-[52%]">
                       <input
                         type="number"
@@ -343,10 +352,18 @@ function App() {
                     {t("converterWords.convertedFigure")}
                   </label>
                   <div className="flex items-center justify-between gap-6 border border-gray-200 rounded-xl px-4 py-[17px] bg-white shadow-sm">
-                    <CurrencyDropdown
-                      selected={toCurrency}
-                      setSelected={setToCurrency}
-                    />
+                    <Suspense
+                      fallback={
+                        <span className="text-center font-light">
+                          Loading...
+                        </span>
+                      }
+                    >
+                      <CurrencyDropdown
+                        selected={toCurrency}
+                        setSelected={setToCurrency}
+                      />
+                    </Suspense>
                     <div className="w-[52%]">
                       <input
                         type="text"
@@ -380,7 +397,11 @@ function App() {
             </section>
           </div>
         </main>
-        <Footer />
+        <Suspense
+          fallback={<span className="text-center font-light">Loading...</span>}
+        >
+          <Footer />
+        </Suspense>{" "}
       </div>
     </>
   );
