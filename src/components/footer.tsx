@@ -5,32 +5,27 @@ import {
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 import { useTranslation } from "react-i18next";
-//import xG from "../assets/xG.png";
 
 export default function Footer() {
   const { t } = useTranslation();
 
   return (
     <footer className="bg-white space-y-5 pt-20">
-      {/*<div className="flex items-center justify-center !bg-none">
-        <img src={xG} alt="xG-logo" className="w-24 bg-none" />
-      </div>*/}
-
       <div className="border-t border-[#0000001f] pb-7 mx-5"></div>
 
-      <h1 className="text-[26px] text-center font-medium mb-3 ml-6">
+      <h1 className="text-[25px] text-center font-medium mb-3 ml-6">
         exchan<span className="text-[#256F5C]">go</span>
       </h1>
 
-      <p className="text-center text-lg text-gray-500 mb-12 whitespace-pre-line">
+      <p className="text-center text-[17px] text-gray-500 mb-12 whitespace-pre-line">
         {t("footer.value")}
       </p>
 
       <div className="flex flex-col items-center space-y-2">
-        <h4 className="font-medium text-gray-800 text-[21px]">
+        <h4 className="font-medium text-gray-800 text-[18.5px]">
           {t("footer.links.title")}
         </h4>
-        <ul className="text-gray-500 text-lg gap-3 flex justify-center flex-wrap">
+        <ul className="text-gray-500 text-[17px] gap-3 flex justify-center flex-wrap">
           <li>
             <a href="#how-it-works" className="hover:underline">
               {t("footer.links.howItWorks")}{" "}
@@ -53,7 +48,7 @@ export default function Footer() {
       </div>
 
       <div className="text-center pb-3">
-        <h4 className="font-medium text-gray-800 text-[21px]">
+        <h4 className="font-medium text-gray-800 text-[18.5px]">
           {t("footer.socials")}
         </h4>
         <div className="gap-1.5 mt-2 items-center justify-center flex">
@@ -85,14 +80,14 @@ export default function Footer() {
         {t("footer.disclaimer")}
       </div>
 
-      <div className="flex flex-col items-center justify-center pt-5 pb-4">
-        <p className="gap-1.5 text-lg mb-0 text-gray-500 flex justify-center items-center">
+      <div className="flex flex-col items-center justify-center text-[17px] pt-5 pb-4">
+        <p className="gap-1.5 mb-0 text-gray-500 flex justify-center items-center">
           <span>&copy;</span> <span>{new Date().getFullYear()}</span>
           <span>
             exchan<span className="text-[#256F5C]">go</span>, Inc.
           </span>{" "}
         </p>
-        <span className="text-lg text-gray-500">
+        <span className="text-gray-500">
           {t("footer.builder")}
           <a
             href="https://github.com/zeke614"

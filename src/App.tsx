@@ -7,11 +7,9 @@ import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 const CurrencyDropdown = lazy(() => import("./components/currencies"));
 const Footer = lazy(() => import("./components/footer"));
-//import { motion } from "framer-motion";
 
 function App() {
   const { t } = useTranslation();
-
   const [fromCurrency, setFromCurrency] = useState(countriesData.currencies[0]);
   const [toCurrency, setToCurrency] = useState(countriesData.currencies[1]);
   const [amount, setAmount] = useState("");
@@ -21,7 +19,6 @@ function App() {
   const [relativeTime, setRelativeTime] = useState<string>("");
   const [isMobile, setIsMobile] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
   const currencyApiKey = import.meta.env.VITE_CURRENCY_FREAKS_API_KEY;
   const ipInfoToken = import.meta.env.VITE_IPINFO_TOKEN;
 
@@ -195,11 +192,6 @@ function App() {
           />
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://exchangoio.vercel.app" />
-          {/*<meta
-            property="og:image"
-            content="https://exchangoio.vercel.app/preview.png"
-          />*/}
-
           <meta name="twitter:card" content="summary" />
           <meta
             name="twitter:title"
@@ -209,10 +201,6 @@ function App() {
             name="twitter:description"
             content="Convert currencies with real-time rates and a clean, mobile-first interface."
           />
-          {/*<meta
-            name="twitter:image"
-            content="https://exchangoio.vercel.app/preview.png"
-          />*/}
 
           <link rel="canonical" href="https://exchangoio.vercel.app" />
         </Helmet>
@@ -259,10 +247,6 @@ function App() {
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://exchangoio.vercel.app" />
-        {/*<meta
-            property="og:image"
-            content="https://exchangoio.vercel.app/preview.png"
-          />*/}
 
         <meta name="twitter:card" content="summary" />
         <meta
@@ -273,10 +257,6 @@ function App() {
           name="twitter:description"
           content="Convert currencies with real-time rates and a clean, mobile-first interface."
         />
-        {/*<meta
-            name="twitter:image"
-            content="https://exchangoio.vercel.app/preview.png"
-          />*/}
 
         <link rel="canonical" href="https://exchangoio.vercel.app" />
       </Helmet>

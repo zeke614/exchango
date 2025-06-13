@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import countriesData from "./data.ts";
-//import xG from "../assets/xG.png";
 
 export default function Header() {
   const { t, i18n } = useTranslation();
@@ -37,10 +36,6 @@ export default function Header() {
 
   return (
     <header className="bg-white sticky top-0 z-50 flex items-center justify-between p-4 border-b border-b-[#0000001f] shadow-sm">
-      {/*<div className="flex items-center justify-center !bg-none">
-        <img src={xG} alt="xG-logo" className="w-11 bg-none" />
-      </div>*/}
-
       <h1 className="text-[22px] font-medium">
         exchan<span className="text-[#256F5C]">go</span>
       </h1>
