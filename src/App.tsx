@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
+import { faSackDollar } from "@fortawesome/free-solid-svg-icons";
 import Header from "./components/header";
 import { lazy, Suspense } from "react";
 import countriesData from "./components/data";
@@ -126,7 +129,8 @@ function App() {
   }, [amount]);
 
   useEffect(() => {
-    if (amount && !isNaN(parseFloat(amount))) {
+    if (amount.trim() === "") return;
+    if (!isNaN(parseFloat(amount))) {
       fetchRates(true);
     }
   }, [amount, fromCurrency, toCurrency]);
@@ -301,7 +305,15 @@ function App() {
                       <input
                         type="number"
                         value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
+                        onChange={(e) => {
+                          const input = e.target.value;
+                          setAmount(input);
+
+                          if (input.trim() === "") {
+                            setConvertedAmount("");
+                            return;
+                          }
+                        }}
                         className="outline-none border-none w-full bg-transparent text-xl text-end font-medium appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                         placeholder="0.00"
                       />
@@ -310,20 +322,22 @@ function App() {
                 </div>
 
                 {isLoading ? (
-                  <div className="flex items-center justify-center animate-spin mt-6 mb-4 text-[#256F5C]">
-                    <span className="material-symbols-outlined text-[40px]">
-                      currency_exchange
-                    </span>
+                  <div className="flex items-center justify-center animate-spin my-7 text-[#256F5C]">
+                    <FontAwesomeIcon
+                      icon={faSackDollar}
+                      className="text-[26px]"
+                    />
                   </div>
                 ) : (
                   <button
                     onClick={handleSwap}
                     className="text-[26px] my-7 items-center bg-[#256F5C] rounded-full rotate-90 p-2 justify-center flex"
-                    title="Swap currencies"
+                    aria-label="Swap currencies"
                   >
-                    <span className="material-symbols-outlined text-white">
-                      sync_alt
-                    </span>
+                    <FontAwesomeIcon
+                      icon={faRightLeft}
+                      className="text-white text-lg"
+                    />
                   </button>
                 )}
 
