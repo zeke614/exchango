@@ -283,7 +283,7 @@ function App() {
                 {t("welcome.guideTitle")}
               </h3>
 
-              <div className="grid grid-rows-3 gap-9 mb-14 mt-6 mx-4 text-center">
+              <div className="grid grid-rows-3 gap-9 mb-14 mt-6 mx-5 text-center">
                 {["step1", "step2", "step3"].map((step, index) => (
                   <div
                     key={step}
@@ -300,12 +300,24 @@ function App() {
             </section>
 
             <section id="converter" className="pt-12">
-              <div className="bg-white px-3.5 py-6 border border-gray-200 rounded-2xl flex flex-col items-center gap-3 shadow-md">
+              <div className="bg-white px-3.5 py-6 border mx-1.5 border-gray-200 rounded-2xl flex flex-col items-center gap-3 shadow-md">
                 <h3 className="text-center text-[26px] text-[#256F5C] font-medium my-3">
                   {t("converterWords.title")}
                 </h3>
 
                 <div className="w-full max-w-xs">
+                  <h4 className="text-lg text-center pb-9">
+                    Get{" "}
+                    <span className="font-medium text-xl">
+                      free instant conversions
+                    </span>{" "}
+                    for
+                    <br />
+                    <span className="font-medium text-[22px] text-[#256F5C]">
+                      150+ global currencies
+                    </span>
+                    <span>.</span>
+                  </h4>
                   <label className="block text-end text-[17px] text-gray-600 mb-1.5">
                     {t("converterWords.amount")}
                   </label>
