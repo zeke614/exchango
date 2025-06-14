@@ -24,6 +24,10 @@
   },
   "converterWords": {
     "title": "Currency Converter",
+    "line1": "Get",
+    "highlight1": "free instant conversions",
+    "line2": "for",
+    "highlight2": "150+ global currencies",
     "amount": "Amount",
     "convertedFigure": "Equals",
     "rate": "Exchange Rate"

@@ -267,61 +267,66 @@ function App() {
 
       <div className="min-h-screen flex flex-col bg-[#fefefe] text-black">
         <Header />
-        <main className="flex-grow px-4">
-          <div className="pb-12 pt-16">
-            <h2 className="text-center text-[21px] mb-6">
+        <main className="flex-grow px-[1rem]">
+          <div className="pb-[3rem] pt-[4rem]">
+            <h2 className="text-center text-[1.3125rem] mb-[1.5rem]">
               {t("welcome.welcomeLine1")}
-              <span className="font-medium text-[22px]">
+              <span className="font-medium text-[1.375rem]">
                 exchan<span className="text-[#256F5C]">go</span>,
               </span>
               <br />
               {t("welcome.welcomeLine2")}
             </h2>
 
-            <section id="how-it-works" className="scroll-mt-18">
-              <h3 className="text-center text-[#256F5C] text-[30px] font-medium">
+            <section id="how-it-works" className="scroll-mt-[4.5rem]">
+              <h3 className="text-center text-[#256F5C] text-[1.875rem] font-medium">
                 {t("welcome.guideTitle")}
               </h3>
 
-              <div className="grid grid-rows-3 gap-9 mb-14 mt-6 mx-5 text-center">
+              <div className="grid grid-rows-3 gap-[2.5rem] mb-[3.5rem] mt-[1.5rem] mx-[1.5rem] text-center">
                 {["step1", "step2", "step3"].map((step, index) => (
                   <div
                     key={step}
-                    className="bg-white px-6 py-11 border border-gray-200 rounded-3xl space-y-6 shadow-md"
+                    className="bg-white px-[1.25rem] py-[1.875rem] flex flex-col justify-center items-center border border-gray-200 rounded-3xl space-y-[1.5rem] shadow-md"
                   >
-                    <h3 className="text-[38px] font-semibold">{index + 1}.</h3>
-                    <h4 className="text-[23px] font-medium">
+                    <h3 className="text-[2.375rem] font-semibold">
+                      {index + 1}.
+                    </h3>
+                    <h4 className="text-[1.4375rem] font-medium">
                       {t(`guide.${step}.title`)}
                     </h4>
-                    <p className="text-[19.5px]">{t(`guide.${step}.desc`)}</p>
+                    <p className="text-[1.21875rem]">
+                      {t(`guide.${step}.desc`)}
+                    </p>
                   </div>
                 ))}
               </div>
             </section>
 
-            <section id="converter" className="pt-12">
-              <div className="bg-white px-3.5 py-6 border mx-1.5 border-gray-200 rounded-2xl flex flex-col items-center gap-3 shadow-md">
-                <h3 className="text-center text-[26px] text-[#256F5C] font-medium my-3">
+            <section id="converter" className="pt-[3rem]">
+              <div className="bg-white px-[0.875rem] py-[1.5rem] border mx-[0.375rem] border-gray-200 rounded-2xl flex flex-col items-center gap-3 shadow-md">
+                <h3 className="text-center text-[1.625rem] text-[#256F5C] font-medium my-[0.75rem]">
                   {t("converterWords.title")}
                 </h3>
 
                 <div className="w-full max-w-xs">
-                  <h4 className="text-lg text-center pb-9">
-                    Get{" "}
+                  <h4 className="text-lg text-center pb-[2.25rem]">
+                    {t("converterWords.line1")}{" "}
                     <span className="font-medium text-xl">
-                      free instant conversions
+                      {t("converterWords.highlight1")}
                     </span>{" "}
-                    for
+                    {t("converterWords.line2")}
                     <br />
-                    <span className="font-medium text-[22px] text-[#256F5C]">
-                      150+ global currencies
+                    <span className="font-medium text-[1.375rem] text-[#256F5C]">
+                      {t("converterWords.highlight2")}
                     </span>
                     <span>.</span>
                   </h4>
-                  <label className="block text-end text-[17px] text-gray-600 mb-1.5">
+
+                  <label className="block text-end text-[1.0625rem] text-gray-600 mb-[0.375rem]">
                     {t("converterWords.amount")}
                   </label>
-                  <div className="flex items-center justify-between border gap-6 border-gray-200 rounded-xl px-4 py-[17px] bg-white shadow-sm">
+                  <div className="flex items-center justify-between border gap-6 border-gray-200 rounded-xl px-[1rem] py-[1.0625rem] bg-white shadow-sm">
                     <Suspense
                       fallback={
                         <span className="text-center font-light">
@@ -341,7 +346,6 @@ function App() {
                         onChange={(e) => {
                           const input = e.target.value;
                           setAmount(input);
-
                           if (input.trim() === "") {
                             setConvertedAmount("");
                             return;
@@ -355,16 +359,16 @@ function App() {
                 </div>
 
                 {isLoading ? (
-                  <div className="flex items-center justify-center animate-spin my-7 text-[#256F5C]">
+                  <div className="flex items-center justify-center animate-spin my-[1.75rem] text-[#256F5C]">
                     <FontAwesomeIcon
                       icon={faSackDollar}
-                      className="text-[26px]"
+                      className="text-[1.625rem]"
                     />
                   </div>
                 ) : (
                   <button
                     onClick={handleSwap}
-                    className="text-[26px] my-7 items-center bg-[#256F5C] rounded-full rotate-90 p-2 justify-center flex"
+                    className="text-[1.625rem] my-[1.75rem] items-center bg-[#256F5C] rounded-full rotate-90 p-2 justify-center flex"
                     aria-label="Swap currencies"
                   >
                     <FontAwesomeIcon
@@ -375,10 +379,10 @@ function App() {
                 )}
 
                 <div className="w-full max-w-xs">
-                  <label className="block text-end text-[17px] text-gray-600 mb-2">
+                  <label className="block text-end text-[1.0625rem] text-gray-600 mb-[0.5rem]">
                     {t("converterWords.convertedFigure")}
                   </label>
-                  <div className="flex items-center justify-between gap-6 border border-gray-200 rounded-xl px-4 py-[17px] bg-white shadow-sm">
+                  <div className="flex items-center justify-between gap-6 border border-gray-200 rounded-xl px-[1rem] py-[1.0625rem] bg-white shadow-sm">
                     <Suspense
                       fallback={
                         <span className="text-center font-light">
@@ -403,10 +407,10 @@ function App() {
                 </div>
 
                 <div>
-                  <h5 className="text-center text-2xl font-medium mt-12">
+                  <h5 className="text-center text-2xl font-medium mt-[3rem]">
                     {t("converterWords.rate")}
                   </h5>
-                  <p className="text-center text-[22px] font-medium text-gray-600 mt-1.5">
+                  <p className="text-center text-[1.375rem] font-medium text-gray-600 mt-[0.375rem]">
                     {rate
                       ? `${fromCurrency.symbol}1.00 ${fromCurrency.code} = ${
                           toCurrency.symbol
@@ -415,7 +419,7 @@ function App() {
                   </p>
 
                   {rate && relativeTime && (
-                    <p className="text-center text-lg font-light text-gray-600 mt-4 mb-2">
+                    <p className="text-center text-lg font-light text-gray-600 mt-[1rem] mb-[0.5rem]">
                       {relativeTime}
                     </p>
                   )}
@@ -428,7 +432,7 @@ function App() {
           fallback={<span className="text-center font-light">Loading...</span>}
         >
           <Footer />
-        </Suspense>{" "}
+        </Suspense>
       </div>
     </>
   );

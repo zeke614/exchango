@@ -24,6 +24,10 @@
   },
   "converterWords": {
     "title": "Convertidor de Divisas",
+    "line1": "Obtén",
+    "highlight1": "conversiones instantáneas gratuitas",
+    "line2": "para",
+    "highlight2": "150+ monedas globales",
     "amount": "Cantidad",
     "convertedFigure": "Equivale",
     "rate": "Tipo de Cambio"

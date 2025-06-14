@@ -36,12 +36,12 @@ export default function Header() {
 
   return (
     <header className="bg-white sticky top-0 z-50 flex items-center justify-between p-4 border-b border-b-[#0000001f] shadow-sm">
-      <h1 className="text-[22px] font-medium">
+      <h1 className="text-[1.375rem] font-medium">
         exchan<span className="text-[#256F5C]">go</span>
       </h1>
 
       <div
-        className="relative flex flex-row items-center justify-center gap-2.5"
+        className="relative flex flex-row items-center justify-center gap-[0.625rem]"
         ref={dropdownRef}
       >
         <button
@@ -49,9 +49,9 @@ export default function Header() {
           className="flex items-center gap-0 justify-center"
           onClick={() => setShowDropdown(!showDropdown)}
         >
-          <i className="bx bx-globe-alt text-[16px] mr-0.5 leading-none align-middle"></i>
-          <span className="uppercase text-[15px]">{i18n.language}</span>
-          <i className="bx bx-chevron-down text-[22px]"></i>
+          <i className="bx bx-globe-alt text-[1rem] mr-[0.125rem] leading-none align-middle"></i>
+          <span className="uppercase text-[0.9375rem]">{i18n.language}</span>
+          <i className="bx bx-chevron-down text-[1.375rem]"></i>
         </button>
 
         <AnimatePresence>
@@ -63,10 +63,10 @@ export default function Header() {
               transition={{ duration: 0.3 }}
               className="absolute -right-2 top-10 bg-white w-52 border border-gray-300 rounded-xl px-3 py-4 shadow-lg z-10"
             >
-              <h3 className="font-normal text-[17.5px]">
+              <h3 className="font-normal text-[1.09375rem]">
                 Select your language
               </h3>
-              <ul className="text-[16.5px] mt-2 font-light">
+              <ul className="text-[1.03125rem] mt-2 font-light">
                 {countriesData.languages.map(({ code, label }) => (
                   <li key={code}>
                     <button
@@ -75,7 +75,7 @@ export default function Header() {
                     >
                       <span>{label}</span>
                       {i18n.language === code && (
-                        <i className="bx  bx-check font-normal text-[#256F5C]"></i>
+                        <i className="bx bx-check font-normal text-[#256F5C]"></i>
                       )}
                     </button>
                   </li>

@@ -24,6 +24,10 @@
   },
   "converterWords": {
     "title": "Convertisseur de Devises",
+    "line1": "Obtenez",
+    "highlight1": "des conversions instantanées gratuites",
+    "line2": "pour",
+    "highlight2": "150+ devises mondiales",
     "amount": "Montant",
     "convertedFigure": "Équivaut",
     "rate": "Taux de Change"

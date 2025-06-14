@@ -24,6 +24,10 @@
   },
   "converterWords": {
     "title": "Convertitore di Valute",
+    "line1": "Ottieni",
+    "highlight1": "conversioni istantanee gratuite",
+    "line2": "per",
+    "highlight2": "150+ valute globali",
     "amount": "Quantità",
     "convertedFigure": "Equivale",
     "rate": "Tasso di Cambio"

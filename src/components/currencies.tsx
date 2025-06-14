@@ -46,7 +46,7 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
         <img
           src={`https://flagcdn.com/${selected.flag}.svg`}
           alt={selected.code}
-          className="w-5 h-[15px] rounded-sm object-cover"
+          className="w-5 h-[0.9375rem] rounded-sm object-cover"
         />
         <span className="text-xl font-medium">{selected.code}</span>
         <i className="bx bx-chevron-down text-2xl"></i>
@@ -59,10 +59,10 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -8 }}
             transition={{ duration: 0.15 }}
-            className="absolute mt-5 -left-[26px] z-50 bg-white space-y-3 shadow-md rounded-xl px-2 pt-4 w-[340px] h-[275px] border border-gray-300 overflow-y-auto max-h-72 thin-scrollbar"
+            className="absolute mt-[1.25rem] -left-[1.625rem] z-50 bg-white space-y-3 shadow-md rounded-xl px-[0.5rem] pt-[1rem] w-[21.25rem] h-[17.1875rem] border border-gray-300 overflow-y-auto max-h-[18rem] thin-scrollbar"
           >
             <div className="relative">
-              <div className="absolute left-0 text-lg inset-y-0 flex items-center pl-2 pointer-events-none">
+              <div className="absolute left-0 text-lg inset-y-0 flex items-center pl-[0.5rem] pointer-events-none">
                 <i className="bx bx-search-alt text-gray-500"></i>
               </div>
               <input
@@ -70,11 +70,11 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-[30px] pr-3 py-2 border border-gray-300 rounded-md outline-none transition-all duration-300 ease-in-out focus:border-gray-600 text-lg"
+                className="w-full pl-[1.875rem] pr-[0.75rem] py-[0.5rem] border border-gray-300 rounded-md outline-none transition-all duration-300 ease-in-out focus:border-gray-600 text-lg"
               />
             </div>
 
-            <ul className="space-y-1 max-h-[180px] overflow-y-auto">
+            <ul className="space-y-1 max-h-[11.25rem] overflow-y-auto">
               {filteredCurrencies.length > 0 ? (
                 filteredCurrencies.map((currency) => (
                   <li key={currency.code}>
@@ -84,7 +84,7 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
                         setOpen(false);
                         setSearchTerm("");
                       }}
-                      className="w-full flex items-center justify-between p-1 rounded hover:bg-gray-50"
+                      className="w-full flex items-center justify-between p-[0.25rem] rounded hover:bg-gray-50"
                     >
                       <div className="flex items-center gap-2">
                         <img
@@ -92,7 +92,9 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
                           alt={currency.code}
                           className="w-5 h-4 object-cover rounded"
                         />
-                        <span className="text-[17px]">{currency.code}</span>
+                        <span className="text-[1.0625rem]">
+                          {currency.code}
+                        </span>
                         <span className="text-gray-600">{currency.name}</span>
                       </div>
                       {selected.code === currency.code && (
@@ -102,7 +104,7 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
                   </li>
                 ))
               ) : (
-                <li className="text-xl text-gray-500 text-center py-2">
+                <li className="text-xl text-gray-500 text-center py-[0.5rem]">
                   No results
                 </li>
               )}
