@@ -55,6 +55,7 @@ export default function Footer() {
           <a
             href="https://x.com/zekecodes"
             target="_blank"
+            aria-label="Visit our X(formally twitter) page"
             className="w-[2rem] h-[2.25rem] flex items-center justify-center"
           >
             <FontAwesomeIcon icon={faXTwitter} className="text-[1.375rem]" />
@@ -62,6 +63,7 @@ export default function Footer() {
           <a
             href=""
             target="_blank"
+            aria-label="Visit our Instagram page"
             className="w-[2rem] h-[2.25rem] flex items-center justify-center"
           >
             <FontAwesomeIcon icon={faInstagram} className="text-[1.375rem]" />
@@ -69,6 +71,7 @@ export default function Footer() {
           <a
             href="https://github.com/zeke614/exchango.git"
             target="_blank"
+            aria-label="View project on Github"
             className="w-[2rem] h-[2.25rem] flex items-center justify-center"
           >
             <FontAwesomeIcon icon={faGithub} className="text-[1.375rem]" />

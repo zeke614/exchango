@@ -342,6 +342,7 @@ function App() {
                     <div className="w-[52%]">
                       <input
                         type="number"
+                        aria-label="Enter amount to convert"
                         value={amount}
                         onChange={(e) => {
                           const input = e.target.value;
@@ -397,7 +398,8 @@ function App() {
                     </Suspense>
                     <div className="w-[52%]">
                       <input
-                        type="text"
+                        type="number"
+                        aria-label="Converted amount"
                         value={convertedAmount}
                         readOnly
                         className="outline-none border-none w-full bg-transparent text-xl text-end font-medium"
