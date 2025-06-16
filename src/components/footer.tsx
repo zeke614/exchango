@@ -22,9 +22,9 @@ export default function Footer() {
       </p>
 
       <div className="flex flex-col items-center space-y-2">
-        <h4 className="font-medium text-gray-800 text-[1.15625rem]">
+        <h2 className="font-medium text-gray-800 text-[1.15625rem]">
           {t("footer.links.title")}
-        </h4>
+        </h2>
         <ul className="text-gray-500 text-[1.0625rem] gap-3 flex justify-center flex-wrap">
           <li>
             <a href="#how-it-works" className="hover:underline">
@@ -48,9 +48,9 @@ export default function Footer() {
       </div>
 
       <div className="text-center pb-3">
-        <h4 className="font-medium text-gray-800 text-[1.15625rem]">
+        <h2 className="font-medium text-gray-800 text-[1.15625rem]">
           {t("footer.socials")}
-        </h4>
+        </h2>
         <div className="gap-1.5 mt-2 items-center justify-center flex">
           <a
             href="https://x.com/zekecodes"
