@@ -45,7 +45,7 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
       >
         <img
           src={`https://flagcdn.com/${selected.flag}.svg`}
-          alt={selected.code}
+          alt="Flag"
           className="w-5 h-[0.9375rem] rounded-sm object-cover"
         />
         <span className="text-xl font-medium">{selected.code}</span>
@@ -89,7 +89,7 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
                       <div className="flex items-center gap-2">
                         <img
                           src={`https://flagcdn.com/${currency.flag}.svg`}
-                          alt={currency.code}
+                          alt="Flag"
                           className="w-5 h-4 object-cover rounded"
                         />
                         <span className="text-[1.0625rem]">
