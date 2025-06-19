@@ -31,8 +31,8 @@ const countriesData = {
   ],
 
   "currencies": [
-    { code: "GBP", name: "British Pound Sterling", flag: "gb", symbol: "£" },
     { code: "USD", name: "United States Dollar", flag: "us", symbol: "$" },
+    { code: "GBP", name: "British Pound Sterling", flag: "gb", symbol: "£" },
     { code: "EUR", name: "Euro", flag: "eu", symbol: "€" },
     { code: "CHF", name: "Swiss Franc", flag: "ch", symbol: "CHF" },
     { code: "CAD", name: "Canadian Dollar", flag: "ca", symbol: "C$" },

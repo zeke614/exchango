@@ -22,10 +22,12 @@ function App() {
   const [relativeTime, setRelativeTime] = useState<string>("");
   const [isMobile, setIsMobile] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const currencyApiKey = import.meta.env.VITE_CURRENCY_FREAKS_API_KEY;
+  //const currencyApiKey = import.meta.env.VITE_CURRENCY_FREAKS_API_KEY;
   const ipInfoToken = import.meta.env.VITE_IPINFO_TOKEN;
+  const openExchangeRatesAppId = import.meta.env
+    .VITE_OPEN_EXCHANGE_RATES_APP_ID;
 
-  interface CurrencyFreaksResponse {
+  interface APIResponse {
     rates: {
       [key: string]: string;
     };
@@ -94,12 +96,51 @@ function App() {
   async function fetchRates(showLoader = false) {
     if (showLoader) setIsLoading(true);
 
+    const cacheKey = "exchange_rates";
+    const cachedData = localStorage.getItem(cacheKey);
+
+    if (cachedData) {
+      const parsed = JSON.parse(cachedData);
+      const now = new Date();
+      const cachedTime = new Date(parsed.timestamp);
+
+      // Use cached data if it's less than 1 hour old
+      const ageInMinutes = (now.getTime() - cachedTime.getTime()) / (1000 * 60);
+      if (ageInMinutes < 60) {
+        useRates(parsed.rates);
+        if (showLoader) setIsLoading(false);
+        return;
+      }
+    }
+
+    // Fetch fresh rates and cache them
     try {
-      const res = await axios.get<CurrencyFreaksResponse>(
-        `https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${currencyApiKey}`
+      const res = await axios.get<APIResponse>(
+        `https://openexchangerates.org/api/latest.json?app_id=${openExchangeRatesAppId}`
       );
 
       const rates = res.data.rates;
+      localStorage.setItem(
+        cacheKey,
+        JSON.stringify({
+          rates,
+          timestamp: new Date().toISOString(),
+        })
+      );
+
+      useRates(rates);
+    } catch (error) {
+      console.error("Error fetching rates:", error);
+
+      if (cachedData) {
+        const parsed = JSON.parse(cachedData);
+        useRates(parsed.rates); // Use stale data as a fallback
+      }
+    } finally {
+      if (showLoader) setIsLoading(false);
+    }
+
+    function useRates(rates: Record<string, string>) {
       const rateFrom = parseFloat(rates[fromCurrency.code]);
       const rateTo = parseFloat(rates[toCurrency.code]);
 
@@ -111,10 +152,6 @@ function App() {
         const result = parseFloat(amount) * conversionRate;
         setConvertedAmount(result.toFixed(2));
       }
-    } catch (error) {
-      console.error("Error fetching rates:", error);
-    } finally {
-      if (showLoader) setIsLoading(false);
     }
   }
 
@@ -327,18 +364,10 @@ function App() {
                     {t("converterWords.amount")}
                   </label>
                   <div className="flex items-center justify-between border gap-6 border-gray-200 rounded-xl px-[1rem] py-[1.0625rem] bg-white shadow-sm">
-                    <Suspense
-                      fallback={
-                        <span className="text-center font-light">
-                          Loading...
-                        </span>
-                      }
-                    >
-                      <CurrencyDropdown
-                        selected={fromCurrency}
-                        setSelected={setFromCurrency}
-                      />
-                    </Suspense>
+                    <CurrencyDropdown
+                      selected={fromCurrency}
+                      setSelected={setFromCurrency}
+                    />
                     <div className="w-[52%]">
                       <input
                         type="number"
@@ -384,18 +413,10 @@ function App() {
                     {t("converterWords.convertedFigure")}
                   </label>
                   <div className="flex items-center justify-between gap-6 border border-gray-200 rounded-xl px-[1rem] py-[1.0625rem] bg-white shadow-sm">
-                    <Suspense
-                      fallback={
-                        <span className="text-center font-light">
-                          Loading...
-                        </span>
-                      }
-                    >
-                      <CurrencyDropdown
-                        selected={toCurrency}
-                        setSelected={setToCurrency}
-                      />
-                    </Suspense>
+                    <CurrencyDropdown
+                      selected={toCurrency}
+                      setSelected={setToCurrency}
+                    />
                     <div className="w-[52%]">
                       <input
                         type="number"
