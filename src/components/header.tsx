@@ -35,7 +35,7 @@ export default function Header() {
   }, [showDropdown]);
 
   return (
-    <header className="bg-white sticky top-0 z-50 flex items-center justify-between p-4 border-b border-b-[#0000001f] shadow-sm">
+    <header className="bg-white sticky top-0 z-50 flex items-center justify-between p-4 border-b border-b-[#0000001f]">
       <h1 className="text-[1.375rem] font-medium">
         exchan<span className="text-[#256F5C]">go</span>
       </h1>

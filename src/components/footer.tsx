@@ -25,21 +25,21 @@ export default function Footer() {
         <h2 className="font-medium text-gray-800 text-[1.15625rem]">
           {t("footer.links.title")}
         </h2>
-        <ul className="text-gray-500 text-[1.0625rem] gap-3 flex justify-center flex-wrap">
+        <ul className="text-gray-500 text-[1.0625rem] gap-3 flex items-center justify-center flex-wrap">
           <li>
-            <a href="#how-it-works" className="hover:underline">
+            <a href="#how-it-works" className="underline underline-offset-2">
               {t("footer.links.howItWorks")}
             </a>
           </li>
           <li>
-            <a href="#converter" className="hover:underline">
+            <a href="#converter" className="underline underline-offset-2">
               {t("footer.links.converter")}
             </a>
           </li>
           <li>
             <a
               href="mailto:ezekielarkohamissah@gmail.com"
-              className="hover:underline"
+              className="underline underline-offset-2"
             >
               {t("footer.links.contact")}
             </a>
