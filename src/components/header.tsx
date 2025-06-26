@@ -52,7 +52,7 @@ export default function Header() {
             transition={{ duration: 0.5, ease: "easeInOut" }}
             className="fixed inset-0 z-[9999] bg-white flex items-center justify-center"
           >
-            <i className="bx bx-translate text-[3.5rem] text-[#256F5C] animate-bounce"></i>
+            <i className="bx bx-translate text-[3rem] text-[#256F5C] animate-bounce"></i>
           </motion.div>
         )}
       </AnimatePresence>
