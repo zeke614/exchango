@@ -12,7 +12,7 @@ const CurrencyDropdown = lazy(() => import("./components/currencies"));
 const Footer = lazy(() => import("./components/footer"));
 
 function App() {
-  const { t } = useTranslation();
+  const { t, ready } = useTranslation();
   const [fromCurrency, setFromCurrency] = useState(countriesData.currencies[0]);
   const [toCurrency, setToCurrency] = useState(countriesData.currencies[1]);
   const [amount, setAmount] = useState("");
@@ -333,7 +333,9 @@ function App() {
                       {t(`guide.${step}.title`)}
                     </h4>
                     <p className="text-[1.21875rem]">
-                      {t(`guide.${step}.desc`)}
+                      {ready
+                        ? t(`guide.${step}.desc`)
+                        : "Use the dropdowns to choose the currency you're converting from (e.g. USD) and the one you're converting to (e.g. GHS)."}
                     </p>
                   </div>
                 ))}
