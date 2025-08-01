@@ -6,6 +6,7 @@ import { faSackDollar } from "@fortawesome/free-solid-svg-icons";
 import Header from "./components/header";
 import { lazy, Suspense } from "react";
 import countriesData from "./components/data";
+import CurrencyHistoryChart from "./components/historyChart";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 const CurrencyDropdown = lazy(() => import("./components/currencies"));
@@ -449,6 +450,12 @@ function App() {
                     </p>
                   )}
                 </div>
+
+                <CurrencyHistoryChart
+                  base="USD"
+                  target={toCurrency.code}
+                  appId={openExchangeRatesAppId}
+                />
               </div>
             </section>
           </div>

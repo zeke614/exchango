@@ -27,3 +27,7 @@ html {
     scrollbar-color: #d1d5db transparent; /* gray-300 */
   }
 }
+
+.recharts-surface {
+  outline: none !important;
+}
