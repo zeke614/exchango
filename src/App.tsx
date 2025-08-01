@@ -26,7 +26,7 @@ function App() {
   //const currencyApiKey = import.meta.env.VITE_CURRENCY_FREAKS_API_KEY;
   const ipInfoToken = import.meta.env.VITE_IPINFO_TOKEN;
   const openExchangeRatesAppId = import.meta.env
-    .VITE_OPEN_EXCHANGE_RATES_APP_ID;
+    .VITE_OPEN_EXCHANGE_RATES_APP_ID2;
 
   interface APIResponse {
     rates: {
