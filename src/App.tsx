@@ -344,7 +344,7 @@ function App() {
             </section>
 
             <section id="converter" className="pt-[3rem]">
-              <div className="bg-white px-[0.875rem] py-[1.5rem] border mx-[0.375rem] border-gray-200 rounded-2xl flex flex-col items-center gap-3 shadow-md">
+              <div className="bg-white py-[1.5rem] border-0 flex flex-col items-center gap-3">
                 <h3 className="text-center text-[1.625rem] text-[#256F5C] font-medium my-[0.75rem]">
                   {t("converterWords.title")}
                 </h3>
@@ -452,7 +452,7 @@ function App() {
                 </div>
 
                 <CurrencyHistoryChart
-                  base="USD"
+                  base={fromCurrency.code}
                   target={toCurrency.code}
                   appId={openExchangeRatesAppId}
                 />

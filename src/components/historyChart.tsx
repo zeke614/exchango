@@ -43,7 +43,15 @@ const CurrencyHistoryChart = ({ base, target, appId }: Props) => {
   const [data, setData] = useState<DataPoint[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const unsupportedBase = base !== "USD";
+
   useEffect(() => {
+    if (unsupportedBase) {
+      setData([]);
+      setLoading(false);
+      return;
+    }
+
     async function fetchHistory() {
       setLoading(true);
 
@@ -113,30 +121,41 @@ const CurrencyHistoryChart = ({ base, target, appId }: Props) => {
   }, [base, target, range, appId]);
 
   return (
-    <div className="w-full mt-8 mb-3 bg-white">
-      <h3 className="text-[1.25rem] font-normal mb-3 text-center">
-        {base} — {target}
+    <div className="w-full mt-10 mb-3 bg-white">
+      <h3 className="text-[1.625rem] font-medium mb-5 text-[#256F5C] text-center">
+        {base} — {target} History
       </h3>
 
-      <div className="flex justify-center gap-3 mb-7">
-        {ranges.map((r) => (
-          <button
-            key={r}
-            onClick={() => setRange(r)}
-            className={`px-2.5 py-0.5 rounded-full text-[0.938rem] font-medium border transition ${
-              range === r
-                ? "bg-[#256F5C] text-white"
-                : "bg-white text-gray-800 border-0 hover:bg-gray-200"
-            }`}
-          >
-            {r}
-          </button>
-        ))}
-      </div>
+      {!unsupportedBase && (
+        <div className="flex justify-center gap-3 mb-10">
+          {ranges.map((r) => (
+            <button
+              key={r}
+              onClick={() => setRange(r)}
+              className={`px-2 py-0 rounded-full text-[0.938rem] font-medium border transition ${
+                range === r
+                  ? "bg-[#256F5C] text-white"
+                  : "bg-white text-gray-800 border hover:bg-gray-200"
+              }`}
+            >
+              {r}
+            </button>
+          ))}
+        </div>
+      )}
 
-      {loading ? (
+      {unsupportedBase ? (
+        <div className="text-center py-8 px-4 text-gray-600 flex flex-col items-center gap-2">
+          <p className="text-[1.063rem] font-light leading-relaxed max-w-xs">
+            Oops... <span className="text-[1.156rem]">😕</span> <br />
+            Historical data is only available for currency pairs that include{" "}
+            <span className="text-lg font-medium">USD</span> as the base
+            currency.
+          </p>
+        </div>
+      ) : loading ? (
         <div className="flex items-center justify-center animate-bounce py-[2rem] text-[#256F5C]">
-          <i className="bx  bx-chart-spline text-[1.625rem]"></i>{" "}
+          <i className="bx bx-chart-spline text-[1.625rem]"></i>
         </div>
       ) : (
         <ResponsiveContainer width="92%" height={210}>

@@ -61,7 +61,7 @@ export default function Footer() {
             <FontAwesomeIcon icon={faXTwitter} className="text-[1.375rem]" />
           </a>
           <a
-            href=""
+            href="https://instagram.com/zeke.146/"
             target="_blank"
             aria-label="Visit our Instagram page"
             className="w-[2rem] h-[2.25rem] flex items-center justify-center"
