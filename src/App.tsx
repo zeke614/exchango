@@ -9,6 +9,7 @@ import countriesData from "./components/data";
 import CurrencyHistoryChart from "./components/historyChart";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
+import { NumericFormat } from "react-number-format";
 const CurrencyDropdown = lazy(() => import("./components/currencies"));
 const Footer = lazy(() => import("./components/footer"));
 
@@ -366,18 +367,18 @@ function App() {
                   <label className="block text-end text-[1.0625rem] text-gray-600 mb-[0.375rem]">
                     {t("converterWords.amount")}
                   </label>
-                  <div className="flex items-center justify-between border gap-6 border-gray-200 rounded-xl px-[1rem] py-[1.0625rem] bg-white shadow-sm">
+                  <div className="flex items-center justify-between border gap-5 border-gray-200 rounded-xl px-3 py-[1.0625rem] bg-white shadow-sm">
                     <CurrencyDropdown
                       selected={fromCurrency}
                       setSelected={setFromCurrency}
                     />
-                    <div className="w-[52%]">
+                    <div className="w-[55%]" dir="ltr">
                       <input
-                        type="number"
+                        type="text"
                         aria-label="Enter amount to convert"
-                        value={amount}
+                        value={amount.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                         onChange={(e) => {
-                          const input = e.target.value;
+                          const input = e.target.value.replace(/,/g, "");
                           setAmount(input);
                           if (input.trim() === "") {
                             setConvertedAmount("");
@@ -415,18 +416,17 @@ function App() {
                   <label className="block text-end text-[1.0625rem] text-gray-600 mb-[0.5rem]">
                     {t("converterWords.convertedFigure")}
                   </label>
-                  <div className="flex items-center justify-between gap-6 border border-gray-200 rounded-xl px-[1rem] py-[1.0625rem] bg-white shadow-sm">
+                  <div className="flex items-center justify-between gap-6 border border-gray-200 rounded-xl px-3 py-[1.0625rem] bg-white shadow-sm">
                     <CurrencyDropdown
                       selected={toCurrency}
                       setSelected={setToCurrency}
                     />
-                    <div className="w-[52%]">
-                      <input
-                        type="number"
-                        aria-label="Converted amount"
+                    <div className="w-[55%] min-w-0" dir="ltr">
+                      <NumericFormat
                         value={convertedAmount}
-                        readOnly
-                        className="outline-none border-none w-full bg-transparent text-xl text-end font-medium"
+                        displayType="text"
+                        thousandSeparator=","
+                        className="w-full text-end text-xl font-medium block whitespace-nowrap overflow-x-auto no-scrollbar"
                       />
                     </div>
                   </div>
