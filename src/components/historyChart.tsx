@@ -29,6 +29,8 @@ const getExpiryDays = (range: string) => {
       return 1;
     case "1W":
       return 7;
+    case "2W":
+      return 14;
     case "1M":
       return 30;
     default:
@@ -36,10 +38,10 @@ const getExpiryDays = (range: string) => {
   }
 };
 
-const ranges: ("1D" | "1W" | "1M")[] = ["1D", "1W", "1M"];
+const ranges: ("1D" | "1W" | "2W" | "1M")[] = ["1D", "1W", "2W", "1M"];
 
 const CurrencyHistoryChart = ({ base, target, appId }: Props) => {
-  const [range, setRange] = useState<"1D" | "1W" | "1M">("1W");
+  const [range, setRange] = useState<"1D" | "1W" | "2W" | "1M">("1W");
   const [data, setData] = useState<DataPoint[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -64,6 +66,9 @@ const CurrencyHistoryChart = ({ base, target, appId }: Props) => {
           break;
         case "1W":
           startDate = today.subtract(7, "day");
+          break;
+        case "2W":
+          startDate = today.subtract(14, "day");
           break;
         case "1M":
           startDate = today.subtract(1, "month");

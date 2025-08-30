@@ -367,7 +367,7 @@ function App() {
                   <label className="block text-end text-[1.0625rem] text-gray-600 mb-[0.375rem]">
                     {t("converterWords.amount")}
                   </label>
-                  <div className="flex items-center justify-between border gap-5 border-gray-200 rounded-xl px-3 py-[1.0625rem] bg-white shadow-sm">
+                  <div className="flex items-center w-[20.5rem] justify-between border gap-5 border-gray-200 rounded-xl px-3 py-[1.0625rem] bg-white shadow-sm">
                     <CurrencyDropdown
                       selected={fromCurrency}
                       setSelected={setFromCurrency}
