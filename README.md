@@ -8,7 +8,7 @@
 
 - 📱 **Mobile-first design**
 - 🌐 **Multilingual support** (English, German, French, Spanish, Italian etc)
-- 🔁 **Live currency conversion** using [CurrencyFreaks API]
+- 🔁 **Live currency conversion** using [OpenExchangeRates API]
 - 📊 **Real-time exchange rate updates**
 - 🌎 **Auto-detects your local currency** based on location (via IPInfo)
 - 🕒 Shows **relative time** of last update (e.g., “Updated 3 minutes ago”)
