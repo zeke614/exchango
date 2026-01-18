@@ -2,8 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 
+@font-face {
+  font-family: "DK Frozen Memory";
+  src: url("/fonts/DKFrozenMemory.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 @theme {
   --font-outfit: "Outfit", sans-serif; 
+  --font-frozen: "DK Frozen Memory";
+
   
   @keyframes bouncey {
     '0%, 100%': { transform: 'translateY(0)' },

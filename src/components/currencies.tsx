@@ -34,14 +34,14 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
   const filteredCurrencies = countriesData.currencies.filter(
     (currency) =>
       currency.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      currency.name.toLowerCase().includes(searchTerm.toLowerCase())
+      currency.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
     <div className="relative" ref={ref}>
       <button
         onClick={toggleDropdown}
-        className="flex items-center w-fit gap-2"
+        className="flex font-frozen items-center w-fit gap-2"
       >
         <img
           src={`https://flagcdn.com/${selected.flag}.svg`}
@@ -89,10 +89,10 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
                       <div className="flex items-center gap-2">
                         <img
                           src={`https://flagcdn.com/${currency.flag}.svg`}
-                          alt="Flag"
+                          alt={`${currency.name} flag`}
                           className="w-5 h-4 object-cover rounded"
                         />
-                        <span className="text-[1.0625rem]">
+                        <span className="font-frozen text-[1.0625rem]">
                           {currency.code}
                         </span>
                         <span className="text-gray-600">{currency.name}</span>

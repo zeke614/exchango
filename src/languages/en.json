@@ -44,6 +44,13 @@
       "days_other": "Updated {{count}} days ago"
     }
   },
+
+  "chart": {
+    "title": "History",
+    "oops1": "Historical data is only available for currency pairs that include",
+    "oops2": " as the base currency."
+  },
+
   "footer": {
     "value": "Simple, Accurate & Trusted.\nHelping you convert currencies\nfast and reliably.",
     "links": {
@@ -54,6 +61,6 @@
     },
     "socials": "Our Socials",
     "disclaimer": "Currency rates are for general information\nand may vary slightly. Always check with\nyour bank or financial service provider\nbefore making decisions.",
-    "builder": "Built by"
+    "builder": "Designed & Built by"
   }
 }

@@ -58,8 +58,8 @@ export default function Header() {
       </AnimatePresence>
 
       {!showLanguageOverlay && (
-        <header className="bg-white sticky top-0 z-50 flex items-center justify-between p-4 border-b border-b-[#0000001f]">
-          <h1 className="text-[1.375rem] font-medium">
+        <header className="bg-white sticky top-0 z-50 flex items-center justify-between mx-4 py-2.5 border-b border-b-black/5">
+          <h1 className="text-[1.375rem] font-frozen">
             exchan<span className="text-[#256F5C]">go</span>
           </h1>
 
@@ -73,7 +73,7 @@ export default function Header() {
               onClick={() => setShowDropdown(!showDropdown)}
             >
               <i className="bx bx-globe-alt text-[1rem] mr-[0.125rem] leading-none align-middle"></i>
-              <span className="uppercase text-[0.9375rem]">
+              <span className="uppercase font-frozen text-[0.9375rem]">
                 {i18n.language}
               </span>
               <i className="bx bx-chevron-down text-[1.375rem]"></i>
@@ -86,17 +86,17 @@ export default function Header() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute -right-2 top-10 bg-white w-52 border border-gray-300 rounded-xl px-3 py-4 shadow-lg z-10"
+                  className="absolute -right-0.5 top-9.5 bg-white w-48 border border-black/5 rounded-xl p-3 shadow-lg z-10"
                 >
-                  <h3 className="font-normal text-[1.09375rem]">
-                    Select your language
+                  <h3 className="font-frozen text-[1.09375rem]">
+                    Pick your language
                   </h3>
                   <ul className="text-[1.03125rem] mt-2 font-light">
                     {countriesData.languages.map(({ code, label }) => (
                       <li key={code}>
                         <button
                           onClick={() => changeLanguage(code)}
-                          className="w-full flex items-center justify-between p-2 text-left hover:bg-gray-100 rounded-md"
+                          className="w-full flex items-center justify-between py-1.5 text-left hover:bg-gray-100 rounded-md"
                         >
                           <span>{label}</span>
                           {i18n.language === code && (

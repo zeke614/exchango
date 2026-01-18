@@ -44,6 +44,13 @@
       "days_other": "Aggiornato {{count}} giorni fa"
     }
   },
+
+  "chart": {
+    "title": "Storia",
+    "oops1": "I dati storici sono disponibili solo per le coppie di valute che includono",
+    "oops2": " come valuta di base."
+  },
+
   "footer": {
     "value": "Semplice, Accurato e Affidabile.\nTi aiutiamo a convertire valute in modo veloce e affidabile.",
     "links": {
@@ -54,6 +61,6 @@
     },
     "socials": "I Nostri Social",
     "disclaimer": "I tassi di cambio sono per informazioni generali e possono variare leggermente. Controlla sempre con la tua banca o fornitore di servizi finanziari\nprima di prendere decisioni.",
-    "builder": "Creato da"
+    "builder": "Designato & Costruito da"
   }
 }

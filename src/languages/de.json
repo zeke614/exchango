@@ -44,6 +44,13 @@
       "days_other": "Aktualisiert vor {{count}} Tagen"
     }
   },
+
+  "chart": {
+    "title": "Geschichte",
+    "oops1": "Historische Daten sind nur für Währungspaare verfügbar",
+    "oops2": " als Basiswährung enthalten."
+  },
+
   "footer": {
     "value": "Einfach, Genau und Zuverlässig.\nWir helfen dir, Währungen schnell\nund zuverlässig umzuwandeln.",
     "links": {
@@ -54,6 +61,6 @@
     },
     "socials": "Unsere Sozialen Netzwerke",
     "disclaimer": "Die Wechselkurse dienen nur zu Informationszwecken\nund können leicht variieren. Überprüfe immer\nbei deiner Bank oder deinem Finanzdienstleister\nbevor du Entscheidungen triffst.",
-    "builder": "Erstellt von"
+    "builder": "Entworfen & Gebaut von"
   }
 }

@@ -11,9 +11,9 @@ export default function Footer() {
 
   return (
     <footer className="bg-white space-y-5 pt-20">
-      <div className="border-t border-[#0000001f] pb-7 mx-6"></div>
+      <div className="border-t border-black/5 pb-7 mx-6"></div>
 
-      <h1 className="text-[1.5625rem] text-center font-medium mb-3 ml-6">
+      <h1 className="text-[1.5625rem] text-center font-frozen mb-3 ml-6">
         exchan<span className="text-[#256F5C]">go</span>
       </h1>
 
@@ -22,25 +22,22 @@ export default function Footer() {
       </p>
 
       <div className="flex flex-col items-center space-y-2">
-        <h2 className="font-medium text-gray-800 text-[1.15625rem]">
+        <h2 className="font-frozen text-gray-800 text-[1.15625rem]">
           {t("footer.links.title")}
         </h2>
-        <ul className="text-gray-500 text-[1.0625rem] gap-3 flex items-center justify-center flex-wrap">
+        <ul className="text-gray-500 text-[1.0625rem] space-y-3 flex-col text-center items-center justify-center flex-wrap">
           <li>
-            <a href="#how-it-works" className="underline underline-offset-2">
+            <a href="#how-it-works" className="">
               {t("footer.links.howItWorks")}
             </a>
           </li>
           <li>
-            <a href="#converter" className="underline underline-offset-2">
+            <a href="#converter" className="">
               {t("footer.links.converter")}
             </a>
           </li>
           <li>
-            <a
-              href="mailto:ezekielarkohamissah@gmail.com"
-              className="underline underline-offset-2"
-            >
+            <a href="mailto:ezekielarkohamissah@gmail.com" className="">
               {t("footer.links.contact")}
             </a>
           </li>
@@ -48,12 +45,12 @@ export default function Footer() {
       </div>
 
       <div className="text-center pb-3">
-        <h2 className="font-medium text-gray-800 text-[1.15625rem]">
+        <h2 className="font-frozen text-gray-800 text-[1.15625rem]">
           {t("footer.socials")}
         </h2>
         <div className="gap-1.5 mt-2 items-center justify-center flex">
           <a
-            href="https://x.com/zekecodes"
+            href="https://x.com/devzeke146"
             target="_blank"
             aria-label="Visit our X(formally twitter) page"
             className="w-[2rem] h-[2.25rem] flex items-center justify-center"
@@ -83,19 +80,20 @@ export default function Footer() {
         {t("footer.disclaimer")}
       </div>
 
-      <div className="flex flex-col items-center justify-center text-[1.0625rem] pt-5 pb-4">
-        <p className="gap-1.5 mb-0 text-gray-500 flex justify-center items-center">
+      <div className="flex flex-col items-center justify-center pt-5 pb-4">
+        <p className="gap-1.5 mb-0 text-[0.96875rem] text-gray-500 flex justify-center items-center">
           <span>&copy;</span> <span>{new Date().getFullYear()}</span>
-          <span>
-            exchan<span className="text-[#256F5C]">go</span>, Inc.
+          <span className="font-frozen text-black">
+            exchan<span className="text-[#256F5C]">go</span>
           </span>
+          <span>All rights reserved.</span>
         </p>
         <span className="text-gray-500">
           {t("footer.builder")}
           <a
             href="https://github.com/zeke614"
             target="_blank"
-            className="font-medium ml-1 text-[#256F5C] text-[1.09375rem] underline underline-offset-2"
+            className="font-frozen ml-1 text-[#256F5C] text-[1.09375rem] underline underline-offset-2"
           >
             Ezekiel
           </a>

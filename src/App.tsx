@@ -37,7 +37,7 @@ function App() {
 
   function getRelativeTime(
     date: Date,
-    t: (key: string, options?: any) => string
+    t: (key: string, options?: any) => string,
   ) {
     const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
     if (seconds < 60) return t("updated.relative.seconds", { count: seconds });
@@ -66,7 +66,7 @@ function App() {
 
         if (countriesData.euroZone.includes(countryCode)) {
           const euroCurrency = countriesData.currencies.find(
-            (currency) => currency.code === "EUR"
+            (currency) => currency.code === "EUR",
           );
 
           if (euroCurrency) {
@@ -77,14 +77,14 @@ function App() {
         }
 
         const detectedCurrency = countriesData.currencies.find(
-          (currency) => currency.flag.toUpperCase() === countryCode
+          (currency) => currency.flag.toUpperCase() === countryCode,
         );
 
         if (detectedCurrency) {
           setToCurrency(detectedCurrency);
           localStorage.setItem(
             "user_currency",
-            JSON.stringify(detectedCurrency)
+            JSON.stringify(detectedCurrency),
           );
         }
       } catch (error) {
@@ -118,7 +118,7 @@ function App() {
     // Fetch fresh rates and cache them
     try {
       const res = await axios.get<APIResponse>(
-        `https://openexchangerates.org/api/latest.json?app_id=${openExchangeRatesAppId}`
+        `https://openexchangerates.org/api/latest.json?app_id=${openExchangeRatesAppId}`,
       );
 
       const rates = res.data.rates;
@@ -127,7 +127,7 @@ function App() {
         JSON.stringify({
           rates,
           timestamp: new Date().toISOString(),
-        })
+        }),
       );
 
       useRates(rates);
@@ -310,7 +310,7 @@ function App() {
           <div className="pb-[3rem] pt-[4rem]">
             <h2 className="text-center text-[1.3125rem] mb-[1.5rem]">
               {t("welcome.welcomeLine1")}
-              <span className="font-medium text-[1.375rem]">
+              <span className="font-frozen text-[1.375rem]">
                 exchan<span className="text-[#256F5C]">go</span>,
               </span>
               <br />
@@ -318,7 +318,7 @@ function App() {
             </h2>
 
             <section id="how-it-works" className="scroll-mt-[4.5rem]">
-              <h3 className="text-center text-[#256F5C] text-[1.875rem] font-medium">
+              <h3 className="text-center text-[#256F5C] text-[1.875rem] font-frozen">
                 {t("welcome.guideTitle")}
               </h3>
 
@@ -326,9 +326,9 @@ function App() {
                 {["step1", "step2", "step3"].map((step, index) => (
                   <div
                     key={step}
-                    className="bg-white px-[1.25rem] py-[1.875rem] flex flex-col justify-center items-center border border-gray-200 rounded-3xl space-y-[1.5rem] shadow-md"
+                    className="bg-white px-[1.25rem] py-[1.875rem] flex flex-col justify-center items-center border border-black/5 rounded-3xl space-y-[1.5rem] shadow-md"
                   >
-                    <h3 className="text-[2.375rem] font-semibold">
+                    <h3 className="text-[2.375rem] font-frozen">
                       {index + 1}.
                     </h3>
                     <h4 className="text-[1.4375rem] font-medium">
@@ -346,7 +346,7 @@ function App() {
 
             <section id="converter" className="pt-[3rem]">
               <div className="bg-white py-[1.5rem] border-0 flex flex-col items-center gap-3">
-                <h3 className="text-center text-[1.625rem] text-[#256F5C] font-medium my-[0.75rem]">
+                <h3 className="text-center text-[1.625rem] text-[#256F5C] font-frozen my-[0.75rem]">
                   {t("converterWords.title")}
                 </h3>
 
@@ -367,7 +367,7 @@ function App() {
                   <label className="block text-end text-[1.0625rem] text-gray-600 mb-[0.375rem]">
                     {t("converterWords.amount")}
                   </label>
-                  <div className="flex items-center w-[20.5rem] justify-between border gap-5 border-gray-200 rounded-xl px-3 py-[1.0625rem] bg-white shadow-sm">
+                  <div className="flex items-center w-[20.5rem] justify-between border gap-5 border-black/5 rounded-xl px-3 py-[1.0625rem] bg-white shadow-sm">
                     <CurrencyDropdown
                       selected={fromCurrency}
                       setSelected={setFromCurrency}
@@ -416,7 +416,7 @@ function App() {
                   <label className="block text-end text-[1.0625rem] text-gray-600 mb-[0.5rem]">
                     {t("converterWords.convertedFigure")}
                   </label>
-                  <div className="flex items-center justify-between gap-6 border border-gray-200 rounded-xl px-3 py-[1.0625rem] bg-white shadow-sm">
+                  <div className="flex items-center justify-between gap-6 border border-black/5 rounded-xl px-3 py-[1.0625rem] bg-white shadow-sm">
                     <CurrencyDropdown
                       selected={toCurrency}
                       setSelected={setToCurrency}
@@ -433,15 +433,21 @@ function App() {
                 </div>
 
                 <div>
-                  <h5 className="text-center text-2xl font-medium mt-[3rem]">
+                  <h5 className="text-center text-2xl font-frozen mt-[3rem]">
                     {t("converterWords.rate")}
                   </h5>
-                  <p className="text-center text-[1.375rem] font-medium text-gray-600 mt-[0.375rem]">
-                    {rate
-                      ? `${fromCurrency.symbol}1.00 ${fromCurrency.code} = ${
-                          toCurrency.symbol
-                        }${rate.toFixed(4)} ${toCurrency.code}`
-                      : "Could not fetch rate."}
+                  <p className="text-center text-[1.375rem] font-normal text-gray-600 mt-[0.375rem]">
+                    {rate ? (
+                      <>
+                        {fromCurrency.symbol}1.00{" "}
+                        <span className="font-frozen">{fromCurrency.code}</span>{" "}
+                        = {toCurrency.symbol}
+                        {rate.toFixed(4)}{" "}
+                        <span className="font-frozen">{toCurrency.code}</span>
+                      </>
+                    ) : (
+                      "Could not fetch rate."
+                    )}
                   </p>
 
                   {rate && relativeTime && (

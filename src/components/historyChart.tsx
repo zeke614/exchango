@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   base: string;
@@ -125,10 +126,12 @@ const CurrencyHistoryChart = ({ base, target, appId }: Props) => {
     fetchHistory();
   }, [base, target, range, appId]);
 
+  const { t } = useTranslation();
+
   return (
     <div className="w-full mt-10 mb-3 bg-white">
-      <h3 className="text-[1.625rem] font-medium mb-5 text-[#256F5C] text-center">
-        {base} — {target} History
+      <h3 className="text-[1.625rem] font-frozen mb-5 text-[#256F5C] text-center">
+        {base} — {target} {t("chart.title")}
       </h3>
 
       {!unsupportedBase && (
@@ -137,7 +140,7 @@ const CurrencyHistoryChart = ({ base, target, appId }: Props) => {
             <button
               key={r}
               onClick={() => setRange(r)}
-              className={`px-2 py-0 rounded-full text-[0.938rem] font-medium border transition ${
+              className={`px-2 py-0 rounded-full text-[0.938rem] font-frozen border transition ${
                 range === r
                   ? "bg-[#256F5C] text-white"
                   : "bg-white text-gray-800 border hover:bg-gray-200"
@@ -153,9 +156,8 @@ const CurrencyHistoryChart = ({ base, target, appId }: Props) => {
         <div className="text-center py-8 px-4 text-gray-600 flex flex-col items-center gap-2">
           <p className="text-[1.063rem] font-light leading-relaxed max-w-xs">
             Oops... <span className="text-[1.156rem]">😕</span> <br />
-            Historical data is only available for currency pairs that include{" "}
-            <span className="text-lg font-medium">USD</span> as the base
-            currency.
+            {t("chart.oops1")} <span className="font-frozen">$ USD</span>{" "}
+            {t("chart.oops2")}
           </p>
         </div>
       ) : loading ? (
