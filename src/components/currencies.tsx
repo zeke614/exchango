@@ -41,7 +41,7 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
     <div className="relative" ref={ref}>
       <button
         onClick={toggleDropdown}
-        className="flex font-frozen items-center w-fit gap-2"
+        className="flex font- items-center w-fit gap-2"
       >
         <img
           src={`https://flagcdn.com/${selected.flag}.svg`}
@@ -92,7 +92,7 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
                           alt={`${currency.name} flag`}
                           className="w-5 h-4 object-cover rounded"
                         />
-                        <span className="font-frozen text-[1.0625rem]">
+                        <span className=" text-[1.0625rem]">
                           {currency.code}
                         </span>
                         <span className="text-gray-600">{currency.name}</span>

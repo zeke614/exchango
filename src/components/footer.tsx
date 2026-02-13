@@ -93,7 +93,7 @@ export default function Footer() {
           <a
             href="https://github.com/zeke614"
             target="_blank"
-            className="font-frozen ml-1 text-[#256F5C] text-[1.09375rem] underline underline-offset-2"
+            className="font-semibold ml-1 text-[#256F5C] text-[1.09375rem] underline underline-offset-2"
           >
             Ezekiel
           </a>

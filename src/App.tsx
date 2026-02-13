@@ -440,10 +440,10 @@ function App() {
                     {rate ? (
                       <>
                         {fromCurrency.symbol}1.00{" "}
-                        <span className="font-frozen">{fromCurrency.code}</span>{" "}
-                        = {toCurrency.symbol}
+                        <span className="">{fromCurrency.code}</span> ={" "}
+                        {toCurrency.symbol}
                         {rate.toFixed(4)}{" "}
-                        <span className="font-frozen">{toCurrency.code}</span>
+                        <span className="">{toCurrency.code}</span>
                       </>
                     ) : (
                       "Could not fetch rate."
