@@ -59,7 +59,7 @@ export default function Header() {
 
       {!showLanguageOverlay && (
         <header className="bg-white sticky top-0 z-50 flex items-center justify-between mx-4 py-2.5 border-b border-b-black/5">
-          <h1 className="text-[1.375rem] font-frozen">
+          <h1 className="text-xl font-frozen">
             exchan<span className="text-[#256F5C]">go</span>
           </h1>
 
@@ -88,7 +88,7 @@ export default function Header() {
                   transition={{ duration: 0.3 }}
                   className="absolute -right-0.5 top-9.5 bg-white w-48 border border-black/5 rounded-xl p-3 shadow-lg z-10"
                 >
-                  <h3 className="font-frozen text-[1.09375rem]">
+                  <h3 className="font-frozen text-[1.0625rem]">
                     Pick your language
                   </h3>
                   <ul className="text-[1.03125rem] mt-2 font-light">

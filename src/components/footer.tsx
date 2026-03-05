@@ -13,7 +13,7 @@ export default function Footer() {
     <footer className="bg-white space-y-5 pt-20">
       <div className="border-t border-black/5 pb-7 mx-6"></div>
 
-      <h1 className="text-[1.5625rem] text-center font-frozen mb-3 ml-6">
+      <h1 className="text-xl text-center font-frozen mb-3 ml-6">
         exchan<span className="text-[#256F5C]">go</span>
       </h1>
 
@@ -22,7 +22,7 @@ export default function Footer() {
       </p>
 
       <div className="flex flex-col items-center space-y-2">
-        <h2 className="font-frozen text-gray-800 text-[1.15625rem]">
+        <h2 className="font-frozen text-gray-800 text-lg">
           {t("footer.links.title")}
         </h2>
         <ul className="text-gray-500 text-[1.0625rem] space-y-3 flex-col text-center items-center justify-center flex-wrap">
@@ -45,7 +45,7 @@ export default function Footer() {
       </div>
 
       <div className="text-center pb-3">
-        <h2 className="font-frozen text-gray-800 text-[1.15625rem]">
+        <h2 className="font-frozen text-gray-800 text-lg">
           {t("footer.socials")}
         </h2>
         <div className="gap-1.5 mt-2 items-center justify-center flex">

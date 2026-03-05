@@ -12,6 +12,8 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 
+// Types
+
 interface Props {
   base: string;
   target: string;
@@ -24,32 +26,200 @@ interface DataPoint {
   cachedAt?: string;
 }
 
-const getExpiryDays = (range: string) => {
-  switch (range) {
-    case "1D":
-      return 1;
-    case "1W":
-      return 7;
-    case "2W":
-      return 14;
-    case "1M":
-      return 30;
-    default:
-      return 1;
-  }
+type Range = "1D" | "1W" | "2W" | "1M";
+
+// Constants
+
+const RANGES: Range[] = ["1D", "1W", "2W", "1M"];
+
+// How many days back each range covers, and how long its cache is valid
+const RANGE_CONFIG: Record<
+  Range,
+  { subtractDays: number; cacheExpiryDays: number }
+> = {
+  "1D": { subtractDays: 1, cacheExpiryDays: 1 },
+  "1W": { subtractDays: 7, cacheExpiryDays: 7 },
+  "2W": { subtractDays: 14, cacheExpiryDays: 14 },
+  "1M": { subtractDays: 30, cacheExpiryDays: 30 },
 };
 
-const ranges: ("1D" | "1W" | "2W" | "1M")[] = ["1D", "1W", "2W", "1M"];
+const BRAND_GREEN = "#256F5C";
 
-const CurrencyHistoryChart = ({ base, target, appId }: Props) => {
-  const [range, setRange] = useState<"1D" | "1W" | "2W" | "1M">("1W");
+// Helpers
+
+function buildDateList(range: Range): dayjs.Dayjs[] {
+  const today = dayjs();
+  const { subtractDays } = RANGE_CONFIG[range];
+  const dates: dayjs.Dayjs[] = [];
+
+  for (let i = subtractDays; i >= 0; i--) {
+    dates.push(today.subtract(i, "day"));
+  }
+
+  return dates;
+}
+
+function getCacheKey(
+  base: string,
+  target: string,
+  dateStr: string,
+  range: Range,
+) {
+  return `history_${base}_${target}_${dateStr}_${range}`;
+}
+
+function readFreshCache(key: string, expiryDays: number): DataPoint | null {
+  const raw = localStorage.getItem(key);
+  if (!raw) return null;
+
+  const cached = JSON.parse(raw) as DataPoint;
+  const isExpired = dayjs().diff(dayjs(cached.cachedAt), "day") >= expiryDays;
+
+  if (isExpired) {
+    localStorage.removeItem(key);
+    return null;
+  }
+
+  return cached;
+}
+
+// Subcomponents
+
+function UnsupportedBaseMessage() {
+  const { t } = useTranslation();
+
+  return (
+    <div className="text-center py-10 px-6 text-gray-500 flex flex-col items-center gap-2">
+      <span className="text-3xl">😕</span>
+      <p className="text-[1rem] font-light leading-relaxed max-w-xs">
+        {t("chart.oops1")}{" "}
+        <span className="font-semibold text-gray-700">$ USD</span>{" "}
+        {t("chart.oops2")}
+      </p>
+    </div>
+  );
+}
+
+function LoadingIndicator() {
+  return (
+    <div className="flex items-center justify-center py-12 text-[#256F5C]">
+      <i className="bx bx-chart-spline text-[1.625rem] animate-bounce" />
+    </div>
+  );
+}
+
+function RangeSelector({
+  selected,
+  onChange,
+}: {
+  selected: Range;
+  onChange: (r: Range) => void;
+}) {
+  return (
+    <div className="flex justify-center gap-2 mb-8">
+      {RANGES.map((r) => (
+        <button
+          key={r}
+          onClick={() => onChange(r)}
+          className={`
+            px-3 py-[2px] rounded-full text-[0.875rem] font-frozen border transition-all duration-200
+            ${
+              r === selected
+                ? "bg-[#256F5C] text-white border-[#256F5C] shadow-sm"
+                : "bg-white text-gray-500 border-gray-200 hover:border-[#256F5C] hover:text-[#256F5C]"
+            }
+          `}
+        >
+          {r}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function RateChart({
+  data,
+  base,
+  target,
+}: {
+  data: DataPoint[];
+  base: string;
+  target: string;
+}) {
+  return (
+    <ResponsiveContainer width="94%" height={200}>
+      <LineChart data={data} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
+        <CartesianGrid horizontal={true} vertical={false} stroke="#f0f0f0" />
+        <XAxis
+          dataKey="date"
+          tick={{ fontSize: 11, fill: "#9ca3af" }}
+          axisLine={{ stroke: "#e5e7eb" }}
+          tickLine={{ stroke: "#e5e7eb" }}
+          tickMargin={6}
+          minTickGap={10}
+          tickFormatter={(tick) => dayjs(tick).format("MMM D")}
+        />
+        <YAxis
+          domain={["auto", "auto"]}
+          tick={{ fontSize: 11, fill: "#9ca3af" }}
+          axisLine={{ stroke: "#e5e7eb" }}
+          tickLine={{ stroke: "#e5e7eb" }}
+          tickMargin={6}
+          width={54}
+        />
+        <Tooltip
+          formatter={(value: number) => [
+            value.toFixed(4),
+            `${base} → ${target}`,
+          ]}
+          labelFormatter={(label: string) =>
+            dayjs(label).format("MMMM D, YYYY")
+          }
+          contentStyle={{
+            fontSize: "12px",
+            padding: "6px 10px",
+            backgroundColor: "#fff",
+            border: "1px solid #e5e7eb",
+            borderRadius: "8px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+          }}
+          labelStyle={{
+            fontSize: "11px",
+            color: "#6b7280",
+            marginBottom: "2px",
+          }}
+          itemStyle={{ color: BRAND_GREEN, fontWeight: 600 }}
+          cursor={{
+            stroke: "#e5e7eb",
+            strokeDasharray: "3 3",
+            strokeWidth: 1.5,
+          }}
+        />
+        <Line
+          type="monotone"
+          dataKey="rate"
+          stroke={BRAND_GREEN}
+          strokeWidth={2}
+          dot={false}
+          activeDot={{ r: 4, fill: BRAND_GREEN, strokeWidth: 0 }}
+        />
+      </LineChart>
+    </ResponsiveContainer>
+  );
+}
+
+// Main component
+
+export default function CurrencyHistoryChart({ base, target, appId }: Props) {
+  const { t } = useTranslation();
+  const [range, setRange] = useState<Range>("1W");
   const [data, setData] = useState<DataPoint[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const unsupportedBase = base !== "USD";
+  const isUnsupportedBase = base !== "USD";
 
   useEffect(() => {
-    if (unsupportedBase) {
+    if (isUnsupportedBase) {
       setData([]);
       setLoading(false);
       return;
@@ -58,64 +228,34 @@ const CurrencyHistoryChart = ({ base, target, appId }: Props) => {
     async function fetchHistory() {
       setLoading(true);
 
-      const today = dayjs();
-      let startDate = today;
-
-      switch (range) {
-        case "1D":
-          startDate = today.subtract(1, "day");
-          break;
-        case "1W":
-          startDate = today.subtract(7, "day");
-          break;
-        case "2W":
-          startDate = today.subtract(14, "day");
-          break;
-        case "1M":
-          startDate = today.subtract(1, "month");
-          break;
-      }
-
-      const expiryDays = getExpiryDays(range);
+      const { cacheExpiryDays } = RANGE_CONFIG[range];
+      const dates = buildDateList(range);
       const results: DataPoint[] = [];
 
-      for (
-        let date = startDate;
-        date.isBefore(today) || date.isSame(today);
-        date = date.add(1, "day")
-      ) {
+      for (const date of dates) {
         const dateStr = date.format("YYYY-MM-DD");
-        const cacheKey = `history_${base}_${target}_${dateStr}_${range}`;
-        const cachedRaw = localStorage.getItem(cacheKey);
+        const cacheKey = getCacheKey(base, target, dateStr, range);
 
-        if (cachedRaw) {
-          const cached = JSON.parse(cachedRaw) as DataPoint;
-          const cachedAt = dayjs(cached.cachedAt);
-
-          if (dayjs().diff(cachedAt, "day") < expiryDays) {
-            results.push(cached);
-            continue;
-          } else {
-            localStorage.removeItem(cacheKey); // expired
-          }
+        // Use cache if fresh
+        const cached = readFreshCache(cacheKey, cacheExpiryDays);
+        if (cached) {
+          results.push(cached);
+          continue;
         }
 
+        // Otherwise fetch from API
         try {
           const url = `https://openexchangerates.org/api/historical/${dateStr}.json?app_id=${appId}&base=${base}&symbols=${target}`;
-          const res = await axios.get(url);
-          const data = res.data as { rates: Record<string, number> };
-          const rate = data.rates[target];
-
+          const res = await axios.get<{ rates: Record<string, number> }>(url);
           const point: DataPoint = {
             date: dateStr,
-            rate,
+            rate: res.data.rates[target],
             cachedAt: new Date().toISOString(),
           };
-
           localStorage.setItem(cacheKey, JSON.stringify(point));
           results.push(point);
-        } catch (err) {
-          console.warn(`Failed for ${dateStr}`, err);
+        } catch {
+          // Skip days that fail — the chart will simply have a gap
         }
       }
 
@@ -126,85 +266,25 @@ const CurrencyHistoryChart = ({ base, target, appId }: Props) => {
     fetchHistory();
   }, [base, target, range, appId]);
 
-  const { t } = useTranslation();
-
   return (
-    <div className="w-full mt-10 mb-3 bg-white">
-      <h3 className="text-[1.625rem] font-frozen mb-5 text-[#256F5C] text-center">
+    <div className="w-full mt-10 mb-3">
+      {/* Header */}
+      <h3 className="text-[1.375rem] font-frozen mb-5 text-[#256F5C] text-center">
         {base} — {target} {t("chart.title")}
       </h3>
 
-      {!unsupportedBase && (
-        <div className="flex justify-center gap-3 mb-10">
-          {ranges.map((r) => (
-            <button
-              key={r}
-              onClick={() => setRange(r)}
-              className={`px-2 py-0 rounded-full text-[0.938rem] font-frozen border transition ${
-                range === r
-                  ? "bg-[#256F5C] text-white"
-                  : "bg-white text-gray-800 border hover:bg-gray-200"
-              }`}
-            >
-              {r}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {unsupportedBase ? (
-        <div className="text-center py-8 px-4 text-gray-600 flex flex-col items-center gap-2">
-          <p className="text-[1.063rem] font-light leading-relaxed max-w-xs">
-            Oops... <span className="text-[1.156rem]">😕</span> <br />
-            {t("chart.oops1")} <span className="font-frozen">$ USD</span>{" "}
-            {t("chart.oops2")}
-          </p>
-        </div>
-      ) : loading ? (
-        <div className="flex items-center justify-center animate-bounce py-[2rem] text-[#256F5C]">
-          <i className="bx bx-chart-spline text-[1.625rem]"></i>
-        </div>
+      {isUnsupportedBase ? (
+        <UnsupportedBaseMessage />
       ) : (
-        <ResponsiveContainer width="92%" height={210}>
-          <LineChart data={data}>
-            <CartesianGrid horizontal={true} vertical={false} />
-            <XAxis
-              dataKey="date"
-              tick={{ fontSize: 11 }}
-              minTickGap={10}
-              tickFormatter={(tick) => dayjs(tick).format("MMM D")}
-            />
-            <YAxis domain={["auto", "auto"]} tick={{ fontSize: 11 }} />
-            <Tooltip
-              formatter={(value: any) => [`${value}`, `${base} → ${target}`]}
-              labelFormatter={(label: any) =>
-                dayjs(label).format("MMMM D, YYYY")
-              }
-              contentStyle={{
-                fontSize: "12px",
-                padding: "5px 8px",
-                backgroundColor: "#fff",
-                borderRadius: "6px",
-              }}
-              labelStyle={{
-                fontSize: "13px",
-                fontWeight: "normal",
-                textAlign: "center",
-              }}
-              cursor={{ strokeDasharray: "3 3", strokeWidth: 2 }}
-            />
-            <Line
-              type="bumpX"
-              dataKey="rate"
-              stroke="#256F5C"
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+        <>
+          <RangeSelector selected={range} onChange={setRange} />
+          {loading ? (
+            <LoadingIndicator />
+          ) : (
+            <RateChart data={data} base={base} target={target} />
+          )}
+        </>
       )}
     </div>
   );
-};
-
-export default CurrencyHistoryChart;
+}
