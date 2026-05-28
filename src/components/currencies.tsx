@@ -41,14 +41,14 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
     <div className="relative" ref={ref}>
       <button
         onClick={toggleDropdown}
-        className="flex font- items-center w-fit gap-2"
+        className="flex font- items-center w-fit gap-2 cursor-pointer"
       >
         <img
           src={`https://flagcdn.com/${selected.flag}.svg`}
           alt="Flag"
-          className="w-5 h-[0.9375rem] rounded-sm object-cover"
+          className="w-5 h-3.5 rounded-sm object-cover"
         />
-        <span className="text-xl font-medium">{selected.code}</span>
+        <span className="text-[17px] font-medium">{selected.code}</span>
         <i className="bx bx-chevron-down text-2xl"></i>
       </button>
 
@@ -59,22 +59,22 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -8 }}
             transition={{ duration: 0.15 }}
-            className="absolute mt-[1.25rem] -left-[1.625rem] z-50 bg-white space-y-3 shadow-md rounded-xl px-[0.5rem] pt-[1rem] w-[21.25rem] h-[17.1875rem] border border-gray-300 overflow-y-auto max-h-[18rem] thin-scrollbar"
+            className="absolute mt-4.5 left-0 z-50 bg-white dark:bg-[#242424] space-y-3 shadow-md rounded-xl px-2 pt-4 w-85 h-68.5 border border-black/6 dark:border-white/6 overflow-y-auto max-h-[18rem] thin-scrollbar"
           >
             <div className="relative">
-              <div className="absolute left-0 text-lg inset-y-0 flex items-center pl-[0.5rem] pointer-events-none">
-                <i className="bx bx-search-alt text-gray-500"></i>
+              <div className="absolute left-0 text-lg inset-y-0 flex items-center pl-2 pointer-events-none">
+                <i className="bx bx-search-alt text-black/50 dark:text-gray-400"></i>
               </div>
               <input
                 type="text"
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-[1.875rem] pr-[0.75rem] py-[0.5rem] border border-gray-300 rounded-md outline-none transition-all duration-300 ease-in-out focus:border-gray-600 text-lg"
+                className="w-full pl-[1.875rem] pr-3 py-2 border border-black/6 dark:border-white/6 rounded-md outline-none transition-all duration-300 ease-in-out focus:border-black/15 dark:focus:border-white/15"
               />
             </div>
 
-            <ul className="space-y-1 max-h-[11.25rem] overflow-y-auto">
+            <ul className="space-y-1 max-h-47.5 overflow-y-auto">
               {filteredCurrencies.length > 0 ? (
                 filteredCurrencies.map((currency) => (
                   <li key={currency.code}>
@@ -84,7 +84,7 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
                         setOpen(false);
                         setSearchTerm("");
                       }}
-                      className="w-full flex items-center justify-between p-[0.25rem] rounded hover:bg-gray-50"
+                      className="w-full flex items-center justify-between p-1 rounded hover:bg-gray-50 dark:hover:bg-white/5.5 cursor-pointer"
                     >
                       <div className="flex items-center gap-2">
                         <img
@@ -92,10 +92,10 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
                           alt={`${currency.name} flag`}
                           className="w-5 h-4 object-cover rounded"
                         />
-                        <span className=" text-[1.0625rem]">
-                          {currency.code}
+                        <span>{currency.code}</span>
+                        <span className="text-black/65 dark:text-gray-200 text-sm">
+                          {currency.name}
                         </span>
-                        <span className="text-gray-600">{currency.name}</span>
                       </div>
                       {selected.code === currency.code && (
                         <i className="bx bx-check font-normal text-[#256F5C]"></i>
@@ -104,7 +104,7 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
                   </li>
                 ))
               ) : (
-                <li className="text-xl text-gray-500 text-center py-[0.5rem]">
+                <li className="text-black/65 dark:text-gray-200 text-center py-2">
                   No results
                 </li>
               )}

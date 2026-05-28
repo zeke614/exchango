@@ -12,8 +12,6 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 
-// Types
-
 interface Props {
   base: string;
   target: string;
@@ -27,8 +25,6 @@ interface DataPoint {
 }
 
 type Range = "1D" | "1W" | "2W" | "1M";
-
-// Constants
 
 const RANGES: Range[] = ["1D", "1W", "2W", "1M"];
 
@@ -89,11 +85,10 @@ function UnsupportedBaseMessage() {
   const { t } = useTranslation();
 
   return (
-    <div className="text-center py-10 px-6 text-gray-500 flex flex-col items-center gap-2">
+    <div className="text-center py-10 px-6 text-black/65 dark:text-gray-200 flex flex-col items-center gap-2">
       <span className="text-3xl">😕</span>
       <p className="text-[1rem] font-light leading-relaxed max-w-xs">
-        {t("chart.oops1")}{" "}
-        <span className="font-semibold text-gray-700">$ USD</span>{" "}
+        {t("chart.oops1")} <span className="font-semibold">$ USD</span>{" "}
         {t("chart.oops2")}
       </p>
     </div>
@@ -116,17 +111,17 @@ function RangeSelector({
   onChange: (r: Range) => void;
 }) {
   return (
-    <div className="flex justify-center gap-2 mb-8">
+    <div className="flex justify-center gap-2 mb-12">
       {RANGES.map((r) => (
         <button
           key={r}
           onClick={() => onChange(r)}
           className={`
-            px-3 py-[2px] rounded-full text-[0.875rem] font-frozen border transition-all duration-200
+            px-3 py-[2px] rounded-full text-sm font-semibold border transition-all duration-200 cursor-pointer
             ${
               r === selected
                 ? "bg-[#256F5C] text-white border-[#256F5C] shadow-sm"
-                : "bg-white text-gray-500 border-gray-200 hover:border-[#256F5C] hover:text-[#256F5C]"
+                : "bg-white dark:bg-[#242424] text-black/65 dark:text-gray-200 border-black/6 dark:border-white/6 hover:border-[#256F5C] hover:text-[#256F5C]"
             }
           `}
         >
@@ -147,64 +142,69 @@ function RateChart({
   target: string;
 }) {
   return (
-    <ResponsiveContainer width="94%" height={200}>
-      <LineChart data={data} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
-        <CartesianGrid horizontal={true} vertical={false} stroke="#f0f0f0" />
-        <XAxis
-          dataKey="date"
-          tick={{ fontSize: 11, fill: "#9ca3af" }}
-          axisLine={{ stroke: "#e5e7eb" }}
-          tickLine={{ stroke: "#e5e7eb" }}
-          tickMargin={6}
-          minTickGap={10}
-          tickFormatter={(tick) => dayjs(tick).format("MMM D")}
-        />
-        <YAxis
-          domain={["auto", "auto"]}
-          tick={{ fontSize: 11, fill: "#9ca3af" }}
-          axisLine={{ stroke: "#e5e7eb" }}
-          tickLine={{ stroke: "#e5e7eb" }}
-          tickMargin={6}
-          width={54}
-        />
-        <Tooltip
-          formatter={(value: number) => [
-            value.toFixed(4),
-            `${base} → ${target}`,
-          ]}
-          labelFormatter={(label: string) =>
-            dayjs(label).format("MMMM D, YYYY")
-          }
-          contentStyle={{
-            fontSize: "12px",
-            padding: "6px 10px",
-            backgroundColor: "#fff",
-            border: "1px solid #e5e7eb",
-            borderRadius: "8px",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-          }}
-          labelStyle={{
-            fontSize: "11px",
-            color: "#6b7280",
-            marginBottom: "2px",
-          }}
-          itemStyle={{ color: BRAND_GREEN, fontWeight: 600 }}
-          cursor={{
-            stroke: "#e5e7eb",
-            strokeDasharray: "3 3",
-            strokeWidth: 1.5,
-          }}
-        />
-        <Line
-          type="monotone"
-          dataKey="rate"
-          stroke={BRAND_GREEN}
-          strokeWidth={2}
-          dot={false}
-          activeDot={{ r: 4, fill: BRAND_GREEN, strokeWidth: 0 }}
-        />
-      </LineChart>
-    </ResponsiveContainer>
+    <div className="w-full max-w-lg mx-auto">
+      <ResponsiveContainer width="93%" height={200}>
+        <LineChart
+          data={data}
+          margin={{ top: 4, right: 4, left: 0, bottom: 0 }}
+        >
+          <CartesianGrid horizontal={true} vertical={false} stroke="#f0f0f0" />
+          <XAxis
+            dataKey="date"
+            tick={{ fontSize: 11, fill: "#9ca3af" }}
+            axisLine={{ stroke: "#e5e7eb" }}
+            tickLine={{ stroke: "#e5e7eb" }}
+            tickMargin={6}
+            minTickGap={10}
+            tickFormatter={(tick) => dayjs(tick).format("MMM D")}
+          />
+          <YAxis
+            domain={["auto", "auto"]}
+            tick={{ fontSize: 11, fill: "#9ca3af" }}
+            axisLine={{ stroke: "#e5e7eb" }}
+            tickLine={{ stroke: "#e5e7eb" }}
+            tickMargin={6}
+            width={54}
+          />
+          <Tooltip
+            formatter={(value: number) => [
+              value.toFixed(4),
+              `${base} → ${target}`,
+            ]}
+            labelFormatter={(label: string) =>
+              dayjs(label).format("MMMM D, YYYY")
+            }
+            contentStyle={{
+              fontSize: "12px",
+              padding: "6px 10px",
+              backgroundColor: "#fff",
+              border: "1px solid #e5e7eb",
+              borderRadius: "8px",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+            }}
+            labelStyle={{
+              fontSize: "11px",
+              color: "#6b7280",
+              marginBottom: "2px",
+            }}
+            itemStyle={{ color: BRAND_GREEN, fontWeight: 600 }}
+            cursor={{
+              stroke: "#e5e7eb",
+              strokeDasharray: "3 3",
+              strokeWidth: 1.5,
+            }}
+          />
+          <Line
+            type="monotone"
+            dataKey="rate"
+            stroke={BRAND_GREEN}
+            strokeWidth={2}
+            dot={false}
+            activeDot={{ r: 4, fill: BRAND_GREEN, strokeWidth: 0 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
@@ -267,9 +267,9 @@ export default function CurrencyHistoryChart({ base, target, appId }: Props) {
   }, [base, target, range, appId]);
 
   return (
-    <div className="w-full mt-10 mb-3">
+    <div className="w-full flex flex-col items-center justify-center mt-18 mb-3">
       {/* Header */}
-      <h3 className="text-[1.375rem] font-frozen mb-5 text-[#256F5C] text-center">
+      <h3 className="text-[1.375rem] font-bold mb-5 text-[#256F5C] text-center">
         {base} — {target} {t("chart.title")}
       </h3>
 
