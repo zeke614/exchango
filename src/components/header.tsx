@@ -121,7 +121,7 @@ export default function Header() {
       {!showLanguageOverlay && (
         <header className="sticky top-0 z-50 px-5 sm:px-8 lg:px-0 w-full mx-auto max-w-4xl">
           <div className=" flex items-center justify-between h-13 bg-transparent backdrop-blur-md">
-            <a href="/" className="text-xl font-bold leading-none">
+            <a href="/" className="text-lg font-bold leading-none">
               exchan<span className="text-[#256F5C]">go</span>
             </a>
 
@@ -129,14 +129,14 @@ export default function Header() {
               <div className="relative" ref={themeDropdownRef}>
                 <button
                   aria-label="Change Theme"
-                  className="flex items-center gap-1 text-[0.9375rem] font-semibold uppercase cursor-pointer transition-colors duration-150"
+                  className="flex items-center gap-1 font-semibold uppercase cursor-pointer transition-colors duration-150"
                   onClick={() => {
                     setShowThemeDropdown(!showThemeDropdown);
                     setShowDropdown(false);
                   }}
                 >
                   <i
-                    className={`${getThemeIcon(theme)} text-[1.1rem] leading-none`}
+                    className={`${getThemeIcon(theme)} text-base leading-none`}
                   ></i>
                   <i
                     className={`bx bx-chevron-down text-[1.25rem] leading-none transition-transform duration-200 ${
@@ -151,8 +151,8 @@ export default function Header() {
                       initial={{ opacity: 0, y: -6 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -6 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute right-0 top-9 w-40 border border-black/8 dark:border-white/8 bg-white dark:bg-[#242424] rounded-xl p-2 shadow-lg z-10"
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      className="absolute right-0 top-8 w-38 border border-black/8 dark:border-white/8 bg-white dark:bg-[#242424] rounded-xl p-1.5 shadow-lg z-10"
                     >
                       <ul className="text-[0.9375rem] space-y-0.5">
                         {[
@@ -191,13 +191,13 @@ export default function Header() {
               <div className="relative" ref={dropdownRef}>
                 <button
                   aria-label={t("aria.changeLanguage")}
-                  className="flex items-center gap-1 text-[0.9375rem] font-semibold uppercase cursor-pointer transition-colors duration-150"
+                  className="flex items-center gap-1 text-sm font-semibold uppercase cursor-pointer transition-colors duration-150"
                   onClick={() => {
                     setShowDropdown(!showDropdown);
                     setShowThemeDropdown(false);
                   }}
                 >
-                  <i className="bx bx-globe-alt text-[1rem] leading-none"></i>
+                  <i className="bx bx-globe-alt text-base leading-none"></i>
                   <span>{i18n.language}</span>
                   <i
                     className={`bx bx-chevron-down text-[1.25rem] leading-none transition-transform duration-200 ${
@@ -212,8 +212,8 @@ export default function Header() {
                       initial={{ opacity: 0, y: -6 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -6 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute right-0 top-9 w-48 border border-black/8 dark:border-white/8 bg-white dark:bg-[#242424] rounded-xl p-3 shadow-lg z-10"
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      className="absolute right-0 top-8 w-44 border border-black/8 dark:border-white/8 bg-white dark:bg-[#242424] rounded-xl py-3 px-1.5 shadow-lg z-10"
                     >
                       <p className="font-semibold text-[0.9375rem] mb-2 px-1">
                         Pick your language
@@ -240,7 +240,7 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="border-t border-black/5 dark:border-white/5"></div>
+          <div className="border-t border-black/6 dark:border-white/6"></div>
         </header>
       )}
     </>

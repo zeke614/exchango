@@ -58,10 +58,10 @@ export default function App() {
       <div className="min-h-screen flex flex-col">
         <Header />
 
-        <main className="flex-grow px-5 sm:px-8 lg:px-0">
-          <section className="pt-14 sm:pt-24 pb-10">
+        <main className="flex-grow mx-auto max-w-5xl py-14 sm:py-21 px-5 sm:px-8 lg:px-0">
+          <section className="pb-16">
             <div className="max-w-2xl mx-auto gap-y-2 text-center">
-              <h2 className="text-center text-black/65 dark:text-gray-300 text-xl mb-6">
+              <h2 className="text-center text-lg">
                 {t("welcome.welcomeLine1")}
                 <span className="font-bold text-xl">
                   exchan<span className="text-[#256F5C]">go</span>,
@@ -123,7 +123,7 @@ export default function App() {
                 <label className="block text-end text-[1.0625rem] text-black/65 dark:text-gray-200 mb-1.5">
                   {t("converterWords.amount")}
                 </label>
-                <div className="flex items-center justify-between border gap-5 border-black/6 dark:border-white/6 rounded-xl px-3 py-3.5 shadow-sm">
+                <div className="flex items-center justify-between border gap-5 border-black/6 dark:border-white/6 rounded-xl px-3 py-3.75 shadow-sm">
                   <CurrencyDropdown
                     selected={fromCurrency}
                     setSelected={setFromCurrency}
@@ -134,7 +134,7 @@ export default function App() {
                       aria-label="Enter amount to convert"
                       value={amount.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       onChange={(e) => handleAmountChange(e.target.value)}
-                      className="outline-none border-none w-full bg-transparent text-xl text-end font-medium appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none placeholder:text-lg"
+                      className="outline-none border-none w-full bg-transparent text-lg text-end font-medium appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none placeholder:text-lg"
                       placeholder="0.00"
                     />
                   </div>
@@ -167,7 +167,7 @@ export default function App() {
                 <label className="block text-end text-[1.0625rem] text-black/65 dark:text-gray-200 mb-[0.5rem]">
                   {t("converterWords.convertedFigure")}
                 </label>
-                <div className="flex items-center justify-between gap-6 border border-black/6 dark:border-white/6 rounded-xl px-3 py-3.5 shadow-sm">
+                <div className="flex items-center justify-between gap-6 border border-black/6 dark:border-white/6 rounded-xl px-3 py-3.75 shadow-sm">
                   <CurrencyDropdown
                     selected={toCurrency}
                     setSelected={setToCurrency}
@@ -178,7 +178,7 @@ export default function App() {
                       value={convertedAmount}
                       displayType="text"
                       thousandSeparator=","
-                      className="w-full text-end text-xl font-medium block whitespace-nowrap overflow-x-auto no-scrollbar"
+                      className="w-full text-end text-lg font-medium block whitespace-nowrap overflow-x-auto no-scrollbar"
                     />
                   </div>
                 </div>

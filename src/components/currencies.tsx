@@ -49,17 +49,19 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
           className="w-5 h-3.5 rounded-sm object-cover"
         />
         <span className="text-[17px] font-medium">{selected.code}</span>
-        <i className="bx bx-chevron-down text-2xl"></i>
+        <i
+          className={`bx bx-chevron-down text-2xl transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        ></i>
       </button>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: -8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -8 }}
-            transition={{ duration: 0.15 }}
-            className="absolute mt-4.5 left-0 z-50 bg-white dark:bg-[#242424] space-y-3 shadow-md rounded-xl px-2 pt-4 w-85 h-68.5 border border-black/6 dark:border-white/6 overflow-y-auto max-h-[18rem] thin-scrollbar"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="absolute mt-4.5 left-0 z-50 bg-white dark:bg-[#242424] space-y-3 shadow-md rounded-xl px-2 pt-4 w-80 h-68.5 border border-black/6 dark:border-white/6 overflow-y-auto max-h-[18rem] thin-scrollbar"
           >
             <div className="relative">
               <div className="absolute left-0 text-lg inset-y-0 flex items-center pl-2 pointer-events-none">

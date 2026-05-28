@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <footer className="">
       <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-0">
-        <div className="border-t border-black/5 dark:border-white/5 mt-15"></div>
+        <div className="border-t border-black/6 dark:border-white/6"></div>
 
         <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr_2fr] gap-10 sm:gap-4 py-12">
           <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-3">
@@ -62,7 +62,7 @@ export default function Footer() {
             <h3 className="font-semibold text-[0.9375rem]">
               {t("footer.socials")}
             </h3>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center">
               <a
                 href="https://x.com/devzeke146"
                 target="_blank"
