@@ -63,7 +63,7 @@ export default function App() {
             <div className="max-w-2xl mx-auto gap-y-2 text-center">
               <h2 className="text-center text-lg">
                 {t("welcome.welcomeLine1")}
-                <span className="font-bold text-xl">
+                <span className="font-semibold text-lg">
                   exchan<span className="text-[#256F5C]">go</span>,
                 </span>
                 <br />
@@ -128,7 +128,7 @@ export default function App() {
                     selected={fromCurrency}
                     setSelected={setFromCurrency}
                   />
-                  <div className="w-[65%]" dir="ltr">
+                  <div className="w-[75%]" dir="ltr">
                     <input
                       inputMode="decimal"
                       aria-label="Enter amount to convert"
@@ -173,7 +173,7 @@ export default function App() {
                     setSelected={setToCurrency}
                   />
 
-                  <div className="w-[65%] min-w-0" dir="ltr">
+                  <div className="w-[75%] min-w-0" dir="ltr">
                     <NumericFormat
                       value={convertedAmount}
                       displayType="text"

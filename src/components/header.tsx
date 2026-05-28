@@ -121,7 +121,7 @@ export default function Header() {
       {!showLanguageOverlay && (
         <header className="sticky top-0 z-50 px-5 sm:px-8 lg:px-0 w-full mx-auto max-w-4xl">
           <div className=" flex items-center justify-between h-13 bg-transparent backdrop-blur-md">
-            <a href="/" className="text-lg font-bold leading-none">
+            <a href="/" className="text-lg font-semibold leading-none">
               exchan<span className="text-[#256F5C]">go</span>
             </a>
 
