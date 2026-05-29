@@ -1,4 +1,5 @@
-import { useState, lazy, Suspense } from "react";
+import { motion } from "framer-motion";
+import React, { useState, lazy, Suspense } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightLeft, faSackDollar } from "@fortawesome/free-solid-svg-icons";
 import { NumericFormat } from "react-number-format";
@@ -27,6 +28,7 @@ export default function App() {
   const [fromCurrency, setFromCurrency] = useState(DEFAULT_FROM);
   const [toCurrency, setToCurrency] = useState(DEFAULT_TO);
   const [amount, setAmount] = useState("");
+  const [swapRotation, setSwapRotation] = useState(90);
 
   const appId = import.meta.env.VITE_OPEN_EXCHANGE_RATES_APP_ID2;
   const ipInfoToken = import.meta.env.VITE_IPINFO_TOKEN;
@@ -46,9 +48,21 @@ export default function App() {
     setAmount(raw.replace(/,/g, ""));
   }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let cleanedValue = e.target.value.replace(/[^0-9.]/g, "");
+
+    const parts = cleanedValue.split(".");
+    if (parts.length > 2) {
+      cleanedValue = parts[0] + "." + parts.slice(1).join("");
+    }
+
+    handleAmountChange(cleanedValue);
+  };
+
   function handleSwap() {
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
+    setSwapRotation((prev) => prev + 180);
   }
 
   return (
@@ -74,16 +88,16 @@ export default function App() {
 
           {/* How It Works */}
           <section id="how-it-works" className="scroll-mt-16 pb-10">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-md mx-auto">
               <h3 className="text-center text-[#256F5C] text-2xl font-bold mb-8">
                 {t("welcome.guideTitle")}
               </h3>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 gap-5">
                 {STEPS.map((step, index) => (
                   <div
                     key={step}
-                    className="px-5 py-7.5 flex flex-col justify-center items-center border border-black/6 dark:border-white/6 rounded-3xl space-y-[1.5rem] shadow-md"
+                    className="px-7 py-7.5 flex flex-col justify-center items-center border border-black/6 dark:border-white/6 rounded-3xl space-y-[1.5rem] shadow-md"
                   >
                     <h3 className="text-3xl font-frozen">{index + 1}.</h3>
                     <h4 className="text-xl font-semibold">
@@ -118,8 +132,10 @@ export default function App() {
                   </span>
                   .
                 </h4>
+              </div>
 
-                {/* From currency + amount */}
+              {/* From currency + amount */}
+              <div className="w-full max-w-sm px-4 sm:px-0">
                 <label className="block text-end text-[1.0625rem] text-black/65 dark:text-gray-200 mb-1.5">
                   {t("converterWords.amount")}
                 </label>
@@ -128,12 +144,12 @@ export default function App() {
                     selected={fromCurrency}
                     setSelected={setFromCurrency}
                   />
-                  <div className="w-[75%]" dir="ltr">
+                  <div className="w-[65%]" dir="ltr">
                     <input
                       inputMode="decimal"
                       aria-label="Enter amount to convert"
                       value={amount.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                      onChange={(e) => handleAmountChange(e.target.value)}
+                      onChange={handleInputChange}
                       className="outline-none border-none w-full bg-transparent text-lg text-end font-medium appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none placeholder:text-lg"
                       placeholder="0.00"
                     />
@@ -150,33 +166,36 @@ export default function App() {
                   />
                 </div>
               ) : (
-                <button
+                <motion.button
                   onClick={handleSwap}
-                  className="text-2xl my-7 items-center bg-[#256F5C] rounded-full rotate-90 p-2 justify-center flex"
+                  whileHover={{ scale: 1.06 }}
+                  animate={{ rotate: swapRotation }}
+                  transition={{ type: "spring", stiffness: 300, damping: 18 }}
+                  className="text-2xl my-7 items-center bg-[#256F5C] cursor-pointer rounded-full p-2 justify-center flex"
                   aria-label="Swap currencies"
                 >
                   <FontAwesomeIcon
                     icon={faRightLeft}
-                    className="text-white text-lg"
+                    className="text-white text-base"
                   />
-                </button>
+                </motion.button>
               )}
 
               {/* To currency + converted amount */}
-              <div className="w-full max-w-md">
-                <label className="block text-end text-[1.0625rem] text-black/65 dark:text-gray-200 mb-[0.5rem]">
+              <div className="w-full max-w-sm px-5 sm:px-0">
+                <label className="block text-end text-[1.0625rem] text-black/65 dark:text-gray-200 mb-2">
                   {t("converterWords.convertedFigure")}
                 </label>
-                <div className="flex items-center justify-between gap-6 border border-black/6 dark:border-white/6 rounded-xl px-3 py-3.75 shadow-sm">
+                <div className="flex items-center justify-between gap-5 border border-black/6 dark:border-white/6 rounded-xl px-3 py-3.75 shadow-sm">
                   <CurrencyDropdown
                     selected={toCurrency}
                     setSelected={setToCurrency}
                   />
 
-                  <div className="w-[75%] min-w-0" dir="ltr">
+                  <div className="w-[70%] min-w-0" dir="ltr">
                     <NumericFormat
                       value={convertedAmount}
-                      displayType="text"
+                      displayType="input"
                       thousandSeparator=","
                       className="w-full text-end text-lg font-medium block whitespace-nowrap overflow-x-auto no-scrollbar"
                     />

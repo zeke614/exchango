@@ -5,6 +5,16 @@ import countriesData from "./data.ts";
 
 type Theme = "light" | "dark" | "system";
 
+const themes = [
+  { value: "light", label: "Light", icon: "bx bx-sun" },
+  { value: "dark", label: "Dark", icon: "bx bx-moon" },
+  {
+    value: "system",
+    label: "System",
+    icon: "bx bx-desktop",
+  },
+];
+
 export default function Header() {
   const { t, i18n } = useTranslation();
 
@@ -28,14 +38,14 @@ export default function Header() {
     const root = window.document.documentElement;
 
     const applyTheme = (currentTheme: Theme) => {
-      root.classList.remove("light", "dark");
-      if (currentTheme === "system") {
+      root.classList.remove("dark");
+      if (currentTheme === "dark") {
+        root.classList.add("dark");
+      } else if (currentTheme === "system") {
         const systemIsDark = window.matchMedia(
           "(prefers-color-scheme: dark)",
         ).matches;
-        root.classList.add(systemIsDark ? "dark" : "light");
-      } else {
-        root.classList.add(currentTheme);
+        if (systemIsDark) root.classList.add("dark");
       }
     };
 
@@ -111,7 +121,7 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/60 dark:bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-100 flex items-center justify-center bg-white/60 dark:bg-black/60 backdrop-blur-lg"
           >
             <i className="bx bx-translate text-[3rem] text-[#256F5C] animate-bounce"></i>
           </motion.div>
@@ -120,7 +130,7 @@ export default function Header() {
 
       {!showLanguageOverlay && (
         <header className="sticky top-0 z-50 px-5 sm:px-8 lg:px-0 w-full mx-auto max-w-4xl">
-          <div className=" flex items-center justify-between h-13 bg-transparent backdrop-blur-md">
+          <div className=" flex items-center justify-between h-15 bg-transparent backdrop-blur-lg">
             <a href="/" className="text-lg font-semibold leading-none">
               exchan<span className="text-[#256F5C]">go</span>
             </a>
@@ -139,7 +149,7 @@ export default function Header() {
                     className={`${getThemeIcon(theme)} text-base leading-none`}
                   ></i>
                   <i
-                    className={`bx bx-chevron-down text-[1.25rem] leading-none transition-transform duration-200 ${
+                    className={`bx bx-chevron-down text-xl leading-none transition-transform duration-200 ${
                       showThemeDropdown ? "rotate-180" : ""
                     }`}
                   ></i>
@@ -155,15 +165,7 @@ export default function Header() {
                       className="absolute right-0 top-8 w-38 border border-black/8 dark:border-white/8 bg-white dark:bg-[#242424] rounded-xl p-1.5 shadow-lg z-10"
                     >
                       <ul className="text-[0.9375rem] space-y-0.5">
-                        {[
-                          { value: "light", label: "Light", icon: "bx bx-sun" },
-                          { value: "dark", label: "Dark", icon: "bx bx-moon" },
-                          {
-                            value: "system",
-                            label: "System",
-                            icon: "bx bx-desktop",
-                          },
-                        ].map((option) => (
+                        {themes.map((option) => (
                           <li key={option.value}>
                             <button
                               onClick={() => {
@@ -213,7 +215,7 @@ export default function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -6 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="absolute right-0 top-8 w-44 border border-black/8 dark:border-white/8 bg-white dark:bg-[#242424] rounded-xl py-3 px-1.5 shadow-lg z-10"
+                      className="absolute right-0 top-8 w-42 border border-black/8 dark:border-white/8 bg-white dark:bg-[#242424] rounded-xl py-3 px-1.5 shadow-lg z-10"
                     >
                       <p className="font-semibold text-[0.9375rem] mb-2 px-1">
                         Pick your language

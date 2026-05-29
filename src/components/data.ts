@@ -3,7 +3,7 @@ const countriesData = {
     { code: "en", label: "English" },
     { code: "fr", label: "Français" },
     { code: "es", label: "Español" },
-    { code: "de", label: "Deutsch(German)" },
+    { code: "de", label: "Deutsch" },
     { code: "it", label: "Italiano" },
   ],
 

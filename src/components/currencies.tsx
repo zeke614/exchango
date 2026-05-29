@@ -61,11 +61,11 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="absolute mt-4.5 left-0 z-50 bg-white dark:bg-[#242424] space-y-3 shadow-md rounded-xl px-2 pt-4 w-80 h-68.5 border border-black/6 dark:border-white/6 overflow-y-auto max-h-[18rem] thin-scrollbar"
+            className="absolute mt-4.5 left-0 z-30 bg-white dark:bg-[#242424] space-y-3 shadow-md rounded-xl px-2 pt-4 w-80 h-68.5 border border-black/6 dark:border-white/6 overflow-y-auto max-h-[18rem] thin-scrollbar"
           >
             <div className="relative">
               <div className="absolute left-0 text-lg inset-y-0 flex items-center pl-2 pointer-events-none">
-                <i className="bx bx-search-alt text-black/50 dark:text-gray-400"></i>
+                <i className="bx bx-search text-black/50 dark:text-gray-400"></i>
               </div>
               <input
                 type="text"
