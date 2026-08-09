@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 
 const META = {
-  title: "exchango – Smart Currency Converter",
+  title: "exchango | Smart Currency Converter",
   description:
     "Convert currencies with real-time rates and a clean, mobile-first interface.",
   keywords:

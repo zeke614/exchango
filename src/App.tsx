@@ -77,7 +77,7 @@ export default function App() {
             <div className="max-w-2xl mx-auto gap-y-2 text-center">
               <h2 className="text-center text-lg">
                 {t("welcome.welcomeLine1")}
-                <span className="font-semibold text-lg">
+                <span className="font-bold text-lg">
                   exchan<span className="text-[#256F5C]">go</span>,
                 </span>
                 <br />
@@ -100,7 +100,7 @@ export default function App() {
                     className="px-7 py-7.5 flex flex-col justify-center items-center border border-black/6 dark:border-white/6 rounded-3xl space-y-[1.5rem] shadow-md"
                   >
                     <h3 className="text-3xl font-frozen">{index + 1}.</h3>
-                    <h4 className="text-xl font-semibold">
+                    <h4 className="text-xl font-bold">
                       {t(`guide.${step}.title`)}
                     </h4>
                     <p className="text-black/65 dark:text-gray-200 text-center">
@@ -213,7 +213,7 @@ export default function App() {
                     <>
                       {fromCurrency.symbol}1.00 {fromCurrency.code} ={" "}
                       {toCurrency.symbol}
-                      <span className="font-semibold">
+                      <span className="font-bold">
                         {rate.toFixed(RATE_DECIMAL_PLACES)}
                       </span>{" "}
                       {toCurrency.code}

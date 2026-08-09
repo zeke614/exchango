@@ -16,7 +16,7 @@ export default function Footer() {
 
         <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr_2fr] gap-10 sm:gap-4 py-12">
           <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-3">
-            <h2 className="text-lg font-semibold leading-none">
+            <h2 className="text-lg font-bold leading-none">
               exchan<span className="text-[#256F5C]">go</span>
             </h2>
             <p className="text-[0.9375rem] text-black/55 dark:text-gray-300 leading-relaxed whitespace-pre-line max-w-[22ch] md:max-w-none">
@@ -26,10 +26,10 @@ export default function Footer() {
 
           {/* Quick links */}
           <div className="flex flex-col items-center space-y-3">
-            <h3 className="font-semibold text-[0.9375rem]">
+            <h3 className="font-bold mr-3 text-[0.9375rem]">
               {t("footer.links.title")}
             </h3>
-            <ul className="space-y-2 text-center text-[0.9375rem] text-black/55 dark:text-gray-300">
+            <ul className="space-y-2 text-[0.9375rem] text-black/55 dark:text-gray-300">
               <li>
                 <a
                   href="#how-it-works"
@@ -59,7 +59,7 @@ export default function Footer() {
 
           {/* Socials */}
           <div className="flex flex-col items-center space-y-3">
-            <h3 className="font-semibold text-[0.9375rem]">
+            <h3 className="font-bold mr-3 text-[0.9375rem]">
               {t("footer.socials")}
             </h3>
             <div className="flex items-center">
@@ -123,7 +123,7 @@ export default function Footer() {
               href="https://github.com/zeke614"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold ml-1 text-[#256F5C] underline underline-offset-2"
+              className="font-bold ml-1 text-[#256F5C] underline underline-offset-2"
             >
               Ezekiel
             </a>

@@ -6,13 +6,6 @@
 
 
 @font-face {
-  font-family: "DK Frozen Memory";
-  src: url("/fonts/DKFrozenMemory.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
   font-family: "Satoshi";
   src: url("/fonts/Satoshi-Regular.otf") format("opentype");
   font-weight: 400; 
@@ -42,7 +35,6 @@
 
 @theme {
   --font-outfit: "Outfit", sans-serif; 
-  --font-frozen: "DK Frozen Memory";  
   --font-satoshi: "Satoshi", Arial, Helvetica, sans-serif; 
 
   @keyframes bouncey {

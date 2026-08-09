@@ -88,7 +88,7 @@ function UnsupportedBaseMessage() {
     <div className="text-center py-10 px-6 text-black/65 dark:text-gray-200 flex flex-col items-center gap-2">
       <span className="text-3xl">😕</span>
       <p className="text-[1rem] font-light leading-relaxed max-w-xs">
-        {t("chart.oops1")} <span className="font-semibold">$ USD</span>{" "}
+        {t("chart.oops1")} <span className="font-bold">$ USD</span>{" "}
         {t("chart.oops2")}
       </p>
     </div>
@@ -117,7 +117,7 @@ function RangeSelector({
           key={r}
           onClick={() => onChange(r)}
           className={`
-            px-3 py-[2px] rounded-full text-sm font-semibold border transition-all duration-200 cursor-pointer
+            px-3 py-[2px] rounded-full text-sm font-bold border transition-all duration-200 cursor-pointer
             ${
               r === selected
                 ? "bg-[#256F5C] text-white border-[#256F5C] shadow-sm"

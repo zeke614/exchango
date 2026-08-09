@@ -131,7 +131,7 @@ export default function Header() {
       {!showLanguageOverlay && (
         <header className="sticky top-0 z-50 px-5 sm:px-8 lg:px-0 w-full mx-auto max-w-4xl">
           <div className=" flex items-center justify-between h-15 bg-transparent backdrop-blur-lg">
-            <a href="/" className="text-lg font-semibold leading-none">
+            <a href="/" className="text-lg font-bold leading-none">
               exchan<span className="text-[#256F5C]">go</span>
             </a>
 
@@ -139,7 +139,7 @@ export default function Header() {
               <div className="relative" ref={themeDropdownRef}>
                 <button
                   aria-label="Change Theme"
-                  className="flex items-center gap-1 font-semibold uppercase cursor-pointer transition-colors duration-150"
+                  className="flex items-center gap-1 font-bold uppercase cursor-pointer transition-colors duration-150"
                   onClick={() => {
                     setShowThemeDropdown(!showThemeDropdown);
                     setShowDropdown(false);
@@ -193,7 +193,7 @@ export default function Header() {
               <div className="relative" ref={dropdownRef}>
                 <button
                   aria-label={t("aria.changeLanguage")}
-                  className="flex items-center gap-1 text-sm font-semibold uppercase cursor-pointer transition-colors duration-150"
+                  className="flex items-center gap-1 text-sm font-bold uppercase cursor-pointer transition-colors duration-150"
                   onClick={() => {
                     setShowDropdown(!showDropdown);
                     setShowThemeDropdown(false);
@@ -217,7 +217,7 @@ export default function Header() {
                       transition={{ duration: 0.2, ease: "easeInOut" }}
                       className="absolute right-0 top-8 w-42 border border-black/8 dark:border-white/8 bg-white dark:bg-[#242424] rounded-xl py-3 px-1.5 shadow-lg z-10"
                     >
-                      <p className="font-semibold text-[0.9375rem] mb-2 px-1">
+                      <p className="font-bold text-[0.9375rem] mb-2 px-1">
                         Pick your language
                       </p>
                       <ul className="text-[0.9375rem] space-y-0.5">
