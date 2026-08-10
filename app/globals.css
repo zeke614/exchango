@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #fcfcfc;
+  --foreground: #171717;
+}
+
+.dark {
+  --background: #1f1f1f;
+  --foreground: #f9fafb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --font-outfit: var(--font-outfit);
+  --font-satoshi: var(--font-satoshi);
+
+  @keyframes bouncey {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  --animate-bouncey: bouncey 0.8s ease-in-out infinite;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-satoshi), Arial, Helvetica, sans-serif;
+  @apply tracking-wider; 
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer utilities {
+  .thin-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .thin-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full dark:bg-gray-600;
+  }
+
+  .thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+.recharts-surface {
+  outline: none !important;
+}
