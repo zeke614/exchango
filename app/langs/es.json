@@ -1,0 +1,69 @@
+{
+  "siteTitle": "exchango",
+  "aria": {
+    "changeLanguage": "Cambiar idioma"
+  },
+  "language": {
+    "title": "Seleccionar idioma"
+  },
+  "welcome": {
+    "welcomeLine1": "Bienvenido a ",
+    "welcomeLine2": "el mejor convertidor de divisas!",
+    "guideTitle": "Guía Rápida"
+  },
+  "guide": {
+    "step1": {
+      "title": "Elige tus monedas",
+      "desc": "Usa los menús desplegables para elegir la moneda de origen (ej. USD) y la moneda de destino (ej. GHS)."
+    },
+    "step2": {
+      "title": "Ingresa la cantidad",
+      "desc": "Escribe cuánto dinero deseas convertir en el campo de entrada. La conversión se hará automáticamente."
+    },
+    "step3": {
+      "title": "Obtén resultados instantáneos",
+      "desc": "Verá la actualización del tipo de cambio en tiempo real a medida que cambian las condiciones del mercado."
+    }
+  },
+  "converterWords": {
+    "title": "Convertidor de Divisas",
+    "line1": "Obtén",
+    "highlight1": "conversiones instantáneas gratuitas",
+    "line2": "para",
+    "highlight2": "150+ monedas globales",
+    "amount": "Cantidad",
+    "convertedFigure": "Equivale",
+    "rate": "Tipo de Cambio"
+  },
+  "updated": {
+    "relative": {
+      "seconds_one": "Actualizado hace {{count}} segundo",
+      "seconds_other": "Actualizado hace {{count}} segundos",
+      "minutes_one": "Actualizado hace {{count}} minuto",
+      "minutes_other": "Actualizado hace {{count}} minutos",
+      "hours_one": "Actualizado hace {{count}} hora",
+      "hours_other": "Actualizado hace {{count}} horas",
+      "days_one": "Actualizado hace {{count}} día",
+      "days_other": "Actualizado hace {{count}} días"
+    }
+  },
+
+  "chart": {
+    "title": "Historia",
+    "oops1": "Los datos históricos solo están disponibles para pares de divisas que incluyen",
+    "oops2": " como moneda base."
+  },
+
+  "footer": {
+    "value": "Simple, Preciso y Confiable.\nTe ayudamos a convertir divisas de manera rápida y confiable.",
+    "links": {
+      "title": "Enlaces Rápidos",
+      "howItWorks": "Cómo Funciona",
+      "converter": "Convertidor",
+      "contact": "Contacto"
+    },
+    "socials": "Medios Sociales",
+    "disclaimer": "Las tasas de cambio son para información general y pueden variar ligeramente. Siempre verifica con tu banco o proveedor de servicios financieros antes de tomar decisiones.",
+    "builder": "Construido por"
+  }
+}
