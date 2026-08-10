@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   keywords:
-    "currency converter, money exchange, exchango, exchange rates, convert currencies online",
+    "currency converter, money exchange, exchango, exchange rates, free currency converter, simple currency converter, fast currency converter, convert currencies online",
   authors: [{ name: "exchango" }],
   alternates: {
     canonical: SITE_URL,
