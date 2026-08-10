@@ -7,18 +7,7 @@ import { readCache, writeCache } from "@/app/lib/cache";
 
 type Currency = (typeof countriesData.currencies)[number];
 
-/**
- * On first load, detects the user's local currency via their IP address
- * and updates the `toCurrency` state. Result is cached so the API is
- * only called once per browser session. Unchanged from the original —
- * this has no server-side equivalent worth building yet (would mean
- * swapping to Vercel's geo headers), so it stays exactly as it was.
- */
-
-export function useDetectedCurrency(
-  setCurrency: (currency: Currency) => void,
-  ipInfoToken: string,
-) {
+export function useDetectedCurrency(setCurrency: (currency: Currency) => void) {
   useEffect(() => {
     async function detect() {
       const cached = readCache<Currency>(CACHE_KEYS.userCurrency);
@@ -28,7 +17,9 @@ export function useDetectedCurrency(
       }
 
       try {
-        const res = await fetch(`https://ipinfo.io/json?token=${ipInfoToken}`);
+        const res = await fetch("/api/geo");
+        if (!res.ok) throw new Error("Failed to fetch geolocation");
+
         const { country } = await res.json();
         const countryCode = country?.toUpperCase();
 

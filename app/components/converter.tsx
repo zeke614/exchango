@@ -34,16 +34,9 @@ const STEPS = ["step1", "step2", "step3"] as const;
 interface Props {
   initialRates: RatesMap | null;
   fetchedAt: string | null;
-  appId: string;
-  ipInfoToken: string;
 }
 
-export default function Converter({
-  initialRates,
-  fetchedAt,
-  appId,
-  ipInfoToken,
-}: Props) {
+export default function Converter({ initialRates, fetchedAt }: Props) {
   const { t, ready } = useTranslation();
 
   const [fromCurrency, setFromCurrency] = useState(DEFAULT_FROM);
@@ -51,7 +44,7 @@ export default function Converter({
   const [amount, setAmount] = useState("");
   const [swapRotation, setSwapRotation] = useState(90);
 
-  useDetectedCurrency(setToCurrency, ipInfoToken);
+  useDetectedCurrency(setToCurrency);
 
   // No isLoading state anymore — rates arrive with the initial HTML
   // instead of being fetched after mount, so there's nothing to spin on
@@ -243,7 +236,6 @@ export default function Converter({
           <CurrencyHistoryChart
             base={fromCurrency.code}
             target={toCurrency.code}
-            appId={appId}
           />
         </div>
       </section>

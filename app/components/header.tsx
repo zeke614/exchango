@@ -6,8 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 import countriesData from "@/app/lib/data";
 
-type Theme = "light" | "dark" | "system";
-
 const themes = [
   { value: "light", label: "Light", icon: "bx bx-sun" },
   { value: "dark", label: "Dark", icon: "bx bx-moon" },
@@ -17,7 +15,6 @@ const themes = [
 export default function Header() {
   const { t, i18n } = useTranslation();
 
-  // 1. Hook into next-themes and set up our mounted state
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -82,7 +79,7 @@ export default function Header() {
 
   return (
     <>
-      {/* Language Overlay (Unchanged) */}
+      {/* Language Overlay */}
       <AnimatePresence>
         {showLanguageOverlay && (
           <motion.div

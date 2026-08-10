@@ -17,7 +17,6 @@ import { useTranslation } from "react-i18next";
 interface Props {
   base: string;
   target: string;
-  appId: string;
 }
 
 interface DataPoint {
@@ -213,7 +212,7 @@ function RateChart({
   );
 }
 
-export default function CurrencyHistoryChart({ base, target, appId }: Props) {
+export default function CurrencyHistoryChart({ base, target }: Props) {
   const { t } = useTranslation();
   const [range, setRange] = useState<Range>("1W");
   const [data, setData] = useState<DataPoint[]>([]);
@@ -246,7 +245,7 @@ export default function CurrencyHistoryChart({ base, target, appId }: Props) {
         }
 
         try {
-          const url = `https://openexchangerates.org/api/historical/${dateStr}.json?app_id=${appId}&base=${base}&symbols=${target}`;
+          const url = `/api/history?date=${dateStr}&base=${base}&target=${target}`;
           const res = await axios.get<{ rates: Record<string, number> }>(url);
           const point: DataPoint = {
             date: dateStr,
@@ -265,7 +264,7 @@ export default function CurrencyHistoryChart({ base, target, appId }: Props) {
     }
 
     fetchHistory();
-  }, [base, target, range, appId]);
+  }, [base, target, range]);
 
   return (
     <div className="w-full flex flex-col items-center justify-center mt-18 mb-3">

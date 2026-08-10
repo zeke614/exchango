@@ -11,17 +11,11 @@ export interface RatesMap {
 
 export interface RatesData {
   rates: RatesMap | null; // null = fetch failed; UI shows "Could not fetch rate"
-  fetchedAt: string | null; // ISO timestamp — see note below
+  fetchedAt: string | null; // ISO timestamp
 }
 
 export async function getExchangeRates(): Promise<RatesData> {
-  // Same variable historyChart.tsx reads client-side. Deliberately not
-  // a separate server-only var: with 4 manually-rotated app IDs, having
-  // the server fetch and the client chart point at different variables
-  // means every rotation has two places to update in sync — a good way
-  // to get a silent split where one half of the app is quietly rate-
-  // limited while the other isn't. One variable, one thing to swap.
-  const appId = process.env.NEXT_PUBLIC_OPEN_EXCHANGE_RATES_APP_ID;
+  const appId = process.env.OPEN_EXCHANGE_RATES_APP_ID;
   if (!appId) {
     // Misconfiguration, not a runtime API failure — fail loudly so it's
     // caught in preview/CI rather than silently showing "no rate" in prod.

@@ -7,9 +7,6 @@ import es from "@/app/langs/es.json";
 import de from "@/app/langs/de.json";
 import it from "@/app/langs/it.json";
 
-// Unchanged from the original src/i18n.ts — client-side language
-// toggling, not URL-based locale routing. See migration notes on
-// why next-intl was deliberately skipped for now.
 if (!i18n.isInitialized) {
   i18n.use(initReactI18next).init({
     resources: {
