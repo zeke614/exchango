@@ -18,10 +18,10 @@ export function useDetectedCurrency(setCurrency: (currency: Currency) => void) {
 
       try {
         const res = await fetch("/api/geo");
-        if (!res.ok) throw new Error("Failed to fetch geolocation");
+        if (!res.ok) throw new Error("Geo fetch failed");
 
-        const { country } = await res.json();
-        const countryCode = country?.toUpperCase();
+        const data = await res.json();
+        const countryCode = data.country?.toUpperCase();
 
         const currency = resolveCurrencyFromCountry(countryCode);
         if (currency) {
@@ -29,15 +29,19 @@ export function useDetectedCurrency(setCurrency: (currency: Currency) => void) {
           writeCache(CACHE_KEYS.userCurrency, currency);
         }
       } catch {
-        // Silently fall back to the default currency set in App state
+        // Silently fall back to the default currency set in App state (GBP)
       }
     }
 
     detect();
-  }, []);
+  }, [setCurrency]);
 }
 
-function resolveCurrencyFromCountry(countryCode: string): Currency | undefined {
+function resolveCurrencyFromCountry(
+  countryCode?: string,
+): Currency | undefined {
+  if (!countryCode) return undefined;
+
   if (countriesData.euroZone.includes(countryCode)) {
     return countriesData.currencies.find((c) => c.code === "EUR");
   }
