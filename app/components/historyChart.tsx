@@ -139,7 +139,7 @@ function RateChart({
 }) {
   return (
     <div className="w-full max-w-lg mx-auto">
-      <ResponsiveContainer width="93%" height={200}>
+      <ResponsiveContainer width="99%" height={200}>
         <LineChart
           data={data}
           margin={{ top: 4, right: 4, left: 0, bottom: 0 }}
@@ -147,7 +147,7 @@ function RateChart({
           <CartesianGrid horizontal={true} vertical={false} stroke="#f0f0f0" />
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 11.5, fill: "#9ca3af" }}
+            tick={{ fontSize: 11, fill: "#9ca3af" }}
             axisLine={{ stroke: "#e5e7eb" }}
             tickLine={{ stroke: "#e5e7eb" }}
             tickMargin={6}
@@ -156,11 +156,12 @@ function RateChart({
           />
           <YAxis
             domain={["auto", "auto"]}
-            tick={{ fontSize: 11.5, fill: "#9ca3af" }}
+            tick={{ fontSize: 11, fill: "#9ca3af" }}
             axisLine={{ stroke: "#e5e7eb" }}
             tickLine={{ stroke: "#e5e7eb" }}
             tickMargin={6}
-            width={54}
+            width={60}
+            tickFormatter={(value) => Number(value).toFixed(4)}
           />
           <Tooltip
             formatter={(value) => {
