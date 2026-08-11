@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
@@ -25,7 +25,7 @@ const outfit = Outfit({
 });
 
 const SITE_URL = "https://exchangoio.vercel.app";
-const TITLE = "exchango | Smart Currency Converter";
+const TITLE = "exchango | Currency Converter";
 const DESCRIPTION =
   "Convert currencies with real-time rates and a clean, mobile-first interface.";
 
@@ -53,6 +53,22 @@ export const metadata: Metadata = {
   verification: {
     google: "T6EdMufxFF69EDDXSRDQ1PLZK33j2BKCRarWzzWCza0",
   },
+  icons: {
+    apple: "/icons/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Exchango",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fcfcfc" },
+    { media: "(prefers-color-scheme: dark)", color: "#1f1f1f" },
+  ],
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
