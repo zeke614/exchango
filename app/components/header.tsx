@@ -96,8 +96,8 @@ export default function Header() {
       </AnimatePresence>
 
       {!showLanguageOverlay && (
-        <header className="sticky top-0 z-50 px-5 sm:px-8 lg:px-0 w-full mx-auto max-w-3xl">
-          <div className=" flex items-center justify-between h-15 bg-transparent backdrop-blur-lg">
+        <header className="sticky top-0 z-50 w-full mx-auto max-w-3xl bg-background/80 backdrop-blur-lg pt-[calc(env(safe-area-inset-top)-0.625rem)]">
+          <div className="flex items-center justify-between h-15 px-5 sm:px-8 lg:px-0">
             <a href="/" className="text-lg font-bold leading-none">
               exchan<span className="text-[#256F5C]">go</span>
             </a>

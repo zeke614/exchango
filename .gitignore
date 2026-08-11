@@ -24,3 +24,9 @@ dist-ssr
 *.sln
 *.sw?
 .next
+
+# PWA
+public/sw.js
+public/sw.js.map
+public/swe-worker-*.js
+public/swe-worker-*.js.map
