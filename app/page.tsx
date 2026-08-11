@@ -18,8 +18,10 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <OfflineBanner fetchedAt={fetchedAt} />
-      <Header />
+      <div className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-lg pt-[env(safe-area-inset-top)]">
+        <OfflineBanner fetchedAt={fetchedAt} />
+        <Header />
+      </div>
 
       <main className="grow mx-auto max-w-5xl py-14 sm:py-21 px-5 sm:px-8 lg:px-0">
         <Converter initialRates={rates} fetchedAt={fetchedAt} />

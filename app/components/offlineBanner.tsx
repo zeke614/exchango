@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
@@ -28,8 +29,8 @@ export default function OfflineBanner({
       role="status"
       className="text-center text-sm font-medium py-2 bg-[#256F5C]/10 text-[#256F5C]"
     >
-      You&apos;re offline — showing rates from{" "}
-      {fetchedAt ? dayjs(fetchedAt).format("h:mm A") : "your last visit"}.
+      You're offline — showing rates from
+      {fetchedAt ? dayjs(fetchedAt).format(" h:mm A") : " your last visit"}.
     </div>
   );
 }
