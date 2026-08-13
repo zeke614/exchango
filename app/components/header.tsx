@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
@@ -25,7 +26,9 @@ export default function Header() {
   const [showThemeDropdown, setShowThemeDropdown] = useState(false);
   const themeDropdownRef = useRef<HTMLDivElement>(null);
 
-  // 2. Safely tell the component we are on the client
+  // Safely tell the component we are on the client — also gates the
+  // language-overlay portal below, since document.body isn't available
+  // during SSR and createPortal would throw if called too early.
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -79,21 +82,33 @@ export default function Header() {
 
   return (
     <>
-      {/* Language Overlay */}
-      <AnimatePresence>
-        {showLanguageOverlay && (
-          <motion.div
-            key="language-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="fixed inset-0 z-100 flex items-center justify-center bg-white/60 dark:bg-black/60 backdrop-blur-md"
-          >
-            <i className="bx bx-translate text-[3rem] text-[#256F5C] animate-bounce"></i>
-          </motion.div>
+      {/* Language Overlay — portaled to document.body, NOT rendered
+          inline in the header tree. page.tsx's sticky wrapper carries
+          `backdrop-blur-lg`, and `backdrop-filter` on an ancestor
+          creates a new containing block for any `fixed` descendant —
+          so a fixed inset-0 overlay left inline here would resolve
+          against that wrapper's box (header-height only) instead of
+          the viewport. Portaling escapes that ancestor chain entirely,
+          so this stays correct regardless of what styling the wrapper
+          picks up in the future. */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {showLanguageOverlay && (
+              <motion.div
+                key="language-overlay"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="fixed inset-0 z-100 flex items-center justify-center bg-white/60 dark:bg-black/60 backdrop-blur-md"
+              >
+                <i className="bx bx-translate text-[3rem] text-[#256F5C] animate-bounce"></i>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
 
       {!showLanguageOverlay && (
         <header className="w-full mx-auto max-w-3xl">
@@ -104,7 +119,6 @@ export default function Header() {
 
             <div className="flex items-center gap-4">
               <div className="relative" ref={themeDropdownRef}>
-                {/* 3. The Skeleton vs Button logic (borrowed from Assay) */}
                 {mounted ? (
                   <button
                     aria-label="Change Theme"
@@ -122,8 +136,6 @@ export default function Header() {
                     ></i>
                   </button>
                 ) : (
-                  // A rigid skeleton block that perfectly mimics the size of the button
-                  // to prevent any layout shifting when the JS finally executes.
                   <div className="w-8.5 h-5 rounded-none bg-black/5 dark:bg-white/5 animate-pulse"></div>
                 )}
 

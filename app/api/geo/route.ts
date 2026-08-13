@@ -10,13 +10,19 @@ export async function GET(request: Request) {
     );
   }
 
-  // 1. Extract the actual user's IP from Vercel's headers
+  // 1. Extract the actual user's IP from headers
   const forwardedFor = request.headers.get("x-forwarded-for");
-  const clientIp = forwardedFor ? forwardedFor.split(",")[0].trim() : "";
+  console.log("[geo] x-forwarded-for:", forwardedFor);
+  let clientIp = forwardedFor ? forwardedFor.split(",")[0].trim() : "";
+
+  // 2. Ignore localhost IPs (dev environment)
+  if (clientIp === "::1" || clientIp === "127.0.0.1") {
+    clientIp = "";
+  }
 
   try {
-    // 2. Explicitly pass the user's IP to IPInfo.
-    // else IPInfo will geolocate the Vercel data center (US).
+    // 3. Explicitly pass the user's IP to IPInfo.
+    // If clientIp is empty (like on localhost), it defaults to the server's public IP.
     const url = clientIp
       ? `https://ipinfo.io/${clientIp}/json?token=${token}`
       : `https://ipinfo.io/json?token=${token}`;

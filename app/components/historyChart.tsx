@@ -228,6 +228,8 @@ export default function CurrencyHistoryChart({ base, target }: Props) {
       return;
     }
 
+    let cancelled = false;
+
     async function fetchHistory() {
       setLoading(true);
 
@@ -236,6 +238,8 @@ export default function CurrencyHistoryChart({ base, target }: Props) {
       const results: DataPoint[] = [];
 
       for (const date of dates) {
+        if (cancelled) return; // bail mid-loop, don't keep fetching for a stale currency
+
         const dateStr = date.format("YYYY-MM-DD");
         const cacheKey = getCacheKey(base, target, dateStr, range);
 
@@ -260,12 +264,17 @@ export default function CurrencyHistoryChart({ base, target }: Props) {
         }
       }
 
+      if (cancelled) return; // don't commit a stale currency's results over a newer fetch
       setData(results);
       setLoading(false);
     }
 
     fetchHistory();
-  }, [base, target, range]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [base, target, range, isUnsupportedBase]);
 
   return (
     <div className="w-full flex flex-col items-center justify-center mt-18 mb-3">

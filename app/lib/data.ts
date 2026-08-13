@@ -43,7 +43,7 @@ const countriesData = {
     { code: "AMD", name: "Armenian Dram", flag: "am", symbol: "֏" },
     {
       code: "ANG",
-      name: "Netherland Antillean Guilder",
+      name: "Netherlands Antillean Guilder",
       flag: "cw",
       symbol: "ƒ",
     },

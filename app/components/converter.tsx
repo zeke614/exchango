@@ -29,6 +29,7 @@ const CurrencyHistoryChart = dynamic(
 
 const DEFAULT_FROM = countriesData.currencies[0];
 const DEFAULT_TO = countriesData.currencies[1];
+const DEFAULT_AMOUNT = "100";
 const STEPS = ["step1", "step2", "step3"] as const;
 
 interface Props {
@@ -41,7 +42,7 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
 
   const [fromCurrency, setFromCurrency] = useState(DEFAULT_FROM);
   const [toCurrency, setToCurrency] = useState(DEFAULT_TO);
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(DEFAULT_AMOUNT);
   const [swapRotation, setSwapRotation] = useState(90);
 
   useDetectedCurrency(setToCurrency);
@@ -151,7 +152,7 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
             <label className="block text-end text-[1.0625rem] text-black/65 dark:text-gray-200 mb-1.5">
               {t("converterWords.amount")}
             </label>
-            <div className="flex items-center justify-between border-2 gap-5 border-black/6 dark:border-white/6 rounded-none px-3 py-3.75 shadow-lg">
+            <div className="relative flex items-center justify-between border-2 gap-5 border-black/6 dark:border-white/6 rounded-none px-3 py-3.75 shadow-lg">
               <CurrencyDropdown
                 selected={fromCurrency}
                 setSelected={setFromCurrency}
@@ -189,7 +190,7 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
             <label className="block text-end text-[1.0625rem] text-black/65 dark:text-gray-200 mb-2">
               {t("converterWords.convertedFigure")}
             </label>
-            <div className="flex items-center justify-between gap-5 border-2 border-black/6 dark:border-white/6 rounded-none px-3 py-3.75 shadow-lg">
+            <div className="relative flex items-center justify-between gap-5 border-2 border-black/6 dark:border-white/6 rounded-none px-3 py-3.75 shadow-lg">
               <CurrencyDropdown
                 selected={toCurrency}
                 setSelected={setToCurrency}
