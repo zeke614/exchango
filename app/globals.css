@@ -37,6 +37,10 @@ html {
   scroll-behavior: smooth;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 @layer utilities {
   .thin-scrollbar::-webkit-scrollbar {
     width: 8px;
