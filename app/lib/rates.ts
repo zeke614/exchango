@@ -90,7 +90,7 @@ export async function getExchangeRates(): Promise<RatesData> {
     // without adding a KV/edge-cache layer, which felt like scope creep
     // for this pass. Flag if you want that added back properly.
     //
-    // NOTE: the try/catch lives out here, wrapping the *call* to
+    // the try/catch lives out here, wrapping the *call* to
     // getCachedRates, not inside fetchRatesFromApi itself. That's
     // intentional — unstable_cache does not persist a thrown error as
     // a cached result, but it WOULD happily cache a returned

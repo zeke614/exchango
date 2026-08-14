@@ -6,7 +6,7 @@ import { unstable_cache } from "next/cache";
 // could shift as the day progresses, so it gets a real revalidate
 // window instead of a long one.
 const TODAY_REVALIDATE_SECONDS = 3600; // matches lib/rates.ts's hourly cadence
-const PAST_DAY_REVALIDATE_SECONDS = 60 * 60 * 24 * 30; // ~forever for a closed day, without touching revalidate:false (which needs manual invalidation to ever clear)
+const PAST_DAY_REVALIDATE_SECONDS = 60 * 60 * 24 * 30; // forever for a closed day, without touching revalidate:false (which needs manual invalidation to ever clear)
 
 function isPastDay(date: string): boolean {
   const today = new Date().toISOString().slice(0, 10);
