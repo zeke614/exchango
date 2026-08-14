@@ -86,7 +86,7 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
 
   return (
     <>
-      <section className="pb-16">
+      <section className="py-16">
         <div className="max-w-2xl mx-auto gap-y-2 text-center">
           <h2 className="text-center text-lg">
             {t("welcome.welcomeLine1")}
@@ -101,7 +101,7 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
 
       {/* How It Works */}
       <section id="how-it-works" className="scroll-mt-16 pb-10">
-        <div className="max-w-md mx-auto">
+        <div className="max-w-sm sm:max-w-md px-2 sm:px-0">
           <h3 className="text-center text-[#256F5C] text-2xl font-bold mb-8">
             {t("welcome.guideTitle")}
           </h3>
@@ -148,7 +148,7 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
           </div>
 
           {/* From currency + amount */}
-          <div className="w-full max-w-sm px-4 sm:px-0">
+          <div className="w-full max-w-sm sm:max-w-md px-2 sm:px-0">
             <label className="block text-end text-[1.0625rem] text-black/65 dark:text-gray-200 mb-1.5">
               {t("converterWords.amount")}
             </label>
@@ -170,7 +170,7 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
             </div>
           </div>
 
-          {/* Swap button — no more isLoading branch, see note above */}
+          {/* Swap button */}
           <motion.button
             onClick={handleSwap}
             whileHover={{ scale: 1.06 }}
@@ -186,7 +186,7 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
           </motion.button>
 
           {/* To currency + converted amount */}
-          <div className="w-full max-w-sm px-4 sm:px-0">
+          <div className="w-full max-w-sm sm:max-w-md px-2 sm:px-0">
             <label className="block text-end text-[1.0625rem] text-black/65 dark:text-gray-200 mb-2">
               {t("converterWords.convertedFigure")}
             </label>

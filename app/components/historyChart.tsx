@@ -1,18 +1,19 @@
 "use client";
 
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
+  AreaChart,
+  Area,
 } from "recharts";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "next-themes";
 
 interface Props {
   base: string;
@@ -113,7 +114,7 @@ function RangeSelector({
           key={r}
           onClick={() => onChange(r)}
           className={`
-            px-3 py-0.5 rounded-none text-sm font-bold border-2 transition-all duration-200 cursor-pointer shadown-lg
+            px-3 py-0.5 rounded-none text-sm font-bold border-2 transition-all duration-200 cursor-pointer shadow-lg
             ${
               r === selected
                 ? "bg-[#256F5C] text-white border-[#256F5C] shadow-sm"
@@ -137,36 +138,94 @@ function RateChart({
   base: string;
   target: string;
 }) {
+  const { resolvedTheme } = useTheme();
+  const tooltipBackground = resolvedTheme === "dark" ? "#242424" : "#ffffff";
+
+  const defaultIndex = data.length > 0 ? data.length - 1 : 0;
+  const [activeIndex, setActiveIndex] = useState<number | null>(defaultIndex);
+
+  // 1. Track if the user is actively touching/hovering the chart
+  const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    setActiveIndex(data.length > 0 ? data.length - 1 : 0);
+  }, [data]);
+
+  const handleMouseMove = (state: any) => {
+    if (state && state.activeTooltipIndex !== undefined) {
+      setIsHovering(true);
+      setActiveIndex(state.activeTooltipIndex);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+    setActiveIndex(defaultIndex);
+  };
+
+  const renderCustomDot = (props: any) => {
+    if (isHovering) return null;
+
+    const { cx, cy, index } = props;
+    if (index !== activeIndex) return null;
+
+    return (
+      <circle
+        key={`dot-${index}`}
+        cx={cx}
+        cy={cy}
+        r={4}
+        fill={BRAND_GREEN}
+        className="drop-shadow-md"
+        style={{ outline: "none" }}
+      />
+    );
+  };
+
   return (
-    <div className="w-full max-w-lg mx-auto">
-      <ResponsiveContainer width="99%" height={200}>
-        <LineChart
+    <div className="w-full max-w-md px-2 sm:px-0">
+      <ResponsiveContainer width="98%" height={200}>
+        <AreaChart
           data={data}
           margin={{ top: 4, right: 4, left: 0, bottom: 0 }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
         >
-          <CartesianGrid horizontal={true} vertical={false} stroke="#f0f0f0" />
+          <defs>
+            <linearGradient id="rateGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={BRAND_GREEN} stopOpacity={0.2} />
+              <stop offset="95%" stopColor={BRAND_GREEN} stopOpacity={0.0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid
+            horizontal={true}
+            vertical={false}
+            className="stroke-gray-100 dark:stroke-white/5"
+          />
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 11, fill: "#9ca3af" }}
-            axisLine={{ stroke: "#e5e7eb" }}
-            tickLine={{ stroke: "#e5e7eb" }}
+            interval="preserveStartEnd"
+            minTickGap={2}
+            tick={{ fontSize: 10, fill: "#9ca3af" }}
+            axisLine={{ className: "stroke-gray-200 dark:stroke-white/10" }}
+            tickLine={{ className: "stroke-gray-200 dark:stroke-white/10" }}
             tickMargin={6}
-            minTickGap={10}
             tickFormatter={(tick) => dayjs(tick).format("MMM D")}
           />
           <YAxis
             domain={["auto", "auto"]}
-            tick={{ fontSize: 11, fill: "#9ca3af" }}
-            axisLine={{ stroke: "#e5e7eb" }}
-            tickLine={{ stroke: "#e5e7eb" }}
+            tick={{ fontSize: 10, fill: "#9ca3af" }}
+            axisLine={{ className: "stroke-gray-200 dark:stroke-white/10" }}
+            tickLine={{ className: "stroke-gray-200 dark:stroke-white/10" }}
             tickMargin={6}
-            width={60}
+            width={62}
             tickFormatter={(value) => Number(value).toFixed(4)}
           />
           <Tooltip
+            defaultIndex={defaultIndex}
             formatter={(value) => {
               const numericValue = Array.isArray(value)
-                ? Number(value[0])
+                ? Number(value)
                 : Number(value);
               return [
                 Number.isFinite(numericValue) ? numericValue.toFixed(4) : "",
@@ -180,34 +239,39 @@ function RateChart({
               return label;
             }}
             contentStyle={{
-              fontSize: "12px",
-              padding: "6px 10px",
-              backgroundColor: "#fff",
-              border: "1px solid #e5e7eb",
-              borderRadius: "0",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+              background: tooltipBackground,
+              border: "none",
+              borderRadius: 0,
+              boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+              fontSize: 11,
+              padding: 6,
             }}
             labelStyle={{
               fontSize: "11px",
               color: "#6b7280",
-              marginBottom: "2px",
+              marginBottom: "0",
             }}
             itemStyle={{ color: BRAND_GREEN, fontWeight: 600 }}
             cursor={{
-              stroke: "#e5e7eb",
+              className: "stroke-gray-200 dark:stroke-neutral-700",
               strokeDasharray: "3 3",
               strokeWidth: 1.5,
             }}
           />
-          <Line
-            type="monotone"
+          <Area
+            type="linear"
             dataKey="rate"
             stroke={BRAND_GREEN}
-            strokeWidth={2}
-            dot={false}
-            activeDot={{ r: 4, fill: BRAND_GREEN, strokeWidth: 0 }}
+            strokeWidth={2.25}
+            fill="url(#rateGradient)"
+            dot={renderCustomDot}
+            activeDot={{
+              r: 4,
+              fill: BRAND_GREEN,
+              stroke: "none",
+            }}
           />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

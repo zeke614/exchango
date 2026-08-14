@@ -64,6 +64,12 @@ html, body {
   }
 }
 
+.recharts-wrapper:focus,
+.recharts-wrapper *:focus,
+.recharts-surface:focus {
+  outline: none !important;
+}
+
 .recharts-surface {
   outline: none !important;
 }

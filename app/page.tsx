@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-lg pt-[env(safe-area-inset-top)]">
+      <div className="fixed top-0 z-50 w-full bg-background/80 backdrop-blur-lg pt-[env(safe-area-inset-top)]">
         <OfflineBanner fetchedAt={fetchedAt} />
         <Header />
       </div>
