@@ -86,7 +86,7 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
 
   return (
     <>
-      <section className="py-16">
+      <section className="pb-16">
         <div className="max-w-2xl mx-auto gap-y-2 text-center">
           <h2 className="text-center text-lg">
             {t("welcome.welcomeLine1")}
