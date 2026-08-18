@@ -78,7 +78,7 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
               />
             </div>
 
-            <ul className="space-y-1 max-h-47.5 overflow-y-auto">
+            <ul className="space-y-1.5 max-h-48 overflow-y-auto">
               {filteredCurrencies.length > 0 ? (
                 filteredCurrencies.map((currency) => (
                   <li key={currency.code}>
@@ -88,7 +88,7 @@ export default function CurrencyDropdown({ selected, setSelected }: Props) {
                         setOpen(false);
                         setSearchTerm("");
                       }}
-                      className="w-full flex items-center justify-between p-1 rounded-none hover:bg-gray-50 dark:hover:bg-white/5.5 cursor-pointer"
+                      className="w-full flex items-center justify-between px-1 rounded-none hover:bg-gray-50 dark:hover:bg-white/5.5 cursor-pointer"
                     >
                       <div className="flex items-center gap-2">
                         <img

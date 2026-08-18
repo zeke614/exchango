@@ -5,13 +5,16 @@ interface CachedValue<T> {
   timestamp: string;
 }
 
-export function readCache<T>(key: string): T | null {
+export function readCache<T>(
+  key: string,
+  maxAgeMinutes: number = CACHE_MAX_AGE_MINUTES,
+): T | null {
   const raw = localStorage.getItem(key);
   if (!raw) return null;
 
   const { data, timestamp }: CachedValue<T> = JSON.parse(raw);
   const ageInMinutes = (Date.now() - new Date(timestamp).getTime()) / 60_000;
-  const isFresh = ageInMinutes < CACHE_MAX_AGE_MINUTES;
+  const isFresh = ageInMinutes < maxAgeMinutes;
 
   return isFresh ? data : null;
 }

@@ -7,6 +7,17 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { ThemeProvider } from "./components/themeProvider";
 
+import Header from "@/app/components/header";
+import dynamic from "next/dynamic";
+
+const Footer = dynamic(() => import("@/app/components/footer"), {
+  loading: () => (
+    <span className="text-center font-light py-6 block text-black/40">
+      Loading…
+    </span>
+  ),
+});
+
 const satoshi = localFont({
   src: [
     // { path: "./fonts/Satoshi-Regular.otf", weight: "400", style: "normal" },
@@ -95,7 +106,23 @@ export default function RootLayout({
 
       <body className="font-satoshi">
         <ThemeProvider>
-          <I18nProvider>{children}</I18nProvider>
+          <I18nProvider>
+            <div className="min-h-screen flex flex-col">
+              <div className="fixed top-0 left-0 right-0 z-50 w-full bg-background/80 backdrop-blur-lg pt-[calc(env(safe-area-inset-top)*0.8)]">
+                <Header />
+              </div>
+
+              <div
+                className="grow"
+                style={{
+                  paddingTop: "calc(3.75rem + env(safe-area-inset-top))",
+                }}
+              >
+                {children}
+              </div>
+              <Footer />
+            </div>
+          </I18nProvider>
         </ThemeProvider>
 
         <Analytics />

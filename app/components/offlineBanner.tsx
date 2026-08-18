@@ -27,7 +27,7 @@ export default function OfflineBanner({
   return (
     <div
       role="status"
-      className="text-center text-sm font-medium py-1.5 bg-[#256F5C]/10 text-[#256F5C]"
+      className="text-center text-sm font-medium py-1 bg-[#256F5C]/10 text-[#256F5C]"
     >
       You're offline — showing rates from
       {fetchedAt ? dayjs(fetchedAt).format(" h:mm A") : " your last visit"}.

@@ -101,7 +101,7 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
 
       {/* How It Works */}
       <section id="how-it-works" className="scroll-mt-16 pb-10">
-        <div className="max-w-sm sm:max-w-md px-2 sm:px-0">
+        <div className="mx-auto max-w-sm sm:max-w-md px-2 sm:px-0">
           <h3 className="text-center text-[#256F5C] text-2xl font-bold mb-8">
             {t("welcome.guideTitle")}
           </h3>

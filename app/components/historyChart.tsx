@@ -12,8 +12,16 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "next-themes";
+import { readCache, writeCache } from "@/app/lib/cache";
+import {
+  HISTORY_LIVE_DAY_CACHE_MINUTES,
+  HISTORY_CLOSED_DAY_CACHE_MINUTES,
+} from "@/app/lib/constants";
+
+dayjs.extend(utc);
 
 interface Props {
   base: string;
@@ -23,27 +31,23 @@ interface Props {
 interface DataPoint {
   date: string;
   rate: number;
-  cachedAt?: string;
 }
 
 type Range = "1D" | "1W" | "2W" | "1M";
 
 const RANGES: Range[] = ["1D", "1W", "2W", "1M"];
 
-const RANGE_CONFIG: Record<
-  Range,
-  { subtractDays: number; cacheExpiryDays: number }
-> = {
-  "1D": { subtractDays: 1, cacheExpiryDays: 1 },
-  "1W": { subtractDays: 7, cacheExpiryDays: 7 },
-  "2W": { subtractDays: 14, cacheExpiryDays: 14 },
-  "1M": { subtractDays: 30, cacheExpiryDays: 30 },
+const RANGE_CONFIG: Record<Range, { subtractDays: number }> = {
+  "1D": { subtractDays: 1 },
+  "1W": { subtractDays: 7 },
+  "2W": { subtractDays: 14 },
+  "1M": { subtractDays: 30 },
 };
 
 const BRAND_GREEN = "#256F5C";
 
 function buildDateList(range: Range): dayjs.Dayjs[] {
-  const today = dayjs();
+  const today = dayjs().utc();
   const { subtractDays } = RANGE_CONFIG[range];
   const dates: dayjs.Dayjs[] = [];
 
@@ -54,28 +58,19 @@ function buildDateList(range: Range): dayjs.Dayjs[] {
   return dates;
 }
 
-function getCacheKey(
-  base: string,
-  target: string,
-  dateStr: string,
-  range: Range,
-) {
-  return `history_${base}_${target}_${dateStr}_${range}`;
+function isTodayUTC(date: dayjs.Dayjs): boolean {
+  const todayUTC = dayjs().utc().format("YYYY-MM-DD");
+  return date.utc().format("YYYY-MM-DD") === todayUTC;
 }
 
-function readFreshCache(key: string, expiryDays: number): DataPoint | null {
-  const raw = localStorage.getItem(key);
-  if (!raw) return null;
+function getCacheKey(base: string, target: string, dateStr: string) {
+  return `history_${base}_${target}_${dateStr}`;
+}
 
-  const cached = JSON.parse(raw) as DataPoint;
-  const isExpired = dayjs().diff(dayjs(cached.cachedAt), "day") >= expiryDays;
-
-  if (isExpired) {
-    localStorage.removeItem(key);
-    return null;
-  }
-
-  return cached;
+function getHistoryCacheMinutes(date: dayjs.Dayjs): number {
+  return isTodayUTC(date)
+    ? HISTORY_LIVE_DAY_CACHE_MINUTES
+    : HISTORY_CLOSED_DAY_CACHE_MINUTES;
 }
 
 function UnsupportedBaseMessage() {
@@ -140,6 +135,7 @@ function RateChart({
 }) {
   const { resolvedTheme } = useTheme();
   const tooltipBackground = resolvedTheme === "dark" ? "#242424" : "#ffffff";
+  const tooltipBorder = resolvedTheme === "dark" ? "#3f3f3f" : "#e5e5e5";
 
   const defaultIndex = data.length > 0 ? data.length - 1 : 0;
   const [activeIndex, setActiveIndex] = useState<number | null>(defaultIndex);
@@ -183,7 +179,7 @@ function RateChart({
   };
 
   return (
-    <div className="w-full max-w-md px-2 sm:px-0">
+    <div className="w-full max-w-md px-1 sm:px-0">
       <ResponsiveContainer width="98%" height={200}>
         <AreaChart
           data={data}
@@ -229,7 +225,6 @@ function RateChart({
                 : Number(value);
               return [
                 Number.isFinite(numericValue) ? numericValue.toFixed(4) : "",
-                `${base} → ${target}`,
               ];
             }}
             labelFormatter={(label) => {
@@ -240,11 +235,12 @@ function RateChart({
             }}
             contentStyle={{
               background: tooltipBackground,
-              border: "none",
+              border: `1px solid ${tooltipBorder}`,
               borderRadius: 0,
               boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
               fontSize: 11,
-              padding: 6,
+              padding: "2px 6px",
+              textAlign: "center",
             }}
             labelStyle={{
               fontSize: "11px",
@@ -297,7 +293,6 @@ export default function CurrencyHistoryChart({ base, target }: Props) {
     async function fetchHistory() {
       setLoading(true);
 
-      const { cacheExpiryDays } = RANGE_CONFIG[range];
       const dates = buildDateList(range);
       const results: DataPoint[] = [];
 
@@ -305,9 +300,13 @@ export default function CurrencyHistoryChart({ base, target }: Props) {
         if (cancelled) return; // bail mid-loop, don't keep fetching for a stale currency
 
         const dateStr = date.format("YYYY-MM-DD");
-        const cacheKey = getCacheKey(base, target, dateStr, range);
 
-        const cached = readFreshCache(cacheKey, cacheExpiryDays);
+        const cacheKey = getCacheKey(base, target, dateStr);
+
+        const cached = readCache<DataPoint>(
+          cacheKey,
+          getHistoryCacheMinutes(date),
+        );
         if (cached) {
           results.push(cached);
           continue;
@@ -319,9 +318,9 @@ export default function CurrencyHistoryChart({ base, target }: Props) {
           const point: DataPoint = {
             date: dateStr,
             rate: res.data.rates[target],
-            cachedAt: new Date().toISOString(),
           };
-          localStorage.setItem(cacheKey, JSON.stringify(point));
+
+          writeCache(cacheKey, point);
           results.push(point);
         } catch {
           // Skip days that fail — the chart will simply have a gap
