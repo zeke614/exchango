@@ -1,5 +1,5 @@
 import { defaultCache } from "@serwist/next/worker";
-import { Serwist } from "serwist";
+import { NetworkOnly, Serwist } from "serwist";
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
 import { NetworkFirst, StaleWhileRevalidate, CacheFirst } from "serwist";
 import { ExpirationPlugin } from "@serwist/expiration";
@@ -62,6 +62,7 @@ const serwist = new Serwist({
         ],
       }),
     },
+    { matcher: /^\/ph\//, handler: new NetworkOnly() },
     ...defaultCache,
   ],
 });

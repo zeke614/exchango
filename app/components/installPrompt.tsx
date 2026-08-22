@@ -1,64 +1,77 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import posthog from "posthog-js";
+import { PH_EVENTS } from "@/app/lib/constants";
 
-// const DISMISS_KEY = "install_prompt_dismissed_at";
-// const DISMISS_COOLDOWN_DAYS = 14;
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: "accepted" | "dismissed";
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
 
 export default function InstallPrompt() {
-  const [prompt, setPrompt] = useState<any>(null);
+  const [prompt, setPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isIOS, setIsIOS] = useState(false);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Already installed? Don't show anything, ever.
+    // 1. Determine platform states locally to prevent dependency loops
+    const iosCheck = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
     const isStandalone =
       window.matchMedia("(display-mode: standalone)").matches ||
       (window.navigator as any).standalone === true;
-    if (isStandalone) return;
 
-    // Respect a recent dismissal.
-    // const dismissedAt = localStorage.getItem(DISMISS_KEY);
-    // if (dismissedAt) {
-    //   const daysSince =
-    //     (Date.now() - Number(dismissedAt)) / (1000 * 60 * 60 * 24);
-    //   if (daysSince < DISMISS_COOLDOWN_DAYS) return;
-    // }
+    setIsIOS(iosCheck);
 
-    const ios = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
-    setIsIOS(ios);
+    // 2. Define the tracking callback using local 'iosCheck' to bypass stale state bugs
+    const handleAppInstalled = () => {
+      posthog.capture(PH_EVENTS.pwaInstalled, {
+        platform: iosCheck ? "ios" : "web_or_android",
+      });
+      setVisible(false);
+    };
 
-    if (ios) {
-      // Safari never fires beforeinstallprompt — show our own card immediately.
-      setVisible(true);
-      return;
-    }
-
-    const handler = (e: Event) => {
+    const handleBeforeInstall = (e: Event) => {
       e.preventDefault();
-      setPrompt(e);
+      setPrompt(e as BeforeInstallPromptEvent);
       setVisible(true);
     };
-    window.addEventListener("beforeinstallprompt", handler);
-    return () => window.removeEventListener("beforeinstallprompt", handler);
-  }, []);
+
+    window.addEventListener("appinstalled", handleAppInstalled);
+
+    // 3. Evaluation logic without breaking early function cleanups
+    if (!isStandalone) {
+      if (iosCheck) {
+        setVisible(true);
+      } else {
+        window.addEventListener("beforeinstallprompt", handleBeforeInstall);
+      }
+    }
+
+    // 4. Guaranteed single cleanup point for all conditions
+    return () => {
+      window.removeEventListener("appinstalled", handleAppInstalled);
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
+    };
+  }, []); // Empty dependency array ensures this setup runs exactly once on mount
 
   function dismiss() {
-    // localStorage.setItem(DISMISS_KEY, String(Date.now()));
     setVisible(false);
   }
 
   async function install() {
     if (!prompt) return;
     prompt.prompt();
-    // const { outcome } = await prompt.userChoice;
-    // if (outcome === "accepted" || outcome === "dismissed") {
-    // // Either way, don't nag again this cooldown window.
-    //  localStorage.setItem(DISMISS_KEY, String(Date.now()));
-    // }
-    await prompt.userChoice;
+    const choice = await prompt.userChoice;
+
+    if (choice.outcome === "accepted") {
+      setVisible(false);
+    }
     setPrompt(null);
-    setVisible(false);
   }
 
   if (!visible) return null;

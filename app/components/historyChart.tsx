@@ -20,6 +20,8 @@ import {
   HISTORY_LIVE_DAY_CACHE_MINUTES,
   HISTORY_CLOSED_DAY_CACHE_MINUTES,
 } from "@/app/lib/constants";
+import posthog from "posthog-js";
+import { PH_EVENTS } from "@/app/lib/constants";
 
 dayjs.extend(utc);
 
@@ -31,6 +33,9 @@ interface Props {
 interface DataPoint {
   date: string;
   rate: number;
+
+   // OER's settled value, not a still-moving intraday snapshot.
+   finalized?: boolean;
 }
 
 type Range = "1D" | "1W" | "2W" | "1M";
@@ -303,14 +308,18 @@ export default function CurrencyHistoryChart({ base, target }: Props) {
 
         const cacheKey = getCacheKey(base, target, dateStr);
 
-        const cached = readCache<DataPoint>(
-          cacheKey,
-          getHistoryCacheMinutes(date),
-        );
-        if (cached) {
-          results.push(cached);
-          continue;
-        }
+         const dateIsClosed = !isTodayUTC(date);
+       const cached = readCache<DataPoint>(
+         cacheKey,
+         getHistoryCacheMinutes(date),
+      );
+
+      const cacheIsUsable = cached && (!dateIsClosed || cached.finalized);
+
+      if (cacheIsUsable) {
+         results.push(cached as DataPoint);
+         continue;
+      }
 
         try {
           const url = `/api/history?date=${dateStr}&base=${base}&target=${target}`;
@@ -318,6 +327,7 @@ export default function CurrencyHistoryChart({ base, target }: Props) {
           const point: DataPoint = {
             date: dateStr,
             rate: res.data.rates[target],
+            finalized: dateIsClosed, // mark closed days as finalized for caching
           };
 
           writeCache(cacheKey, point);
@@ -339,6 +349,16 @@ export default function CurrencyHistoryChart({ base, target }: Props) {
     };
   }, [base, target, range, isUnsupportedBase]);
 
+  function handleRangeChange(r: Range) {
+    if (r === range) return;
+    posthog.capture(PH_EVENTS.chartViewed, {
+      from_currency: base,
+      to_currency: target,
+      range: r,
+    });
+    setRange(r);
+  }
+
   return (
     <div className="w-full flex flex-col items-center justify-center mt-18 mb-3">
       <h3 className="text-[1.375rem] font-bold mb-5 text-[#256F5C] text-center">
@@ -349,7 +369,7 @@ export default function CurrencyHistoryChart({ base, target }: Props) {
         <UnsupportedBaseMessage />
       ) : (
         <>
-          <RangeSelector selected={range} onChange={setRange} />
+          <RangeSelector selected={range} onChange={handleRangeChange} />{" "}
           {loading ? (
             <LoadingIndicator />
           ) : (

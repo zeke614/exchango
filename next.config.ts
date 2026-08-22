@@ -11,7 +11,24 @@ const withSerwist = withSerwistInit({
 
 const nextConfig: NextConfig = {
   /* config options here */
+
   turbopack: {},
+
+  async rewrites() {
+    return [
+      {
+        source: "/ph/static/:path*",
+        destination: "https://eu-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/ph/:path*",
+        destination: "https://eu.i.posthog.com/:path*",
+      },
+    ];
+  },
+
+  // Required for PostHog's trailing-slash API requests to survive the rewrite
+  skipTrailingSlashRedirect: true,
 };
 
 export default withSerwist(nextConfig);

@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import posthog from "posthog-js";
+import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +16,7 @@ import { computeRate, type RatesMap } from "@/app/lib/rates";
 import {
   CONVERSION_DECIMAL_PLACES,
   RATE_DECIMAL_PLACES,
+  PH_EVENTS,
 } from "@/app/lib/constants";
 
 const CurrencyDropdown = dynamic(
@@ -45,6 +47,8 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
   const [amount, setAmount] = useState(DEFAULT_AMOUNT);
   const [swapRotation, setSwapRotation] = useState(90);
 
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useDetectedCurrency(setToCurrency);
 
   // No isLoading state anymore — rates arrive with the initial HTML
@@ -63,6 +67,33 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
 
   const relativeTime = useRelativeTime(fetchedAt ? new Date(fetchedAt) : null);
 
+  useEffect(() => {
+    if (!rate || !amount.trim() || isNaN(parsedAmount) || parsedAmount <= 0) {
+      return;
+    }
+
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    debounceTimerRef.current = setTimeout(() => {
+      posthog.capture(PH_EVENTS.currencyConverted, {
+        from_currency: fromCurrency.code,
+        to_currency: toCurrency.code,
+        amount: parsedAmount,
+        converted_amount: parseFloat(convertedAmount),
+        rate: rate,
+      });
+    }, 800);
+
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+    // Optimized dependencies: Remove raw 'amount' and 'convertedAmount' to avoid duplicate triggers
+  }, [parsedAmount, fromCurrency.code, toCurrency.code, rate]);
+
   function handleAmountChange(raw: string) {
     setAmount(raw.replace(/,/g, ""));
   }
@@ -79,9 +110,17 @@ export default function Converter({ initialRates, fetchedAt }: Props) {
   };
 
   function handleSwap() {
-    setFromCurrency(toCurrency);
-    setToCurrency(fromCurrency);
+    const nextFrom = toCurrency;
+    const nextTo = fromCurrency;
+
+    setFromCurrency(nextFrom);
+    setToCurrency(nextTo);
     setSwapRotation((prev) => prev + 180);
+
+    posthog.capture(PH_EVENTS.currencySwapped, {
+      from_currency: nextFrom.code,
+      to_currency: nextTo.code,
+    });
   }
 
   return (

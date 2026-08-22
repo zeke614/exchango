@@ -112,14 +112,10 @@ export default function RootLayout({
                 <Header />
               </div>
 
-              <div
-                className="grow"
-                style={{
-                  paddingTop: "calc(3.75rem + env(safe-area-inset-top))",
-                }}
-              >
+              <div className="grow pt-[calc(3.5rem+env(safe-area-inset-top))] sm:pt-[calc(4.5rem+env(safe-area-inset-top))]">
                 {children}
               </div>
+
               <Footer />
             </div>
           </I18nProvider>
